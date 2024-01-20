@@ -1,0 +1,1 @@
+selectedItem = global.setting_squid_constant_opacity

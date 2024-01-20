@@ -1,0 +1,7 @@
+{
+    "functions": "functions",
+    "inlineHooks": "inlinehooks",
+    "codeHooks": "codehooks",
+    "objectCode": "objectcode",
+    "functionHooks": "functionhooks"
+}

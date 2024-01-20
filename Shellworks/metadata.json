@@ -1,0 +1,13 @@
+{
+    "id": "com.github.cgytrus.wys.api",
+    "name": "Will You Snail API",
+    "version": "0.1.0",
+    "authors": [ "ConfiG" ],
+    "description": "Some useful GMML APIs for Will You Snail, required for most WYS mods",
+    "dependencies": [
+        {
+            "id": "com.github.cgytrus.gmml.hooker",
+            "version": "0.1.0"
+        }
+    ]
+}

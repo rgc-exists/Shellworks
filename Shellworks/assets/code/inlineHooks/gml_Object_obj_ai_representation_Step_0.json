@@ -1,0 +1,25 @@
+{
+    "Script":"gml_Object_obj_ai_representation_Step_0",
+    "Hooks": [
+        {
+            "File": "inlineHooks/gml_Object_obj_ai_representation_Step_0_constantOpacity.gml",
+            "Sig": [
+                "popz.v",
+                "push.v self.talkyblend",
+                "push.d 0.99",
+                "mul.d.v",
+                "pop.v.v self.talkyblend",
+                "push.v self.image_alpha",
+                "push.d 0.99",
+                "cmp.d.v GT",
+                "conv.b.v",
+                "push.v self.talking",
+                "push.v self.talkyblend",
+                "call.i max(argc=3)",
+                "pop.v.v self.talkyblend"
+            ],
+            "Type": "append",
+            "InArgs": []
+        }
+    ]
+}

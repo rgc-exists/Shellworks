@@ -1,0 +1,1 @@
+global.setting_squid_constant_opacity = argument0

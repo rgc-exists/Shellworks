@@ -1,0 +1,2 @@
+global.setting_show_hitboxes_on_death = argument0
+scr_save_settings()

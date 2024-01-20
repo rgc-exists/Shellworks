@@ -1,0 +1,1 @@
+cam_zoom_target = clamp(cam_zoom_target, global.setting_camzoom_min, global.setting_camzoom_max)

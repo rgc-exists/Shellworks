@@ -1,0 +1,7 @@
+{
+    "File": "gml_Object_obj_credits_renderer_Draw_64.gml",
+    "Object": "obj_credits_renderer",
+    "Type":"Draw",
+    "Subtype":"DrawGUI",
+    "HasSubtype":true
+}

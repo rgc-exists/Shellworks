@@ -1,0 +1,1 @@
+selectedItem = global.show_hitboxes

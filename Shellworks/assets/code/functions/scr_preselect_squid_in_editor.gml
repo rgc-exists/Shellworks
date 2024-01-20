@@ -1,0 +1,1 @@
+selectedItem = global.setting_squid_in_editor

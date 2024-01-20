@@ -1,0 +1,1 @@
+return (file_exists("SettoIngs23-2.set") || file_exists("Snailworks_SettoIngs23-2.set"))

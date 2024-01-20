@@ -1,0 +1,12 @@
+{
+    "BOUND_TOP": "-69",
+    "BOUND_BOTTOM": "-70",
+    "BOUND_LEFT": "-71",
+    "BOUND_RIGHT": "-72",
+    "CLICK": "0",
+    "HOLD": "1",
+    "END": "2",
+    "HOVER": "4",
+    "REAL_MIN": "-2147483648",
+    "REAL_MAX": "2147483647"
+}

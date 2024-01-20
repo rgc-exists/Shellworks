@@ -1,0 +1,7 @@
+{
+    "File": "gml_Object_obj_characterSelect_Draw_64.gml",
+    "Object": "obj_characterSelect",
+    "Type":"Draw",
+    "Subtype":"DrawGUI",
+    "HasSubtype":true
+}

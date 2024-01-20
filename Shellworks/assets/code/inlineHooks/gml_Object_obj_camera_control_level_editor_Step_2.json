@@ -1,0 +1,19 @@
+{
+    "Script":"gml_Object_obj_camera_control_level_editor_Step_2",
+    "Hooks": [
+        {
+            "File": "inlineHooks/gml_Object_obj_camera_control_level_editor_Step_2_extendCamZoom.gml",
+            "Sig": [
+                "pushi.e 6",
+                "conv.i.v",
+                "push.d 0.25",
+                "conv.d.v",
+                "push.v self.cam_zoom_target",
+                "call.i clamp(argc=3)",
+                "pop.v.v self.cam_zoom_target"
+            ],
+            "Type": "replace",
+            "InArgs": []
+        }
+    ]
+}

@@ -1,0 +1,1 @@
+global.screenshake = max(global.screenshake, (global.light_suffering * 20 * global.setting_intense_backgrounds))

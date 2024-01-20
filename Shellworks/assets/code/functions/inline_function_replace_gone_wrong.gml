@@ -1,0 +1,1 @@
+show_message("Something went wrong and we couldn't find the inline function that we need to insert into that code. Please report this to RGC Exists.")
