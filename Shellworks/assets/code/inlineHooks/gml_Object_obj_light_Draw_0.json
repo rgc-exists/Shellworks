@@ -2,7 +2,7 @@
     "Script":"gml_Object_obj_light_Draw_0",
     "Hooks": [
         {
-            "File": "inlineHooks/gml_Object_obj_light_Draw_0.gml",
+            "File": "inlineHooks/gml_Object_obj_light_Draw_0_hook1.gml",
             "Sig": [
                 "push.v self.totalsize",
                 "push.d 0.98",

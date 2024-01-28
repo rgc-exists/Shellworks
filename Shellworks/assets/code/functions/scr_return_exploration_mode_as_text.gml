@@ -6,5 +6,7 @@ switch global.save_exploration_mode
         return loca_text("menu_on");
     case 2:
         return "Extra";
+    case 3:
+        return "Extra + DIALOG SPRINGS"
 }
 

@@ -26,7 +26,7 @@ if(room != level_editor && room != menu){
     global.inspector_active = false
 }
 
-if(global.inspector_active){
+if(global.inspector_active && room == level_editor){
     if(point_in_rectangle(device_mouse_x_to_gui(0), device_mouse_y_to_gui(0), 1920 * .7 + 2, 2, 1920 - 2, 1080 - 2)){
         prevMouseInInspector = true
         global.editor_input_disabled = true

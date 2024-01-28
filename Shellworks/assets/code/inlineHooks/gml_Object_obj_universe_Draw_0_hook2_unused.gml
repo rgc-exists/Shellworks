@@ -1,0 +1,1 @@
+draw_sprite_ext(sprite_index, image_index, xxx, yyy, sc, sc, image_angle, image_blend, (1 - z) - ((1 - global.setting_intense_backgrounds) * .5))

@@ -1,0 +1,80 @@
+{
+    "Script":"gml_Object_obj_light_Step_0",
+    "Hooks": [
+        {
+            "File": "inlineHooks/gml_Object_obj_light_Step_0_hook1.gml",
+            "Sig": [
+                "push.v self.x",
+                "pushi.e 300",
+                "pushi.e 600",
+                "conv.i.v",
+                "call.i random(argc=1)",
+                "sub.v.i",
+                "add.v.v",
+                "pop.v.v self.x",
+                "push.v self.y",
+                "pushi.e 300",
+                "pushi.e 600",
+                "conv.i.v",
+                "call.i random(argc=1)",
+                "sub.v.i",
+                "add.v.v",
+                "pop.v.v self.y"
+            ],
+            "Type": "replace",
+            "InArgs": []
+        },
+        {
+            "File": "inlineHooks/gml_Object_obj_light_Step_0_hook2.gml",
+            "Sig": [
+                "push.v self.x",
+                "pushbltn.v builtin.room_width",
+                "pushi.e 200",
+                "add.i.v",
+                "add.v.v",
+                "pop.v.v self.x"
+            ],
+            "Type": "replace",
+            "InArgs": []
+        },
+        {
+            "File": "inlineHooks/gml_Object_obj_light_Step_0_hook3.gml",
+            "Sig": [
+                "push.v self.y",
+                "pushbltn.v builtin.room_height",
+                "pushi.e 200",
+                "add.i.v",
+                "add.v.v",
+                "pop.v.v self.y"
+            ],
+            "Type": "replace",
+            "InArgs": []
+        },
+        {
+            "File": "inlineHooks/gml_Object_obj_light_Step_0_hook4.gml",
+            "Sig": [
+                "push.v self.x",
+                "pushbltn.v builtin.room_width",
+                "pushi.e 200",
+                "add.i.v",
+                "sub.v.v",
+                "pop.v.v self.x"
+            ],
+            "Type": "replace",
+            "InArgs": []
+        },
+        {
+            "File": "inlineHooks/gml_Object_obj_light_Step_0_hook5.gml",
+            "Sig": [
+                "push.v self.y",
+                "pushbltn.v builtin.room_height",
+                "pushi.e 200",
+                "add.i.v",
+                "sub.v.v",
+                "pop.v.v self.y"
+            ],
+            "Type": "replace",
+            "InArgs": []
+        }
+    ]
+}

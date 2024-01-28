@@ -1,0 +1,1 @@
+time -= max((1 + (global.light_suffering * 3)) * global.setting_intense_backgrounds, 0.25)

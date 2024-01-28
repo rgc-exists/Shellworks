@@ -1,10 +1,12 @@
+
 if(file_exists("SettoIngs23-2.set"))
     #orig#()
 
 
+
 gml_Script_scr_initialize_BSE_settings()
-if(file_exists("Snailworks_SettoIngs23-2.set")){
-    file = file_text_open_read("Snailworks_SettoIngs23-2.set")
+if(file_exists("Shellworks_SettoIngs23-2.set")){
+    file = file_text_open_read("Shellworks_SettoIngs23-2.set")
     save_file_version = ""
     while (!file_text_eof(file))
     {
@@ -42,10 +44,12 @@ if(file_exists("Snailworks_SettoIngs23-2.set")){
                 global.setting_intense_backgrounds = file_text_read_real(file)
                 file_text_readln(file)
                 break
+            /*
             case "Squid Consistent Opacity":
                 global.setting_squid_constant_opacity = file_text_read_real(file)
                 file_text_readln(file)
                 break
+            */
             case "Skip Title Animation":
                 global.setting_skip_title_animation = file_text_read_real(file)
                 file_text_readln(file)

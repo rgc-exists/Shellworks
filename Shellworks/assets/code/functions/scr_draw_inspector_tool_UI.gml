@@ -142,7 +142,11 @@ if(global.rendering_enabled || room = menu){
     var y_offset = 0
     draw_set_halign(fa_left)
     draw_set_valign(fa_top)
-    thisInst = global.global_inspector_selected_obj
+    thisInst = global.inspector_selected_obj
+    var thisInstToolstruct = thisInst.toolStruct
+    if(variable_instance_exists(thisInst, "map_properties")){
+        var thisInstToolProp = thisInst.map_properties
+    }
     //show_message(string(thisInst))
     if(instance_exists(thisInst)){
         if(!variable_instance_exists(id, "curTyping")){
@@ -160,17 +164,22 @@ if(global.rendering_enabled || room = menu){
         draw_set_halign(fa_left)
         draw_set_valign(fa_top)
        
-        scr_draw_text_in_box(object_get_name(global.global_inspector_selected_obj.object_index) + " (" + string(global.global_inspector_selected_obj.id) + ")", (1920 * .2), 75, 1, -1, (1920 * .71) + 5, 60 + y_offset + global.debugger_scroll, false)
-        y_offset += 130
 
 
 
-        var varNames = variable_instance_get_names(thisInst)
-        for(var v = array_length(global.var_names_to_auto_get_at_start) - 1; v > -1; v--){
-            array_insert(varNames, 0, global.var_names_to_auto_get_at_start[v])
+        var varNames = []
+        for(var v = array_length(global.inspector_var_names_to_auto_get_at_start) - 1; v > -1; v--){
+            array_insert(varNames, 0, global.inspector_var_names_to_auto_get_at_start[v])
         }
-        for(var v = 0; v < array_length(global.var_names_to_auto_get_at_end); v++){
-            array_push(varNames, global.var_names_to_auto_get_at_end[v])
+        for(var v = 0; v < array_length(global.inspector_var_names_to_auto_get_at_end); v++){
+            array_push(varNames, global.inspector_var_names_to_auto_get_at_end[v])
+        }
+        if(variable_instance_exists(thisInst, "map_properties")){
+            var toolPropKey = ds_map_find_first(thisInstToolProp)
+            for(var v = 0; v < ds_map_size(thisInstToolProp); v++){
+                array_push(varNames, "editorProperty_" + toolPropKey)
+                toolPropKey = ds_map_find_next(thisInstToolProp, toolPropKey)
+            }
         }
         for (pri = 0; pri < array_length(varNames); pri++)
         {
@@ -187,33 +196,19 @@ if(global.rendering_enabled || room = menu){
             draw_set_halign(fa_left)
             draw_set_color(c_white)
             draw_set_valign(fa_bottom)
-            var curVarType = "unknown type"
-            if(is_string(variable_instance_get(thisInst, thisKey))){
-                curVarType = "string"
-            } else if(is_real(variable_instance_get(thisInst, thisKey))){
-                curVarType = "real"
-            } else if(is_array(variable_instance_get(thisInst, thisKey))){
-                curVarType = "array"
-            } else if(is_struct(variable_instance_get(thisInst, thisKey))){
-                curVarType = "struct"
-            } else if(is_undefined(variable_instance_get(thisInst, thisKey))){
-                curVarType = "undefined"
-            }
-            scr_draw_text_in_box(thisKey + " (" + curVarType + ")", (1920 * .2), 50, 1, -1, (1920 * .71) + 5, 69 + y_offset + global.debugger_scroll, false)
 
+            scr_draw_text_in_box(string_replace(thisKey, "editorProperty_", ""), (1920 * .2), 50, 1, -1, (1920 * .71) + 5, 69 + y_offset + global.debugger_scroll, false)
             draw_set_halign(fa_left)
             draw_set_valign(fa_top)
-            if(is_array(variable_instance_get(thisInst, thisKey)) || is_struct(variable_instance_get(thisInst, thisKey)) || is_undefined(variable_instance_get(thisInst, thisKey)) || is_readonly){
-                draw_set_color(c_ltgray)
-            } else {
-                draw_set_color(c_white)
-            }
             if(typingIn == thisKey){
                 if(typingLineThingyTimer >= 30)
                     scr_draw_text_in_box(string(curTyping) + "|", (1920 * .2), 75, 1, -1, (1920 * .71) + 5, 85 + y_offset + global.debugger_scroll, false)
                 else
                     scr_draw_text_in_box(string(curTyping), (1920 * .2), 75, 1, -1, (1920 * .71) + 5, 85 + y_offset + global.debugger_scroll, false)
             } else {
+                if(string_starts_with(thisKey, "editorProperty_")){
+                    scr_draw_text_in_box(string(ds_map_find_value(thisInstToolProp, string_delete(thisKey, 1, string_length("editorProperty_")))), (1920 * .2), 75, 1, -1, (1920 * .71) + 5, 85 + y_offset + global.debugger_scroll, false)
+                } else
                     scr_draw_text_in_box(string(variable_instance_get(thisInst, thisKey)), (1920 * .2), 75, 1, -1, (1920 * .71) + 5, 85 + y_offset + global.debugger_scroll, false)
             }
             if(typingIn == thisKey)
@@ -236,7 +231,7 @@ if(global.rendering_enabled || room = menu){
 
                 if(keyboard_check_pressed(vk_backspace)){
                     if(string_length(curTyping) > 0)
-                        curTyping = string_delete(curTyping, string_length(curTyping), 1)
+                        curTyping = string_delete(curTyping, 1, string_length(curTyping))
                 }
                     
                 if(mouse_check_button_pressed(mb_left) || keyboard_check_pressed(vk_enter)){
@@ -268,10 +263,12 @@ if(global.rendering_enabled || room = menu){
                         is_acceptable_num = false
                     }
 
-                    if(string_digits_answer != "" && has_num_char && is_acceptable_num && is_real(variable_instance_get(thisInst, thisKey))){
-                        variable_instance_set(thisInst, thisKey, real(string_digits_answer))
-                    } else if(is_string(variable_instance_get(thisInst, thisKey))){
-                        variable_instance_set(thisInst, thisKey, answer)
+                    if(string_digits_answer != "" && has_num_char && is_acceptable_num){
+                        if(!string_starts_with(thisKey, "editorProperty_")){
+                            variable_instance_set(thisInst, thisKey, real(string_digits_answer))
+                        } else {
+                            ds_map_set(thisInstToolProp, string_delete(thisKey, 1, string_length("editorProperty_")), real(string_digits_answer))
+                        }
                     }
                     typingIn = ""
                     global.editor_input_disabled = false
@@ -279,13 +276,15 @@ if(global.rendering_enabled || room = menu){
             } else {
                 if(mouse_check_button_pressed(mb_left)){
                     if(point_in_rectangle(device_mouse_x_to_gui(0), device_mouse_y_to_gui(0), (1920 * .7), 80 + y_offset + global.debugger_scroll, 1900, 140 + y_offset + global.debugger_scroll)){
-                        if(!is_array(variable_instance_get(thisInst, thisKey)) && !is_struct(variable_instance_get(thisInst, thisKey)) && !is_undefined(variable_instance_get(thisInst, thisKey)) && !is_readonly){
-                            typingLineThingyTimer = 0
-                            typingIn = thisKey
-                            typingLineThingyTimer = 30
-                            keyboard_string = ""
+                        typingLineThingyTimer = 0
+                        typingIn = thisKey
+                        typingLineThingyTimer = 30
+                        keyboard_string = ""
+                        if(!string_starts_with(thisKey, "editorProperty_"))
                             curTyping = string(variable_instance_get(thisInst, thisKey))
-                        }
+                        else
+                            curTyping = string(ds_map_find_value(thisInstToolProp, string_delete(thisKey, 1, string_length("editorProperty_"))))
+
                     }
                 }
             }
@@ -330,23 +329,9 @@ if(global.rendering_enabled || room = menu){
     draw_set_color(c_white)
     draw_set_halign(0)
     draw_set_valign(0)
-    draw_text_ext(30, (1080 * .7) + 50, "GLOBAL INSPECTOR ACTIVATED\nClick an object to edit its values!\n\nPress F5 to close", 0, 99999)
+    draw_text_ext(30, (1080 * .7) + 50, "INSPECTOR TOOL ACTIVATED\n\nSwitch to another object\nin your hotbar to close.", 0, 99999)
 
     display_set_gui_size(1920 / .7, 1080 / .7)
-
-    draw_set_alpha(0.7)
-    if(mouse_check_button(mb_left)){
-        if(point_in_rectangle(device_mouse_x_to_gui(0), device_mouse_y_to_gui(0), (1920 * .7) + 10, 0, 1920, 40)){
-            global.object_search_selected = true
-        } else {
-            global.object_search_selected = false
-        }
-        draw_set_color(c_white)
-        draw_rectangle(device_mouse_x_to_gui(0) - 5, device_mouse_y_to_gui(0) - 5, device_mouse_x_to_gui(0) + 5, device_mouse_y_to_gui(0) + 5,false)
-    }
-
-    draw_set_color(c_green)
-    draw_arrow(device_mouse_x_to_gui(0) + 30, device_mouse_y_to_gui(0) + 45, device_mouse_x_to_gui(0), device_mouse_y_to_gui(0), 140)
 } else {
     draw_set_color(c_black)
     draw_rectangle(0, 0, camera_get_view_width(view_camera[0]), camera_get_view_height(view_camera[0]), false)

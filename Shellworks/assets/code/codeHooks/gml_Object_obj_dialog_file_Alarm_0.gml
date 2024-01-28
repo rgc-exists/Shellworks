@@ -1,3 +1,3 @@
 #orig#()
-if(global.save_exploration_mode == 2)   
+if(global.save_exploration_mode >= 3)
     discovered = true

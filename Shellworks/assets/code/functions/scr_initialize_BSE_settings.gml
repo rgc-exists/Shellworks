@@ -30,7 +30,6 @@ global.setting_place_multiple_oneAtATime_objs = false
 global.restart_invincible_mode = false
 global.setting_global_inspector_available = false 
 global.setting_save_states = false
-global.setting_show_hitboxes_on_death = false
 global.setting_respawn_time = 0
 global.setting_input_display = false
 global.setting_legitimacy_marker = false

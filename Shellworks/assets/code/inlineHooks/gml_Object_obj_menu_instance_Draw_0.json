@@ -1,0 +1,23 @@
+{
+    "Script":"gml_Object_obj_menu_instance_Draw_0",
+    "Hooks": [
+        {
+            "File": "inlineHooks/gml_Object_obj_menu_instance_Draw_0_hook1.gml",
+            "Sig": [
+                "pushbltn.v builtin.room_height",
+                "push.v self.menuItemCount",
+                "pushi.e 1",
+                "sub.i.v",
+                "push.v self.yspacing",
+                "mul.v.v",
+                "sub.v.v",
+                "pushi.e 2",
+                "conv.i.d",
+                "div.d.v",
+                "pop.v.v self.starty"
+            ],
+            "Type": "prepend",
+            "InArgs": []
+        }
+    ]
+}

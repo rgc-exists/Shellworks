@@ -18,10 +18,3 @@ if(variable_instance_exists(id, "inspector_select_cooldown")){
     inspector_select_cooldown--;
 }
 
-
-if(!resize_level_enabled){
-    level_bound_x1 = level_bound_x1_remember
-    level_bound_y1 = level_bound_y1_remember
-    level_bound_x2 = level_bound_x2_remember
-    level_bound_y2 = level_bound_y2_remember
-}

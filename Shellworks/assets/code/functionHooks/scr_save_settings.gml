@@ -1,19 +1,22 @@
+if(file_exists("SettoIngs23-2.set")){
+    gml_Script_scr_get_game_version_from_orig_settings_function()
+}
+
 if(variable_global_exists("is_resetting_settings")){
     if(global.is_resetting_settings == 1){
+        global.is_resetting_settings = 0
         return false;
     }
 }
 #orig#()
 if(variable_global_exists("is_resetting_settings")){
     if(global.is_resetting_settings == 2){
+        global.is_resetting_settings = 0
         return false;
     }
 }
-if(file_exists("SettoIngs23-2.set")){
-    gml_Script_scr_get_game_version_from_orig_settings_function()
-}
 
-file = file_text_open_write("Snailworks_SettoIngs23-2.set")
+file = file_text_open_write("Shellworks_SettoIngs23-2.set")
 file_text_write_string(file, "Hello, human. Welcome to the advanced version of the Shellworkss exclusive settings.")
 file_text_writeln(file)
 file_text_write_string(file, "Make sure you know what you're doing before you change anything here.")
@@ -59,11 +62,13 @@ file_text_writeln(file)
 file_text_write_real(file, global.setting_intense_backgrounds)
 repeat (2)
     file_text_writeln(file)
+/*
 file_text_write_string(file, "Squid Consistent Opacity")
 file_text_writeln(file)
 file_text_write_real(file, global.setting_squid_constant_opacity)
 repeat (2)
     file_text_writeln(file)
+*/
 file_text_write_string(file, "Skip Title Animation")
 file_text_writeln(file)
 file_text_write_real(file, global.setting_skip_title_animation)

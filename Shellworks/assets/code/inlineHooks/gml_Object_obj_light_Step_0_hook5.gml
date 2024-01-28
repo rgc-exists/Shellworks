@@ -1,0 +1,1 @@
+y -= (room_height + 200)

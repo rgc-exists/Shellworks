@@ -9,6 +9,7 @@ using System.Linq;
 using UndertaleModLib.Decompiler;
 using UndertaleModLib.Compiler;
 using System.Linq.Expressions;
+using System.Runtime.Serialization;
 
 namespace EditorTweaks;
 
@@ -16,6 +17,7 @@ public class EditorTweaks
 {
     public static string baseDirectory = "UNDEFINED_BASE_DIRECTORY";
     public static UndertaleData data;
+    public static bool failedHook = false;
     public void Load(int audioGroup, UndertaleData loadedData)
     {
         data = loadedData;
@@ -24,6 +26,28 @@ public class EditorTweaks
         LoadCode();
         BuildRooms();
         AddMenuItems();
+
+        if(failedHook){
+            Console.WriteLine(@"
+
+
+
+!!!!! WARNING !!!!!
+
+WHILE LOADING Shellworks, AN ASSEMBLY HOOK WAS UNABLE TO BE MADE.
+THIS LIKELY MEANS YOU ARE USING AN OUTDATED VERSION OF Shellworks, OR Shellworks HAS NOT BEEN UPDATED TO YOUR CURRENT BUILD OF THE GAME.
+
+ARE YOU SURE YOU WANT TO CONTINUE?
+Type ""y"" to continue. Otherwise, Shellworks will throw an error and the mod will be skipped.");
+            string answer = Console.ReadLine();
+            if(answer != null){
+                if(answer.ToLower() == "y"){
+
+                } else {
+                    throw new Exception("There were missing assembly hooks, and the user said not to continue.");
+                }
+            }
+        }
     }
 
     private static void CreateObjects()
@@ -147,19 +171,20 @@ public class EditorTweaks
         handlers.Add("inlinehooks", (code, file) =>
         {
             if (file.EndsWith(".gml")) return;
-            Console.WriteLine("Adding inline hook(s) to " + Path.GetFileNameWithoutExtension(file));
-            
+
             var hookFile = JsonSerializer.Deserialize<HookFile>(code);
             if (hookFile == null) return;
+
+            Console.WriteLine("Adding inline hook(s) to " + file);
+            
             
             foreach(HookFile_Hook hookData in hookFile.Hooks){
-                UndertaleCode undertaleCode = data.Code.ByName(Path.GetFileNameWithoutExtension(file));
+                UndertaleCode undertaleCode = data.Code.ByName(hookFile.Script);
 
                 string assembly_str = undertaleCode.Disassemble(data.Variables, data.CodeLocals.For(undertaleCode));
                 List<string> lines = assembly_str.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None).ToList();
                 
                 bool foundAtAll = false;
-
                 for(var l = 0; l < lines.Count; l++){
                     int cur_l = l;
                     int before = l;
@@ -187,8 +212,11 @@ public class EditorTweaks
                             }
                         }
                     }
+                    Console.WriteLine("Adding inlineHook function for " + Path.GetFileNameWithoutExtension(hookData.File));
                     string hookStr = "function " + scriptName + "(" + functionArgs + "){\n" + fileContents + "\n}";
-                    data.CreateLegacyScript(Path.GetFileNameWithoutExtension(hookData.File), hookStr, (ushort)hookData.InArgs.Length);
+                    if(data.Code.ByName(Path.GetFileNameWithoutExtension(hookData.File)) == null){
+                        data.CreateLegacyScript(Path.GetFileNameWithoutExtension(hookData.File), hookStr, (ushort)hookData.InArgs.Length);
+                    }
                     if(hookData.Type == "replace"){
                         lines.RemoveRange(before, hookData.Sig.Length);
                     }
@@ -209,6 +237,9 @@ public class EditorTweaks
                         assemblyStr_out += li + "\n";
                     }
                     undertaleCode.Replace(Assembler.Assemble(assemblyStr_out, data));
+                    if(hookData.Type == "prepend"){
+                        l = curInsertIndex;
+                    }
                 }
 
                 if(!foundAtAll){
@@ -218,6 +249,7 @@ public class EditorTweaks
                         assemblyLookedFor += l + "\n";
                     }
                     Console.WriteLine("\n\nWARNING: could not find place to assembly hook for " + Path.GetFileNameWithoutExtension(file) + "\n" + assemblyLookedFor + "\n\n\n");
+                    failedHook = true;
                 }
             }
         });
@@ -257,8 +289,9 @@ public class EditorTweaks
         });
 
 
-        data.AddMenuOption("obj_menu_ExplorationMode", new Menus.WysMenuOption("\"Extra\"", script: "gml_Script_scr_set_explore_mode", scriptArgument: "2", tooltipScript: "gml_Script_scr_return_input", tooltipArgument: "\"Unlocks ALL levels and dialog springs, INCLUDING secrets.\""));
-        data.AddMenuOption("obj_menu_StayInBack", new Menus.WysMenuOption("\"Stay In FOREGROUND\"", script: "gml_Script_scr_set_stay_in_back_gml_Object_obj_menu_StayInBack_Other_10", scriptArgument: "2", tooltipScript: "gml_Script_scr_return_input", tooltipArgument: "\"Makes it so squid ALWAYS stays in the foreground, and never goes into the background.\""));
+        data.AddMenuOption("obj_menu_ExplorationMode", new Menus.WysMenuOption("\"Extra\"", script: "gml_Script_scr_set_explore_mode", scriptArgument: "2", tooltipScript: "gml_Script_scr_return_input", tooltipArgument: "\"Unlocks ALL levels, INCLUDING secrets.\""));
+        data.AddMenuOption("obj_menu_ExplorationMode", new Menus.WysMenuOption("\"Extra + DIALOG SPRINGS\"", script: "gml_Script_scr_set_explore_mode", scriptArgument: "3", tooltipScript: "gml_Script_scr_return_input", tooltipArgument: "\"Unlocks ALL levels AND dialog springs.\""));
+        //data.AddMenuOption("obj_menu_StayInBack", new Menus.WysMenuOption("\"Stay In FOREGROUND\"", script: "gml_Script_scr_set_stay_in_back_gml_Object_obj_menu_StayInBack_Other_10", scriptArgument: "2", tooltipScript: "gml_Script_scr_return_input", tooltipArgument: "\"Makes it so squid ALWAYS stays in the foreground, and never goes into the background.\""));
         //UndertaleGameObject squidInEditorMenu =
         UndertaleGameObject levelEditorMenu = data.CreateMenu("level_editor", 
         data.CreateToggleOption("\"Squid In Editor\"", "squidInEditorMenu", "global.setting_squid_in_editor = argument0", "selectedItem = global.setting_squid_in_editor", "global.setting_squid_in_editor", tooltipScript: "gml_Script_scr_return_input", tooltipArgument: "\"Have squid present in your editor. He will not talk, but he will keep you company while you build.\"")
@@ -278,7 +311,7 @@ public class EditorTweaks
         });
         data.InsertMenuOption(Menus.Vanilla.More, 3, data.CreateToggleOption("\"Epilepsy Warning\"", "epilepsy_warning", "gml_Script_scr_set_epilepsy_warning(argument0)", "gml_Script_scr_preselect_epilepsy_warning()", "global.setting_epilepsy_warning", tooltipScript: "gml_Script_scr_return_input", tooltipArgument: "\"Having this off will skip the epilepsy warning you get at the beginning of the game.\""));
         data.InsertMenuOption(Menus.Vanilla.More, 3, data.CreateToggleOption("\"Skip Title Animation\"", "skip_title_anim", "global.setting_skip_title_animation = argument0", "selectedITem = global.setting_skip_title_animation", "global.setting_skip_title_animation", tooltipScript: "gml_Script_scr_return_input", tooltipArgument: "\"Skip the title screen animation from when you load a save file.\""));
-        data.InsertMenuOption(Menus.Vanilla.SquidVisuals, 3, data.CreateToggleOption("\"Constant Opacity\"", "squid_constant_opacity", "gml_Script_scr_set_squid_constant_opacity(argument0)", "scr_preselect_squid_constant_opacity()", "global.setting_squid_constant_opacity", tooltipScript: "gml_Script_scr_return_input", tooltipArgument: "\"Change whether or not squid becomes less visible when being silent.\n(ALSO MAKES HIM ALWAYS STAY IN THE FRONT, DUE TO HOW THE CODE OF THE GAME WAS STRUCTURED I CANNOT CHANGE THIS.)\""));
+        //data.InsertMenuOption(Menus.Vanilla.SquidVisuals, 3, data.CreateToggleOption("\"Constant Opacity\"", "squid_constant_opacity", "gml_Script_scr_set_squid_constant_opacity(argument0)", "scr_preselect_squid_constant_opacity()", "global.setting_squid_constant_opacity", tooltipScript: "gml_Script_scr_return_input", tooltipArgument: "\"Change whether or not squid becomes less visible when being silent.\n(ALSO MAKES HIM ALWAYS STAY IN THE FRONT, DUE TO HOW THE CODE OF THE GAME WAS STRUCTURED I CANNOT CHANGE THIS.)\""));
         data.AddMenuOption(Menus.Vanilla.Graphics, data.CreateChangeOption("\"Intense Background Intensity\"", "intenseBackgrounda", "global.setting_intense_backgrounds = clamp(global.setting_intense_backgrounds + argument0, 0, 1)", "return string_replace(string(global.setting_intense_backgrounds * 100), \".00\", \"\") + \"%\" ", 0.1));
 
 

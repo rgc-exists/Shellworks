@@ -1,0 +1,31 @@
+{
+    "Script":"gml_Object_obj_universe_Draw_0",
+    "Hooks": [
+        {
+            "File": "inlineHooks/gml_Object_obj_universe_Draw_0_hook1.gml",
+            "Sig": [
+                "push.v self.z",
+                "push.v self.zspeed",
+                "add.v.v",
+                "pop.v.v self.z"
+            ],
+            "Type": "replace",
+            "InArgs": []
+        },
+        {
+            "File": "inlineHooks/gml_Object_obj_universe_Draw_0_hook3.gml",
+            "Sig": [
+                "push.v self.image_angle",
+                "pushi.e 10",
+                "conv.i.v",
+                "call.i random(argc=1)",
+                "pushi.e 5",
+                "sub.i.v",
+                "add.v.v",
+                "pop.v.v self.image_angle"
+            ],
+            "Type": "replace",
+            "InArgs": []
+        }
+    ]
+}

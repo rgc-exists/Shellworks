@@ -1,0 +1,1 @@
+hspeed = (inputx * 10) * global.cheat_player_speed

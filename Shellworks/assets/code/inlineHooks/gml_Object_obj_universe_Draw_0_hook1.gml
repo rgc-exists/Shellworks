@@ -1,0 +1,1 @@
+z += zspeed * global.setting_intense_backgrounds

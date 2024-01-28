@@ -1,6 +1,3 @@
-if(global.show_hitboxes || (global.setting_show_hitboxes_on_death && global.player_is_dead)){
-    gml_Script_scr_show_hitboxes()
-}
 if(global.global_inspector_active){
     if(variable_global_exists("global_inspector_selected_obj")){
         if(instance_exists(global.global_inspector_selected_obj)){

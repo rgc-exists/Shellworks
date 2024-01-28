@@ -1,6 +1,6 @@
 
 #orig#()
-if(global.global_inspector_active){
+if(global.global_inspector_active && room != menu){
     if(!point_in_rectangle(device_mouse_x_to_gui(0), device_mouse_y_to_gui(0), 2, 2, 1920 - 2, 1080 - 2)){
         global.input_confirm_pressed = 0
         global.input_x = 0

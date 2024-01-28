@@ -1,0 +1,1 @@
+vspeed = -25  * global.cheat_jump_height

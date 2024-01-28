@@ -1,1 +1,0 @@
-global.show_hitboxes = argument0

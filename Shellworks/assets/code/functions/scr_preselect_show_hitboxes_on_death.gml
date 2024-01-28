@@ -1,1 +1,0 @@
-selectedItem = global.setting_show_hitboxes_on_death

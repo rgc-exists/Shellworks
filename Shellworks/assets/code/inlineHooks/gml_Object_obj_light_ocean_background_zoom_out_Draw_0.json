@@ -1,8 +1,8 @@
 {
-    "Script":"gml_Object_obj_light_ocean_background_Draw_0",
+    "Script":"gml_Object_obj_light_ocean_background_zoom_out_Draw_0",
     "Hooks": [
         {
-            "File": "inlineHooks/gml_Object_obj_light_ocean_background_Draw_0_hook1.gml",
+            "File": "inlineHooks/gml_Object_obj_light_ocean_background_zoom_out_Draw_0_hook1.gml",
             "Sig": [
                 "pushglb.v global.light_suffering",
                 "pushi.e 20",
@@ -16,7 +16,7 @@
             "InArgs": []
         },
         {
-            "File": "inlineHooks/gml_Object_obj_light_ocean_background_Draw_0_hook2.gml",
+            "File": "inlineHooks/gml_Object_obj_light_ocean_background_zoom_out_Draw_0_hook2.gml",
             "Sig": [
                 "pushglb.v global.light_suffering",
                 "push.d 0.5",
@@ -31,7 +31,7 @@
             "InArgs": []
         },
         {
-            "File": "inlineHooks/gml_Object_obj_light_ocean_background_Draw_0_hook3.gml",
+            "File": "inlineHooks/gml_Object_obj_light_ocean_background_zoom_out_Draw_0_hook3.gml",
             "Sig": [
                 "pushi.e 5",
                 "pushi.e 10",
@@ -54,7 +54,7 @@
             "InArgs": []
         },
         {
-            "File": "inlineHooks/gml_Object_obj_light_ocean_background_Draw_0_hook4.gml",
+            "File": "inlineHooks/gml_Object_obj_light_ocean_background_zoom_out_Draw_0_hook4.gml",
             "Sig": [
                 "pushi.e 20",
                 "pushi.e 40",
@@ -72,6 +72,21 @@
                 "pushglb.v global.light_suffering",
                 "mul.v.v",
                 "pop.v.v self.yshake"
+            ],
+            "Type": "replace",
+            "InArgs": []
+        },
+        {
+            "File": "inlineHooks/gml_Object_obj_light_ocean_background_zoom_out_Draw_0_hook5.gml",
+            "Sig": [
+                "push.v self.time",
+                "pushi.e 1",
+                "pushglb.v global.light_suffering",
+                "pushi.e 3",
+                "mul.i.v",
+                "add.v.i",
+                "sub.v.v",
+                "pop.v.v self.time"
             ],
             "Type": "replace",
             "InArgs": []

@@ -7,7 +7,6 @@ global.BSE_version_patch = "v1.2.0-BETA3"
 global.BSE_version_GS2ML = "v1.2.0-BETA3"
 global.check_BSE_version_on_github = false
 
-
 if(directory_exists(working_directory + "gs2ml/mods/Shellworks/Shellworks_Assets/")){
     global.betterSE_assets = working_directory + "gs2ml/mods/Shellworks/Shellworks_Assets/"
     global.is_gmml_version = true
@@ -37,6 +36,21 @@ if(global.check_BSE_version_on_github){
 if(global.is_gmml_version){
     //gmml_console_readline()
 }
+
+
+if(file_exists("SettoIngs23-2.set") && file_exists("Shellworks_SettoIngs23-2-2.set"))
+    global.is_resetting_settings = 0
+else if(file_exists("Shellworks_SettoIngs23-2.set")){
+    global.is_resetting_settings = 1
+}
+else if(file_exists("SettoIngs23-2.set")){
+    global.is_resetting_settings = 2
+} else {
+    global.is_resetting_settings = 1
+}
+
+
+
 global.invincible_mode = false
 global.ball_invincible_mode = false
 global.td_invincible_mode = false
@@ -69,11 +83,15 @@ global.inspector_selection = []
 
 global.inspector_active = false
 
+global.inspector_var_names_to_auto_get_at_start = ["x", "y", "image_xscale", "image_yscale", "image_angle"]
+global.inspector_var_names_to_auto_get_at_end = []
+
+
 global.global_inspector_active = false
 global.global_inspector_selected_obj = -500
 global.read_only_var_names = ["id", "object_index", "xprevious", "yprevious", "sprite_xoffset", "sprite_yoffset", "sprite_width", "sprite_height", "image_number", "mask_index", "bbox_top", "bbox_bottom", "bbox_left", "bbox_right", "path_positionprevious", "path_endaction", "in_sequence", "sequence_instance", "Physics"]
-global.var_names_to_auto_get_at_start = ["x", "y", "image_xscale", "image_yscale"]
-global.var_names_to_auto_get_at_end = ["sprite_index", "image_index", "image_speed", "image_alpha", "image_blend", "image_angle", "object_index", "visible", "solid", "persistent", "hspeed", "vspeed", "xprevious", "yprevious", "sprite_xoffset", "sprite_yoffset", "image_number", "depth", "layer", "alarm", "direction", "friction", "gravity", "gravity_direction", "id", "mask_index", "bbox_top", "bbox_bottom", "bbox_left", "bbox_right", "path_positionprevious", "path_endaction", "in_sequence", "sequence_instance", "Physics"]
+global.var_names_to_auto_get_at_start = ["x", "y", "image_xscale", "image_yscale", "image_angle"]
+global.var_names_to_auto_get_at_end = ["sprite_index", "image_index", "image_speed", "image_alpha", "image_blend", "object_index", "visible", "solid", "persistent", "hspeed", "vspeed", "xprevious", "yprevious", "sprite_xoffset", "sprite_yoffset", "image_number", "depth", "layer", "alarm", "direction", "friction", "gravity", "gravity_direction", "id", "mask_index", "bbox_top", "bbox_bottom", "bbox_left", "bbox_right", "path_positionprevious", "path_endaction", "in_sequence", "sequence_instance", "Physics"]
 global.recently_selected_objs = ds_list_create()
 
 /*
@@ -186,7 +204,7 @@ show_message("E")
 global.snailax_editor_theme = audio_create_stream(global.betterSE_assets + "audio/" + "Snailax Editor Theme.ogg")
 
 global.is_legit_right_now = true
-global.is_resetting_settings = false 
+
 global.player_is_dead = false
 
 global.iDisplay_Up = [sprite_add(global.betterSE_assets + "sprites/" + "Input display/" + "UpOff.png", 0, 0, 0, 0, 0), sprite_add(global.betterSE_assets + "sprites/" + "Input display/" + "UpOn.png", 0, 0, 0, 0, 0)]
@@ -206,3 +224,4 @@ global.room_remember = room
 global.player_exists_remember = 0
 
 #orig#()
+
