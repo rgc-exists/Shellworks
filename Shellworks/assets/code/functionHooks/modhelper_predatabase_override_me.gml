@@ -27,6 +27,21 @@ variable_struct_set(copy_tool_copy_2, "tool_properties", toolProps)
 
 ds_list_add(global.li_level_editor_database, copy_tool_copy_2)
 
+copy_tool_copy_3 = modhelper_create_struct()
+
+for(var i = 0; i < variable_struct_names_count(copy_tool); i += 1){
+    variable_struct_set(copy_tool_copy_3, names[i], variable_struct_get(copy_tool, names[i]))
+}
+
+variable_struct_set(copy_tool_copy_3, "custom_tool_or_object_id", "ruler_tool")
+variable_struct_set(copy_tool_copy_3, "preview_color", "col_bubbles")
+variable_struct_set(copy_tool_copy_3, "preview_sprite_index", global.ruler_tool_sprite)
+variable_struct_set(copy_tool_copy_3, "placement_script", gml_Script_scr_rulertool_display_length_inBlocks)
+variable_struct_set(copy_tool_copy_3, "deletion_script", gml_Script_scr_rulertool_display_length_inBlocks)
+var toolProps = [modhelper_createprop_help("hlp", "editor_prop_info", spr_propico_help, "ruler_tool_help")]
+variable_struct_set(copy_tool_copy_3, "tool_properties", toolProps)
+
+ds_list_add(global.li_level_editor_database, copy_tool_copy_3)
 
 
 
@@ -35,5 +50,6 @@ ds_list_add(global.li_level_editor_database, copy_tool_copy_2)
 
 
 
-global.dont_save_these_objects = ["inspector_tool"]
+
+global.dont_save_these_objects = ["inspector_tool", "ruler_tool"]
 

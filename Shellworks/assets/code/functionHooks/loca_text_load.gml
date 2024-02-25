@@ -12,6 +12,12 @@ kmood = ""
 ds_map_add(global.loca_ds_map_text_translations, kkey, ktrans)
 ds_map_add(global.loca_ds_map_text_moods, kkey, kmood)
 
+kkey = "ruler_tool_help"
+ktrans = "Select an area and display what the width and height of the area is, in grid units.\nNote: Each grid unit is equal to 60 internal game units."
+kmood = ""
+ds_map_add(global.loca_ds_map_text_translations, kkey, ktrans)
+ds_map_add(global.loca_ds_map_text_moods, kkey, kmood)
+
 kkey = "BSE_settings_help"
 ktrans = "BSE-exclusive settings.\nTHEY ARE SAVED TO A SEPARATE FILE IN ORDER TO KEEP THE LVL FILES COMPATIBLE WITH VANILLA."
 kmood = ""

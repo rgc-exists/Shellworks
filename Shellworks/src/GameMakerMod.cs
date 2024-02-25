@@ -609,6 +609,21 @@ dark_blend = " + darkBlend.ToString() + @"
         bubbleg_dark_copy_me.Layers.First(layer => layer.LayerName.Content == "FadeOutIn").InstancesData.Instances.Add(obj_characterSelect_inst);
 
         bubbleg_dark_copy_me.GameObjects.Add(obj_characterSelect_inst);
+
+
+        UndertaleGameObject obj_no_squid_in_this_level = data.GameObjects.ByName("obj_no_squid_in_this_level");
+        data.GeneralInfo.LastObj++;
+        UndertaleRoom.GameObject obj_no_squid_in_this_level_inst = new UndertaleRoom.GameObject()
+        {
+            InstanceID = data.GeneralInfo.LastObj,
+            ObjectDefinition = obj_no_squid_in_this_level,
+            X = -300,
+            Y = -100
+        };
+
+        bubbleg_dark_copy_me.Layers.First(layer => layer.LayerName.Content == "FadeOutIn").InstancesData.Instances.Add(obj_no_squid_in_this_level_inst);
+
+        bubbleg_dark_copy_me.GameObjects.Add(obj_no_squid_in_this_level_inst);
     }
 
     public void BuildMusicRoom()

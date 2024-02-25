@@ -2,9 +2,13 @@ with (obj_music_parent)
     instance_destroy()
 with (obj_persistent)
 {
-    gml_Script_scr_save_settings()
+    sound = audio_play_sound(sou_game_start, 1, false)
+    audio_sound_gain_fx(sound, 1, 0)
+    scr_save_settings()
     inMainMenu = 0
-    room_goto(disco_copy_me)
+    go_to_a_room_next = 1
+    room_to_goto_next = disco_copy_me
+    room_goto(roomBeforeMenu)
     room_persistent = false
     roomBeforeMenu = -1
     audio_resume_all()

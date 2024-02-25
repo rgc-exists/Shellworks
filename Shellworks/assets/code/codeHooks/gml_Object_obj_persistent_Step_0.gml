@@ -1,5 +1,9 @@
 
 #orig#()
+if(go_to_a_room_next){
+    go_to_a_room_next = false
+    room_goto(room_to_goto_next)
+}
 if(room != level_editor && room != level_editor_play_mode && room != menu && room != main_menu_dark){
     if(variable_instance_exists(id, "swapPump_remember")){
         if(swapPump_remember != global.save_pump_is_inverted){

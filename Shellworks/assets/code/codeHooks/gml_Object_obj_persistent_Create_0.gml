@@ -21,6 +21,7 @@ if(directory_exists(working_directory + "gs2ml/mods/Shellworks/Shellworks_Assets
 
 global.model_tool_sprite = sprite_add(global.betterSE_assets + "sprites/" + "spr_models_tool_v3.png", 0, 0, 0, 0, 0)
 global.inspector_tool_sprite = sprite_add(global.betterSE_assets + "sprites/" + "inspector_tool_v2.png", 0, 0, 0, 0, 0)
+global.ruler_tool_sprite = sprite_add(global.betterSE_assets + "sprites/" + "ruler_tool.png", 0, 0, 0, 0, 0)
 global.king_snail_sprite = sprite_add(global.betterSE_assets + "sprites/" + "king_snail.png", 0, 0, 0, 36, 38)
 
 if(!directory_exists(working_directory + "Shellworks_Temp")){
@@ -222,6 +223,9 @@ global.spr_lvlico_auto = sprite_add(global.betterSE_assets + "sprites/" + "spr_l
 
 global.room_remember = room
 global.player_exists_remember = 0
+
+go_to_a_room_next = false
+room_to_goto_next = -1
 
 #orig#()
 
