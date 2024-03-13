@@ -1,2 +1,2 @@
-if(global.setting_epilepsy_warning)
+//if(global.setting_epilepsy_warning)
     #orig#()

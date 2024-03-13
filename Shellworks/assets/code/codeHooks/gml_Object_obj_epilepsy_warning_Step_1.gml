@@ -3,9 +3,12 @@
     timer++
 } else {
     */
+    /*
     if(global.setting_epilepsy_warning){
         #orig#()
     } else {
         room_goto(2)
     }
+    */
 //}
+#orig#()
