@@ -1,0 +1,175 @@
+[
+    {
+        "Name": "imgui_init",
+        "ReturnType": "Double",
+        "ArgumentTypes": [
+            "String",
+            "String",
+            "String"
+        ]
+    },
+    {
+        "Name": "imgui_destroy",
+        "ReturnType": "Double",
+        "ArgumentTypes": [
+            "String"
+        ]
+    },
+    {
+        "Name": "imgui_newframe",
+        "ReturnType": "Double",
+        "ArgumentTypes": []
+    },
+    {
+        "Name": "imgui_render",
+        "ReturnType": "Double",
+        "ArgumentTypes": []
+    },
+    {
+        "Name": "imgui_begin",
+        "ReturnType": "Double",
+        "ArgumentTypes": [
+            "String"
+        ]
+    },
+    {
+        "Name": "imgui_end",
+        "ReturnType": "Double",
+        "ArgumentTypes": []
+    },
+    {
+        "Name": "imgui_text",
+        "ReturnType": "Double",
+        "ArgumentTypes": [
+            "String"
+        ]
+    },
+    {
+        "Name": "imgui_separator",
+        "ReturnType": "Double",
+        "ArgumentTypes": []
+    },
+    {
+        "Name": "imgui_separator_text",
+        "ReturnType": "Double",
+        "ArgumentTypes": [
+            "String"
+        ]
+    },
+    {
+        "Name": "imgui_input_real",
+        "ReturnType": "Double",
+        "ArgumentTypes": [
+            "String",
+            "Double",
+            "String"
+        ]
+    },
+    {
+        "Name": "imgui_input_text",
+        "ReturnType": "String",
+        "ArgumentTypes": [
+            "String",
+            "String"
+        ]
+    },
+    {
+        "Name": "imgui_button",
+        "ReturnType": "Double",
+        "ArgumentTypes": [
+            "String"
+        ]
+    },
+    {
+        "Name": "imgui_checkbox",
+        "ReturnType": "Double",
+        "ArgumentTypes": [
+            "String",
+            "Double"
+        ]
+    },
+    {
+        "Name": "imgui_slider",
+        "ReturnType": "Double",
+        "ArgumentTypes": [
+            "String",
+            "Double",
+            "Double",
+            "Double"
+        ]
+    },
+    {
+        "Name": "imgui_same_line",
+        "ReturnType": "Double",
+        "ArgumentTypes": []
+    },
+    {
+        "Name": "imgui_indent",
+        "ReturnType": "Double",
+        "ArgumentTypes": [
+            "Double"
+        ]
+    },
+    {
+        "Name": "imgui_unindent",
+        "ReturnType": "Double",
+        "ArgumentTypes": [
+            "Double"
+        ]
+    },
+    {
+        "Name": "imgui_deselected_after_edit",
+        "ReturnType": "Double",
+        "ArgumentTypes": []
+    },
+    {
+        "Name": "imgui_any_active",
+        "ReturnType": "Double",
+        "ArgumentTypes": []
+    },
+    {
+        "Name": "imgui_any_focused",
+        "ReturnType": "Double",
+        "ArgumentTypes": []
+    },
+    {
+        "Name": "imgui_is_window_focused",
+        "ReturnType": "Double",
+        "ArgumentTypes": []
+    },
+    {
+        "Name": "imgui_color_edit",
+        "ReturnType": "Double",
+        "ArgumentTypes": [
+            "String",
+            "Double"
+        ]
+    },
+    {
+        "Name": "imgui_no_keyboard",
+        "ReturnType": "Double",
+        "ArgumentTypes": []
+    },
+    {
+        "Name": "imgui_set_mouse_hidden",
+        "ReturnType": "Double",
+        "ArgumentTypes": [
+            "Double"
+        ]
+    },
+    {
+        "Name": "imgui_window_hovered",
+        "ReturnType": "Double",
+        "ArgumentTypes": []
+    },
+    {
+        "Name": "imgui_item_hovered",
+        "ReturnType": "Double",
+        "ArgumentTypes": []
+    },
+    {
+        "Name": "imgui_any_item_hovered",
+        "ReturnType": "Double",
+        "ArgumentTypes": []
+    }
+]

@@ -1,0 +1,9 @@
+{
+    "functions": "functions",
+    "inlineAssemblyHooks_before": "inlineassemblyhooks",
+    "inlineHooks": "inlinehooks",
+    "codeHooks": "codehooks",
+    "objectCode": "objectcode",
+    "functionHooks": "functionhooks",
+    "inlineAssemblyHooks": "inlineassemblyhooks"
+}

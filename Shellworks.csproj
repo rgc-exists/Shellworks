@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>shellworks</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <EnableDefaultCompileItems>False</EnableDefaultCompileItems>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="vendor\gmsl\vendor\undertalemodtool-src\UndertaleModLib\UndertaleModLib.csproj" />
+		<ProjectReference Include="vendor\gmsl\gmsl-modapi\gmsl-modapi.csproj" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="**\*.cs" Exclude="vendor\**\*.*" />
+  </ItemGroup>
+
+  <Target Name="DeleteAssets" BeforeTargets="BeforeBuild">
+    <RemoveDir Directories="$(TargetDir)/code;$(TargetDir)/Shellworks_Assets" />
+  </Target>
+
+  <Target Name="CopyAssets" AfterTargets="AfterBuild">
+    <ItemGroup>
+      <Assets Include="assets/**/*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(Assets)" DestinationFolder="$(TargetDir)/%(RecursiveDir)" SkipUnchangedFiles="false" />
+  </Target>
+  
+</Project>

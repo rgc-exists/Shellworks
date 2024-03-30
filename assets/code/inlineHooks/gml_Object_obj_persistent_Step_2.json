@@ -1,0 +1,19 @@
+{
+    "Script":"gml_Object_obj_persistent_Step_2",
+    "Hooks": [
+        {
+            "File": "inlineHooks/gml_Object_obj_persistent_Step_2_hook1.gml",
+            "Sig": [
+                "push.v global.save_speedrun_timer_level",
+                "pushbltn.v builtin.delta_time",
+                "push.i 1000000",
+                "conv.i.d",
+                "div.d.v",
+                "add.v.v",
+                "pop.v.v global.save_speedrun_timer_level"
+            ],
+            "Type": "append",
+            "InArgs": []
+        }
+    ]
+}

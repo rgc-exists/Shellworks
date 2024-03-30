@@ -255,7 +255,7 @@ Generated_Code/
 # to a newer Visual Studio version. Backup files are not needed,
 # because we have git ;-)
 _UpgradeReport_Files/
-# Backup*/
+Backup*/
 UpgradeLog*.XML
 UpgradeLog*.htm
 ServiceFabricBackup/
@@ -377,7 +377,6 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # VS Code files for those working on multiple tools
-.vscode/
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
@@ -397,9 +396,3 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
-lib/gmml/GmmlPatcher/gmml/patcher/UndertaleModLib.dll
-lib/gmml/UndertaleModTool/UndertaleModLib/gitversion.txt
-lib/gmml/GmmlPatcher/gmml/patcher/UndertaleModLib.dll
-lib/gmml/UndertaleModTool/UndertaleModLib/gitversion.txt
-
-Shellworks_out/

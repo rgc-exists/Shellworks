@@ -1,0 +1,12 @@
+{
+    "Script":"gml_GlobalScript_keybinding_system",
+    "Hooks": [
+        {
+            "ToFind":"push.v stacktop.AddTrigger\ncallv.v 2\npopz.v\nexit.i",
+            "ToReplace":"",
+            "Type": "replace",
+            "IsExternalFile":true,
+            "File":"inlineAssemblyHooks/gml_GlobalScript_keybinding_system.asm"
+        }
+    ]
+}

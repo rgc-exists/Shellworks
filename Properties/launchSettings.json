@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Shellworks": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

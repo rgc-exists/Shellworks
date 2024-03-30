@@ -1,0 +1,3 @@
+[submodule "vendor/gmsl"]
+	path = vendor/gmsl
+	url = https://github.com/GMSLoader/gmsl.git
