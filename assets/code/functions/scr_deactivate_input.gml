@@ -1,10 +1,4 @@
-script_execute(variable_struct_get(global.inputaction_jump, "MakeInvalidTillReleased"))
-script_execute(variable_struct_get(global.inputaction_move_right, "MakeInvalidTillReleased"))
-script_execute(variable_struct_get(global.inputaction_pause_menu, "MakeInvalidTillReleased"))
-script_execute(variable_struct_get(global.inputaction_move_left, "MakeInvalidTillReleased"))
-script_execute(variable_struct_get(global.inputaction_navigate_confirm, "MakeInvalidTillReleased"))
-script_execute(variable_struct_get(global.inputaction_navigate_up, "MakeInvalidTillReleased"))
-script_execute(variable_struct_get(global.inputaction_navigate_down, "MakeInvalidTillReleased"))
+show_debug_message("deactivating input...")
 global.input_confirm_pressed = 0
 global.input_jump_pressed = 0
 global.input_jump = 0
@@ -34,5 +28,27 @@ global.input_lvledit_quick_select_pressed = 0
 global.input_tool_rotation_pressed = 0
 global.input_skipvoice_pressed = 0
 global.input_camera_zoom_in = 0
+global.input_camera_move_x = 0
+global.input_camera_move_y = 0
+if (!variable_global_exists("input_virtualmouse_x"))
+    global.input_virtualmouse_x = 0
+if (!variable_global_exists("input_virtualmouse_y"))
+    global.input_virtualmouse_y = 0
+global.input_virtualmouse_lbutton = 0
+global.input_virtualmouse_lbutton_pressed = 0
+global.input_virtualmouse_lbutton_released = 0
+global.input_virtualmouse_rbutton = 0
+global.input_virtualmouse_rbutton_pressed = 0
+global.input_virtualmouse_rbutton_released = 0
+global.input_virtualmouse_drag = 0
+global.input_virtualmouse_drag_pressed = 0
+global.input_virtualmouse_drag_released = 0
+global.input_camera_zoom_in = 0
+global.input_lvledit_select_x_pressed = 0
+global.input_lvledit_select_y_pressed = 0
+global.input_lvledit_quick_select_pressed = 0
+global.input_lvledit_tool_selection_pressed = 0
+global.input_lvledit_tool_settings_pressed = 0
+global.input_tool_rotation_pressed = 0
 global.input_camera_move_x = 0
 global.input_camera_move_y = 0

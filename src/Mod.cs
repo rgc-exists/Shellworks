@@ -6,6 +6,7 @@ using UndertaleModLib.Models;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Text.Json;
+using System.Runtime.InteropServices;
 using System.Linq;
 using UndertaleModLib.Decompiler;
 using UndertaleModLib.Compiler;
@@ -26,7 +27,14 @@ public class Shellworks : IGMSLMod
     private static UndertaleData data;
     private static bool failedHook = false;
 
+    [DllImport("kernel32.dll")]
+    static extern IntPtr GetConsoleWindow();
 
+    [DllImport("user32.dll")]
+    static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+    const int SW_HIDE = 0;
+    const int SW_SHOW = 5;
 
     public void Load(UndertaleData loadedData)
     {
@@ -64,6 +72,7 @@ THIS LIKELY MEANS YOU ARE USING AN OUTDATED VERSION OF SHELLWORKS, OR SHELLWORKS
 
 ARE YOU SURE YOU WANT TO CONTINUE?
 Type ""y"" to continue. Otherwise, SHELLWORKS will throw an error and the mod will be skipped.");
+                ShowConsole();
                 string answer = Console.ReadLine();
                 if(answer != null){
                     if(answer.ToLower() == "y"){
@@ -87,6 +96,7 @@ Would you like to disable shellworks for now? The auto-updater will re-enable it
 
 Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will crash and you will have to launch again."
             );
+            ShowConsole();
             string answer = Console.ReadLine();
         
             if(answer.ToLower() == "y"){
@@ -926,6 +936,11 @@ dark_blend = " + darkBlend.ToString() + @"
         } else {
             cursedInlineFunctionName_GetPressedPlus = match.Groups[1].Value;
         }
+    }
+
+    private static void ShowConsole(){
+        var handle = GetConsoleWindow();
+        ShowWindow(handle, SW_SHOW);
     }
 
     private static string cursedInlineFunctionName_GetPressedPlus = "gml_Script_scr_fallback_function";

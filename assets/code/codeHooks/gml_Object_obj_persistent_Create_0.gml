@@ -249,6 +249,8 @@ if(!file_exists("shellworks_hasBeenBootedUp.dontDelete")){
     }
 }
 
+global.manual_textbox_selected = false
+
 #orig#()
 
 global.has_persistentCreate0_run_already = true

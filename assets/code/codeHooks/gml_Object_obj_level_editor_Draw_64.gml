@@ -61,7 +61,7 @@ if(global.setting_enter_value_manually){
                         typingLineThingyTimer = 0
                     }
     
-                    global.editor_input_disabled = true
+                    global.manual_textbox_selected = true
                     if(string_length(keyboard_string) > 0){
                         curTyping = string(curTyping) + keyboard_string
                         keyboard_string = ""
@@ -108,7 +108,7 @@ if(global.setting_enter_value_manually){
                             ds_list_set(global.li_level_editor_database, struct_index, selectedToolStruct)
                         }
                         isTypingValue = false
-                        global.editor_input_disabled = false
+                        global.manual_textbox_selected = false
                     }
                 } else {
                     typingLineThingyTimer = 0
