@@ -1,4 +1,3 @@
-show_debug_message("deactivating input...")
 global.input_confirm_pressed = 0
 global.input_jump_pressed = 0
 global.input_jump = 0

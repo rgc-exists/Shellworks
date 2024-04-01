@@ -90,14 +90,6 @@ if(global.shellworks_imgui_menuOpen){
     imgui_separator_text("Cutscenes")
     gml_Script_shellworks_imgui_newboolean("Epilepsy Warning", "setting_epilepsy_warning")
     gml_Script_shellworks_imgui_newboolean("Skip Title Animation", "setting_skip_title_animation")
-
-    imgui_separator_text("Player Character")
-    gml_Script_shellworks_imgui_newbutton_doFunc("Character Customization UI", gml_Script_scr_go_to_character_select)
-    gml_Script_shellworks_imgui_newboolean("Unicorn Hat Pops Ball", "setting_unicorn_horn_ball_override")
-    gml_Script_shellworks_imgui_newbutton_doFunc("Set Default Hat to Current", gml_Script_scr_set_default_hat, [global.save_equipped_hat])
-    gml_Script_shellworks_imgui_newbutton_doFunc("Save Character", gml_Script_scr_save_character)
-    imgui_same_line()
-    gml_Script_shellworks_imgui_newbutton_doFunc("Load Character", gml_Script_scr_load_character)
     
     imgui_separator_text("Other")
     gml_Script_shellworks_imgui_newboolean("Legitimacy Marker", "setting_legitimacy_marker")
@@ -105,14 +97,68 @@ if(global.shellworks_imgui_menuOpen){
     gml_Script_shellworks_imgui_newcolorpicker("Color Noclip Indicator", "setting_noclip_indicator_color")
     gml_Script_shellworks_imgui_newslider("Transparency Noclip Indicator", "setting_noclip_indicator_transparency", 0, 1)
     gml_Script_shellworks_imgui_newboolean("Input Display", "setting_input_display")
-    
-
-    /*
-    imgui_separator_text("Novelties")
-    gml_Script_shellworks_imgui_newboolean("Rendering Altogether", "enable_rendering")
-    */
 
     imgui_end()
+
+    imgui_begin("PLAYER CHARACTER")
+    imgui_separator_text("Colors")
+    gml_Script_shellworks_imgui_newbutton_doFunc("Character Customization UI", gml_Script_scr_go_to_character_select)
+
+    gml_Script_shellworks_imgui_newboolean("Body", "setting_player_body_selected_enabled")
+    imgui_same_line()
+    gml_Script_shellworks_imgui_newcolorpicker(" ", "setting_player_body_selected")
+
+    gml_Script_shellworks_imgui_newboolean("Shell", "setting_player_shell_selected_enabled")
+    imgui_same_line()
+    gml_Script_shellworks_imgui_newcolorpicker("  ", "setting_player_shell_selected")
+
+    gml_Script_shellworks_imgui_newboolean("Outline", "setting_player_outline_selected_enabled")
+    imgui_same_line()
+    gml_Script_shellworks_imgui_newcolorpicker("   ", "setting_player_outline_selected")
+
+    gml_Script_shellworks_imgui_newboolean("Eyes", "setting_player_eye_selected_enabled")
+    imgui_same_line()
+    gml_Script_shellworks_imgui_newcolorpicker("    ", "setting_player_eye_selected")
+
+    gml_Script_shellworks_imgui_newboolean("DeathFX", "setting_player_death_selected_enabled")
+    imgui_same_line()
+    gml_Script_shellworks_imgui_newcolorpicker("     ", "setting_player_death_selected")
+
+    gml_Script_shellworks_imgui_newboolean("Spotlight (Bright)", "setting_player_spotlight_selected_enabled")
+    imgui_same_line()
+    gml_Script_shellworks_imgui_newcolorpicker("      ", "setting_player_spotlight_selected")
+    
+    gml_Script_shellworks_imgui_newboolean("Spotlight (Dark)", "setting_player_spotlight_dark_selected_enabled")
+    imgui_same_line()
+    gml_Script_shellworks_imgui_newcolorpicker("       ", "setting_player_spotlight_dark_selected")
+
+    gml_Script_shellworks_imgui_newboolean("Flare", "setting_player_flare_selected_enabled")
+    imgui_same_line()
+    gml_Script_shellworks_imgui_newcolorpicker("        ", "setting_player_flare_selected")
+    
+    gml_Script_shellworks_imgui_newboolean("Trail", "setting_player_trail_selected_enabled")
+    imgui_same_line()
+    gml_Script_shellworks_imgui_newcolorpicker("         ", "setting_player_trail_selected")
+
+    gml_Script_shellworks_imgui_newbutton_doFunc("Apply Colors", gml_Script_scr_apply_selected_player_colors)
+    imgui_same_line()
+    gml_Script_shellworks_imgui_newbutton_doFunc("Revert Changes", gml_Script_scr_revert_selected_player_colors)
+
+    imgui_separator_text("Hats")
+    gml_Script_shellworks_imgui_newbutton_doFunc("Hat Select", gml_Script_scr_go_to_room_custom, [RoomOfHats])
+    gml_Script_shellworks_imgui_newbutton_doFunc("Set Default Hat to Current", gml_Script_scr_set_default_hat, [global.save_equipped_hat])
+
+    imgui_separator_text("Saving/Loading")
+    gml_Script_shellworks_imgui_newbutton_doFunc("Save Character", gml_Script_scr_save_character)
+    imgui_same_line()
+    gml_Script_shellworks_imgui_newbutton_doFunc("Load Character", gml_Script_scr_load_character)
+
+    imgui_separator_text("Other")
+    gml_Script_shellworks_imgui_newboolean("Unicorn Hat Pops Ball", "setting_unicorn_horn_ball_override")
+
+
+    imgui_end()
+
 
     imgui_begin("MISCELLANEOUS")
 

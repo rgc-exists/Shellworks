@@ -49,12 +49,12 @@ menus_data = [
     [
         "Spotlight (Bright)", //name
         "setting_player_spotlight", //global var to change
-        0 //darkblend
+        0.6 //darkblend
     ],
     [
         "Spotlight (Dark)", //name
         "setting_player_spotlight_dark", //global var to change
-        0 //darkblend
+        0.8 //darkblend
     ],
     [
         "Flare", //name

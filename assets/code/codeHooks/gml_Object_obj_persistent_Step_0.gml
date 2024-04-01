@@ -1,5 +1,8 @@
 
 #orig#()
+
+global.frames_since_startup += 1
+
 if(go_to_a_room_next){
     go_to_a_room_next = false
     room_goto(room_to_goto_next)
@@ -50,12 +53,27 @@ if(global.room_remember != room && room != menu){
     global.player_exists_remember = false
 }
 
-/*
-if(global.setting_gamespeed_audio){
-    if(global.save_game_speed != 1){
-        var hishelf_effect = audio_create_effect(AudioEffectType.HiShelf)
-        hishelf_effect.
-        //NOTE TO SELF: HISHELF DIDNT DO WHAT I THINK IT DID. CONTINUE WORK TRYING TO FIGURE OUT A SYSTEM OF CHANGING PITCH TOMORROW.
+if(global.frames_since_startup == 2){
+    gml_Script_scr_revert_selected_player_colors()
+} else if(global.frames_since_startup > 2){
+    if(instance_exists(obj_levelstyler)){
+        if(!global.setting_player_body_selected_enabled)
+            global.setting_player_body_selected = obj_levelstyler.col_snail_body
+        if(!global.setting_player_shell_selected_enabled)
+            global.setting_player_shell_selected = obj_levelstyler.col_snail_shell
+        if(!global.setting_player_outline_selected_enabled)
+            global.setting_player_outline_selected = obj_levelstyler.col_snail_outline
+        if(!global.setting_player_eye_selected_enabled)
+            global.setting_player_eye_selected = obj_levelstyler.col_snail_eye
+        if(!global.setting_player_death_selected_enabled)
+            global.setting_player_death_selected = obj_levelstyler.col_snail_death
+        if(!global.setting_player_spotlight_selected_enabled)
+            global.setting_player_spotlight_selected = obj_levelstyler.col_player_spotlight
+        if(!global.setting_player_spotlight_dark_selected_enabled)
+            global.setting_player_spotlight_dark_selected = obj_levelstyler.col_player_spotlight_dark
+        if(!global.setting_player_flare_selected_enabled)
+            global.setting_player_flare_selected = obj_levelstyler.col_snail_flare
+        if(!global.setting_player_trail_selected_enabled)
+            global.setting_player_trail_selected = obj_levelstyler.col_player_trail
     }
 }
-*/

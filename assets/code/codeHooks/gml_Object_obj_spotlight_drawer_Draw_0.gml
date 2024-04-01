@@ -8,12 +8,12 @@ with (obj_player)
     if(global.setting_player_spotlight == -1){
         colA = obj_levelstyler.col_player_spotlight
     } else {
-        colA = merge_color(global.setting_player_spotlight, c_black, 0.6)
+        colA = global.setting_player_spotlight
     }
     if(global.setting_player_spotlight_dark == -1){
         colB = obj_levelstyler.col_player_spotlight_dark
     } else {
-        colB = merge_color(global.setting_player_spotlight_dark, c_black, 0.8)
+        colB = global.setting_player_spotlight_dark
     }
     col_spotlight = merge_color(colA, colB, global.level_flicker)
     col_spotlight = merge_color(c_black, col_spotlight, global.spotlight_alpha)

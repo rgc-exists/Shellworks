@@ -83,7 +83,7 @@ Type ""y"" to continue. Otherwise, SHELLWORKS will throw an error and the mod wi
                 }
             }
         } catch(Exception e) {
-            Console.WriteLine("Shellworks encountered an error:\n" + e.Message);
+            Console.WriteLine("Shellworks encountered an error:\n" + e.Message + "\n" + e.StackTrace);
             Console.WriteLine(@"
 
 
@@ -777,11 +777,20 @@ dark_blend = " + darkBlend.ToString() + @"
         UndertaleRoom bubbleg_dark_copy_me = data.Rooms.ByName("bubbleg_dark_copy_me");
         UndertaleGameObject obj_input_overrider_disable_allowRestart = data.GameObjects.ByName("obj_input_overrider_disable_allowRestart");
 
-        foreach(UndertaleRoom.GameObject g in bubbleg_dark_copy_me.GameObjects)
+        foreach(UndertaleRoom.GameObject g in bubbleg_dark_copy_me.GameObjects.ToList())
         {
             if(g.ObjectDefinition.Name.Content == "obj_player")
             {
                 g.X += 120;
+            }
+            if(g.ObjectDefinition.Name.Content == "obj_dark_level"){
+                bubbleg_dark_copy_me.GameObjects.Remove(g);
+
+                //Used UndertaleModTool source code as reference
+                //https://github.com/UnderminersTeam/UndertaleModTool/blob/58ac6d4c41032f19857a714a388670b9f7b36325/UndertaleModTool/Editors/UndertaleRoomEditor.xaml.cs#L1453
+                foreach (var layer in bubbleg_dark_copy_me.Layers.ToList())
+                    if (layer.InstancesData != null)
+                        layer.InstancesData.Instances.Remove(g);
             }
         }
         data.GeneralInfo.LastObj++;

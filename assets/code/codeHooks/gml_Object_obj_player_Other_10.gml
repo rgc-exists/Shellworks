@@ -16,7 +16,7 @@ if(global.setting_player_shell == -1){
 if(global.setting_player_eye == -1){
     col_snail_eye = obj_levelstyler.col_snail_eye
 } else {
-    col_snail_eye = obj_levelstyler.col_snail_shell
+    col_snail_eye = global.setting_player_eye
 }
 eye1.col_snail_outline = col_snail_outline
 eye1.col_snail_body = col_snail_body

@@ -84,10 +84,14 @@ if(file_exists("Shellworks_SettoIngs23-2.set")){
                 break
             case "Player Spotlight Color":
                 global.setting_player_spotlight = file_text_read_real(file)
+                if(save_file_version == "v1.2.0-BETA3") //I accidentally forgot to update the version for the initial beta release of Shellworks. This version name is left over from Better Snail Editor, which Shellworks is based on.
+                    global.setting_player_spotlight = merge_color(global.setting_player_spotlight, c_white, 0.6)
                 file_text_readln(file)
                 break
             case "Player Spotlight Dark Color":
                 global.setting_player_spotlight_dark = file_text_read_real(file)
+                if(save_file_version == "v1.2.0-BETA3") //I accidentally forgot to update the version for the initial beta release of Shellworks. This version name is left over from Better Snail Editor, which Shellworks is based on.
+                    global.setting_player_spotlight = merge_color(global.setting_player_spotlight_dark, c_white, 0.8)
                 file_text_readln(file)
                 break
             case "Player Flare Color":

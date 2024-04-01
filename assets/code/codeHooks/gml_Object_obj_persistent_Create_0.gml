@@ -1,25 +1,20 @@
 
-global.is_BSE_client = true
-//This is for  if any other mods want to make their code "support" BSE by making it compatible if it detects a BSE client.
-//Just use if(variable_global_exists("is_BSE_client")) to detect if it's BSE or not.
-//Sorry for anyone that needs to detect whether or not it's BSE before obj_persistent_Create_0 is run, I couldn't figure out how to get global init scripts to work with GMML.
+global.is_Shellworks_client = true
+//This is for  if any other mods want to make their code "support" Shellworks by making it compatible if it detects a Shellworks client.
+//Just use if(variable_global_exists("is_Shellworks_client")) to detect if it's Shellworks or not.
+//Sorry for anyone that needs to detect whether or not it's Shellworks before obj_persistent_Create_0 is run, I couldn't figure out how to get global init scripts to work with GMML.
 
-global.BSE_version_patch = "v1.2.0-BETA3"
-global.BSE_version_GS2ML = "v1.2.0-BETA3"
-global.check_BSE_version_on_github = false
+global.shellworks_version = "v0.2.0c"
 
 if(directory_exists(working_directory + "gs2ml/mods/Shellworks/Shellworks_Assets/")){
     global.betterSE_assets = working_directory + "gs2ml/mods/Shellworks/Shellworks_Assets/"
     global.is_gmml_version = true
-    global.BSE_version = global.BSE_version_GS2ML
 } else if(directory_exists(working_directory + "gmsl/mods/Shellworks/Shellworks_Assets/")){
     global.betterSE_assets = working_directory + "gmsl/mods/Shellworks/Shellworks_Assets/"
     global.is_gmml_version = true
-    global.BSE_version = global.BSE_version_GS2ML
 } else if(directory_exists(working_directory + "Shellworks_Assets/")){
     global.betterSE_assets = working_directory + "Shellworks_Assets/"
     global.is_gmml_version = false
-    global.BSE_version = global.BSE_version_patch
 } else {
     show_error("SHELLWORKS ERROR:\nThe assets folder for the mod was not found.\nPlease add the folder called 'Shellworks_Assets' to the same folder as the Will You Snail executable\n(your WYS steam install location.)\n\nThe folder can be found in the zip file you downloaded the mod with.\n\nAs for GS2ML users, IDK how you messed this up, the required folder should already be inside the folder you put in the gs2ml/mods folder.", true)
 }
@@ -31,16 +26,6 @@ global.king_snail_sprite = sprite_add(global.betterSE_assets + "sprites/" + "kin
 
 if(!directory_exists(working_directory + "Shellworks_Temp")){
     directory_create(working_directory + "Shellworks_Temp")
-}
-if(global.check_BSE_version_on_github){
-    if(global.is_gmml_version){
-        version_file = http_get_file("https://raw.githubusercontent.com/rgc-exists/MysteriousVersionName/main/version.txt", "Shellworks_Temp\\version.txt")
-    } else {
-        version_file = http_get_file("https://raw.githubusercontent.com/rgc-exists/MysteriousVersionName/main/patchversion.txt", "Shellworks_Temp\\version.txt")
-    }
-}
-if(global.is_gmml_version){
-    //gmml_console_readline()
 }
 
 
@@ -260,4 +245,8 @@ global.has_persistentCreate0_run_already = true
 
 global.enable_dangerous_test_features = true
 
-global.save_speedrun_timer_attempt = 0
+global.save_speedrun_timer_attempt = 
+
+alarm[0] = 3
+
+global.frames_since_startup = 0
