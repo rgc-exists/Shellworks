@@ -15,7 +15,7 @@ with(global.inputaction_shellworks_openmenu){
     }
 }
 
-if(room == menu){
+if(room == menu || room == disclaimer_hackedlevel){
     global.shellworks_imgui_menuOpen = false
 }
 
@@ -30,7 +30,6 @@ if(global.shellworks_imgui_menuOpen || instance_exists(obj_shellworksUI_popup)){
 
 if(global.shellworks_imgui_menuOpen){
     
-
 
     imgui_begin("GAMEPLAY")
     
@@ -178,6 +177,9 @@ if(global.shellworks_imgui_menuOpen){
 
 
     imgui_begin("SHELLWORKS")
+
+    imgui_separator_text("Limited-time Events")
+    gml_Script_shellworks_imgui_newboolean("April Fools Shenanigans", "enable_april_fools_ads")
 
     imgui_separator_text("Important Links")
     gml_Script_shellworks_imgui_newbutton_doFunc("RGC Exists Discord\n(Report mod bugs here)", gml_Script_scr_open_link, ["https://discord.gg/96aukFY7Rx"])

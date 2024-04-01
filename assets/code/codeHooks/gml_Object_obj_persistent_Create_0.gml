@@ -6,10 +6,7 @@ global.is_Shellworks_client = true
 
 global.shellworks_version = "v0.2.0c"
 
-if(directory_exists(working_directory + "gs2ml/mods/Shellworks/Shellworks_Assets/")){
-    global.betterSE_assets = working_directory + "gs2ml/mods/Shellworks/Shellworks_Assets/"
-    global.is_gmml_version = true
-} else if(directory_exists(working_directory + "gmsl/mods/Shellworks/Shellworks_Assets/")){
+if(directory_exists(working_directory + "gmsl/mods/Shellworks/Shellworks_Assets/")){
     global.betterSE_assets = working_directory + "gmsl/mods/Shellworks/Shellworks_Assets/"
     global.is_gmml_version = true
 } else if(directory_exists(working_directory + "Shellworks_Assets/")){
@@ -250,3 +247,5 @@ global.save_speedrun_timer_attempt =
 alarm[0] = 3
 
 global.frames_since_startup = 0
+
+gml_Script_scr_initialize_april_fools_assets()

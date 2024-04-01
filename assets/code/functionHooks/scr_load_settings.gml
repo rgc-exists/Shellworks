@@ -1,3 +1,6 @@
+show_message("load_settings")
+
+
 
 if(file_exists("SettoIngs23-2.set"))
     #orig#()

@@ -772,7 +772,6 @@ dark_blend = " + darkBlend.ToString() + @"
         empty_start_room.GameObjects.Add(obj_shellworksUI_inst);
 
     }
-
     private static void BuildCharacterSelect(){
         UndertaleRoom bubbleg_dark_copy_me = data.Rooms.ByName("bubbleg_dark_copy_me");
         UndertaleGameObject obj_input_overrider_disable_allowRestart = data.GameObjects.ByName("obj_input_overrider_disable_allowRestart");

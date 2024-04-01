@@ -1,3 +1,6 @@
+
+show_message("save_settings")
+
 if(file_exists("SettoIngs23-2.set")){
     gml_Script_scr_get_game_version_from_orig_settings_function()
 }
