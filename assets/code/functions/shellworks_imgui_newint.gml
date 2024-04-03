@@ -22,8 +22,10 @@ if(imgui_deselected_after_edit()){
             var clamped_value = clamp(variable_global_get(global_var_name), clampMin, clampMax)
             variable_global_set(global_var_name, new_value)
         }
-        if(save_settings){
-            scr_save_settings()
+        if(global_var_value != new_value){
+            if(save_settings){
+                scr_save_settings()
+            }
         }
     }
 }

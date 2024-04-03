@@ -13,9 +13,11 @@ var new_value = imgui_input_text(label, global_var_value)
 if(imgui_deselected_after_edit()){
     if(global.shellworks_imgui_time_menu_open > 60){
         variable_global_set(global_var_name, new_value)
-
-        if(save_settings){
-            scr_save_settings()
+        
+        if(global_var_value != new_value){
+            if(save_settings){
+                scr_save_settings()
+            }
         }
     }
 }

@@ -19,8 +19,10 @@ if(imgui_deselected_after_edit() || !wait_until_deselect){
     if(global.shellworks_imgui_time_menu_open > 60){
         variable_global_set(global_var_name, new_value)
         
-        if(save_settings){
-            scr_save_settings()
+        if(global_var_value != new_value){
+            if(save_settings){
+                scr_save_settings()
+            }
         }
     }
 }
