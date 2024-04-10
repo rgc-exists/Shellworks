@@ -232,3 +232,5 @@ if(noclip_deathFX_fadeout > 0 && global.setting_noclip_indicator && global.invin
     noclip_deathFX_fadeout = 0
 }
 
+
+global.just_loaded_savestate = false

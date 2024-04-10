@@ -288,7 +288,7 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
         
         handlers.Add("objectcode", (code, file) =>
         {
-            if (file.EndsWith(".gml")) return;
+            if (!file.EndsWith(".json")) return;
             Console.WriteLine("Adding new object code " + Path.GetFileNameWithoutExtension(file));
 
             var objectFile = JsonSerializer.Deserialize<ObjectFile>(code);
@@ -660,6 +660,7 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
 
         
 
+        /*
         UndertaleGameObject advancedSpecialMenu = data.CreateMenu("advanced_special", 
         data.CreateToggleOption("\"Global Inspector (Press F5)\"", "global_inspector", "global.setting_global_inspector_available = argument0", "selectedItem = global.setting_global_inspector_available", "global.setting_global_inspector_available", tooltipScript: "gml_Script_scr_return_input", tooltipArgument: "\"With this on, you can press F5 to open the global object inspector.\"")
         );
@@ -667,7 +668,7 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
         {
             instance = advancedSpecialMenu.Name.Content
         });
-
+        */
 
 
 

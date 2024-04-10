@@ -1,5 +1,6 @@
-
-#orig#()
+if(!global.just_loaded_savestate){
+    #orig#()
+}
 
 global.frames_since_startup += 1
 
@@ -51,6 +52,9 @@ if(instance_exists(obj_player)){
 if(global.room_remember != room && room != menu){
     global.room_remember = room
     global.player_exists_remember = false
+    if(variable_global_exists("checkpoint")){
+        global.checkpoint = undefined
+    }
 }
 
 if(global.frames_since_startup == 2){

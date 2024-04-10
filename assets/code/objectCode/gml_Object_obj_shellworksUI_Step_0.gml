@@ -73,10 +73,12 @@ if(global.shellworks_imgui_menuOpen){
     imgui_separator_text("Shellworks")
     gml_Script_shellworks_imgui_newboolean("\"O for hotkeys\" message", "setting_show_hotkeys_overlay")
 
+    imgui_separator_text("Other")
     if(room != level_editor){
-        imgui_separator_text("Other")
         gml_Script_shellworks_imgui_newboolean("Manual Value Textbox", "setting_enter_value_manually")
         gml_Script_shellworks_imgui_newboolean("Squid In Editor", "setting_squid_in_editor")
+    } else {
+        imgui_text("Some settings are not available while using the editor.")
     }
 
 

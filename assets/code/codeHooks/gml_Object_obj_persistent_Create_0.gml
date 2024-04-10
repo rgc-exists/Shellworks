@@ -19,10 +19,13 @@ if(directory_exists(working_directory + "gs2ml/mods/Shellworks/Shellworks_Assets
     show_error("SHELLWORKS ERROR:\nThe assets folder for the mod was not found.\nPlease add the folder called 'Shellworks_Assets' to the same folder as the Will You Snail executable\n(your WYS steam install location.)\n\nThe folder can be found in the zip file you downloaded the mod with.\n\nAs for GS2ML users, IDK how you messed this up, the required folder should already be inside the folder you put in the gs2ml/mods folder.", true)
 }
 
+global.just_loaded_savestate = false
+
 global.model_tool_sprite = sprite_add(global.betterSE_assets + "sprites/" + "spr_models_tool_v3.png", 0, 0, 0, 0, 0)
 global.inspector_tool_sprite = sprite_add(global.betterSE_assets + "sprites/" + "inspector_tool_v2.png", 0, 0, 0, 0, 0)
 global.ruler_tool_sprite = sprite_add(global.betterSE_assets + "sprites/" + "ruler_tool.png", 0, 0, 0, 0, 0)
 global.king_snail_sprite = sprite_add(global.betterSE_assets + "sprites/" + "king_snail.png", 0, 0, 0, 36, 38)
+global.spr_wall_invisible = sprite_add(global.betterSE_assets + "sprites/" + "spr_wall_invisible.png", 0, 0, 0, 0, 0)
 
 if(!directory_exists(working_directory + "Shellworks_Temp")){
     directory_create(working_directory + "Shellworks_Temp")
@@ -250,3 +253,7 @@ global.save_speedrun_timer_attempt =
 alarm[0] = 3
 
 global.frames_since_startup = 0
+
+global.savestates_enabled = true //SET TO FALSE BY DEFAULT ONCE DONE TESTING!!!!
+
+gml_Script_scr_ini_checkpoint_variables()
