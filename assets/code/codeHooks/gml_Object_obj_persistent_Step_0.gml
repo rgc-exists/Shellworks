@@ -1,6 +1,7 @@
 
 #orig#()
 
+
 global.frames_since_startup += 1
 
 if(go_to_a_room_next){
@@ -54,6 +55,21 @@ if(global.room_remember != room && room != menu){
 }
 
 if(global.frames_since_startup == 2){
+    global.shellworks_cache_directory = "Shellworks_Cache\\"
+    show_debug_message("Cache directory: " + global.shellworks_cache_directory)
+    if(!directory_exists(global.shellworks_cache_directory)){
+        show_debug_message(global.shellworks_cache_directory + " doesn't exist.")
+        directory_create(global.shellworks_cache_directory)
+    }
+    global.dont_do_updates_cache_path = global.shellworks_cache_directory + "DoUpdates.txt"
+    if(file_exists(global.dont_do_updates_cache_path)){
+        var f = file_text_open_read(global.dont_do_updates_cache_path)
+        global.shw_setting_do_updates = file_text_read_real(f)
+        file_text_close(f)
+    } else {
+        global.shw_setting_do_updates = true
+    }
+
     gml_Script_scr_revert_selected_player_colors()
 } else if(global.frames_since_startup > 2){
     if(instance_exists(obj_levelstyler)){

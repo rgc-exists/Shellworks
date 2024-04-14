@@ -30,7 +30,7 @@ with(popup){
     if(doCancelButton){
         array_push(buttons, 
         [
-            closeButton,
+            cancelButton,
             0
         ])
     }

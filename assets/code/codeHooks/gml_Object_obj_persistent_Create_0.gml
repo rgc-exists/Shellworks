@@ -4,12 +4,9 @@ global.is_Shellworks_client = true
 //Just use if(variable_global_exists("is_Shellworks_client")) to detect if it's Shellworks or not.
 //Sorry for anyone that needs to detect whether or not it's Shellworks before obj_persistent_Create_0 is run, I couldn't figure out how to get global init scripts to work with GMML.
 
-global.shellworks_version = "v0.2.0c"
+global.shellworks_version = "v0.2.1b"
 
-if(directory_exists(working_directory + "gs2ml/mods/Shellworks/Shellworks_Assets/")){
-    global.betterSE_assets = working_directory + "gs2ml/mods/Shellworks/Shellworks_Assets/"
-    global.is_gmml_version = true
-} else if(directory_exists(working_directory + "gmsl/mods/Shellworks/Shellworks_Assets/")){
+if(directory_exists(working_directory + "gmsl/mods/Shellworks/Shellworks_Assets/")){
     global.betterSE_assets = working_directory + "gmsl/mods/Shellworks/Shellworks_Assets/"
     global.is_gmml_version = true
 } else if(directory_exists(working_directory + "Shellworks_Assets/")){
@@ -27,6 +24,7 @@ global.king_snail_sprite = sprite_add(global.betterSE_assets + "sprites/" + "kin
 if(!directory_exists(working_directory + "Shellworks_Temp")){
     directory_create(working_directory + "Shellworks_Temp")
 }
+
 
 
 if(file_exists("SettoIngs23-2.set") && file_exists("Shellworks_SettoIngs23-2-2.set"))
@@ -201,14 +199,13 @@ global.manual_textbox_selected = false
 
 #orig#()
 
+
 global.has_persistentCreate0_run_already = true
 //For some reason certain things in persistent_create_0 run twice... Don't ask me why, GameMaker is wack.
 
 
 
-global.enable_dangerous_test_features = true
-
-global.save_speedrun_timer_attempt = 
+global.enable_dangerous_test_features = false
 
 alarm[0] = 3
 

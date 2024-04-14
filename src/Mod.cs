@@ -24,6 +24,7 @@ public class Shellworks : IGMSLMod
     public bool DEVELOPMENT_BUILD = false;
 
     private static string baseDirectory = "UNDEFINED_BASE_DIRECTORY";
+    private static string appDataDirectory = "UNDEFINED_APPDATA_DIRECTORY";
     private static UndertaleData data;
     private static bool failedHook = false;
 
@@ -40,13 +41,18 @@ public class Shellworks : IGMSLMod
     {
         data = loadedData;
         baseDirectory = Path.Combine(Assembly.GetExecutingAssembly().Location, "..");
+        appDataDirectory = Path.Combine("%LocalAppData%", "Will_You_Snail");
         string wysPath = Path.Combine(baseDirectory, "../../../");
-        if(!DEVELOPMENT_BUILD){
+
+        string doAutoUpdates_path = Path.Combine(appDataDirectory, "Shellworks_Cache" + "DoUpdates.txt");
+
+        if(!(File.Exists(doAutoUpdates_path) && File.ReadAllText(doAutoUpdates_path).Trim() == "0")){
             AutoUpdater.DoUpdate(wysPath);
         }
 
         string needsToBeUpdated = Path.Combine(baseDirectory, "needsToBeUpdated.txt");
-        if(File.Exists(needsToBeUpdated) && File.ReadAllText(needsToBeUpdated) == "1"){
+
+        if(File.Exists(needsToBeUpdated) && File.ReadAllText(needsToBeUpdated).Trim() == "1"){
             Console.WriteLine("Shellworks was disabled until the next updated. To re-enable it, delete or change the file " + needsToBeUpdated);
             return;
         }
@@ -698,7 +704,6 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
         data.InsertMenuOptionFromEnd(Menus.Vanilla.Speedrun, 0, data.CreateToggleOption("\"Savefile Reset Keybind\n(CTRL+SHIFT+R)\"", "SavefileResetButton", "global.setting_speedrun_reset_button = argument0", "selectedItem = global.setting_speedrun_reset_button", "global.setting_speedrun_reset_button", tooltipScript: "gml_Script_scr_return_input", tooltipArgument: "\"Reset your entire savefile with the press of a keybind: CTRL+SHIFT+R.\n\nIMPORTANT: If you accidentally delete a savefile you shouldn't have, savefile backups can be found in the WYS AppData location.\""));
 
     }
-
     private static UndertaleGameObject MakeColorMenu(string name, string global_var_name, float darkBlend = 0)
     {
         UndertaleGameObject customMenu = MakeColorMenuRGB(name + "_custom", global_var_name);
@@ -948,7 +953,7 @@ dark_blend = " + darkBlend.ToString() + @"
         }
     }
 
-    private static void ShowConsole(){
+    public static void ShowConsole(){
         var handle = GetConsoleWindow();
         ShowWindow(handle, SW_SHOW);
     }

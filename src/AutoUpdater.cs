@@ -3,6 +3,7 @@ using UndertaleModLib;
 using System.Text.Json.Nodes;
 using System.Text.Json;
 using System.Reflection;
+using shellworks;
 
 namespace Shellworks_AutoUpdater;
 
@@ -16,9 +17,11 @@ public class AutoUpdater
 
     public static void DoUpdate(string wysPath_arg)
     {
+        Console.WriteLine("Starting update...");
         wysPath = wysPath_arg;
         autoUpdaterPath = Path.Combine(wysPath, "Shellworks_AutoUpdater");
         if (CheckOutdated()){
+            Shellworks.ShowConsole();
             UpdateAutoUpdater();
             UpdateShellworks();
         }

@@ -231,4 +231,3 @@ if(noclip_deathFX_fadeout > 0 && global.setting_noclip_indicator && global.invin
 } else {
     noclip_deathFX_fadeout = 0
 }
-

@@ -220,7 +220,12 @@ if(global.shellworks_imgui_menuOpen){
     gml_Script_shellworks_imgui_newbutton_doFunc("Goodbye AI (Fangame)\nDiscord server", gml_Script_scr_open_link, ["https://discord.gg/A5cHBPxEKP"])
     gml_Script_shellworks_imgui_newbutton_doFunc("Will You Speedrun\nDiscord server", gml_Script_scr_open_link, ["https://discord.gg/sTr5eaYfms"])
     
- 
+    imgui_separator_text("Shellworks Updates")
+    var prevDoUpdates = global.shw_setting_do_updates
+    gml_Script_shellworks_imgui_newboolean("Automatic Updates", "shw_setting_do_updates")
+    if(global.shw_setting_do_updates != prevDoUpdates){
+        gml_Script_scr_change_autoupdater(global.shw_setting_do_updates)
+    }
 
     imgui_end()
 
