@@ -175,44 +175,7 @@ prevMouseInInspector = false
 
 
 gml_Script_scr_initialize_BSE_settings()
-
-/*
-show_message("Begin")
-gml_Script_scr_initialize_betterIO()
-show_message("A")
-var f = gml_Script_OpenFileWrite(working_directory + "BetterIO_TestOutput.txt")
-show_message(string(f))
-show_message("B")
-var stringWrittenOutput = gml_Script_WriteStringFile(f, "BALLS")
-show_message("C")
-show_message(stringWrittenOutput)
-show_message("D")
-gml_Script_CloseFileWrite(f)
-show_message("E")
-*/
-
-
-global.snailax_editor_theme = audio_create_stream(global.betterSE_assets + "audio/" + "Snailax Editor Theme.ogg")
-
-global.is_legit_right_now = true
-
-global.player_is_dead = false
-
-global.iDisplay_Up = [sprite_add(global.betterSE_assets + "sprites/" + "Input display/" + "UpOff.png", 0, 0, 0, 0, 0), sprite_add(global.betterSE_assets + "sprites/" + "Input display/" + "UpOn.png", 0, 0, 0, 0, 0)]
-global.iDisplay_Down = [sprite_add(global.betterSE_assets + "sprites/" + "Input display/" + "DownOff.png", 0, 0, 0, 0, 0), sprite_add(global.betterSE_assets + "sprites/" + "Input display/" + "DownOn.png", 0, 0, 0, 0, 0)]
-global.iDisplay_Left = [sprite_add(global.betterSE_assets + "sprites/" + "Input display/" + "LeftOff.png", 0, 0, 0, 0, 0), sprite_add(global.betterSE_assets + "sprites/" + "Input display/" + "LeftOn.png", 0, 0, 0, 0, 0)]
-global.iDisplay_Right = [sprite_add(global.betterSE_assets + "sprites/" + "Input display/" + "RightOff.png", 0, 0, 0, 0, 0), sprite_add(global.betterSE_assets + "sprites/" + "Input display/" + "RightOn.png", 0, 0, 0, 0, 0)]
-global.iDisplay_Q = [sprite_add(global.betterSE_assets + "sprites/" + "Input display/" + "QOff.png", 0, 0, 0, 0, 0), sprite_add(global.betterSE_assets + "sprites/" + "Input display/" + "QOn.png", 0, 0, 0, 0, 0)]
-global.iDisplay_R = [sprite_add(global.betterSE_assets + "sprites/" + "Input display/" + "ROff.png", 0, 0, 0, 0, 0), sprite_add(global.betterSE_assets + "sprites/" + "Input display/" + "ROn.png", 0, 0, 0, 0, 0)]
-global.iDisplay_Esc = [sprite_add(global.betterSE_assets + "sprites/" + "Input display/" + "EscOff.png", 0, 0, 0, 0, 0), sprite_add(global.betterSE_assets + "sprites/" + "Input display/" + "EscOn.png", 0, 0, 0, 0, 0)]
-
-global.player_has_existed = false
-
-global.spr_lvlico_auto = sprite_add(global.betterSE_assets + "sprites/" + "spr_lvlico_auto.png", 0, 0, 0, 0, 0)
-
-
-global.room_remember = room
-global.player_exists_remember = 0
+gml_Script_scr_initialize_shellworks_globalVars()
 
 go_to_a_room_next = false
 room_to_goto_next = -1

@@ -37,6 +37,7 @@ if(global.shellworks_imgui_menuOpen){
     imgui_separator_text("Special")
     gml_Script_shellworks_imgui_newboolean("Inverted Pump", "save_pump_is_inverted")
     gml_Script_shellworks_imgui_newboolean("Fixed Squid", "save_heart_fixed")
+    gml_Script_shellworks_imgui_newboolean("Show AI Predictions", "setting_show_ai_predictions")
     
     imgui_separator_text("Cheats")
     gml_Script_shellworks_imgui_newboolean("Noclip", "invincible_mode")
@@ -73,10 +74,12 @@ if(global.shellworks_imgui_menuOpen){
     imgui_separator_text("Shellworks")
     gml_Script_shellworks_imgui_newboolean("\"O for hotkeys\" message", "setting_show_hotkeys_overlay")
 
+    imgui_separator_text("Other")
     if(room != level_editor){
-        imgui_separator_text("Other")
         gml_Script_shellworks_imgui_newboolean("Manual Value Textbox", "setting_enter_value_manually")
         gml_Script_shellworks_imgui_newboolean("Squid In Editor", "setting_squid_in_editor")
+    } else {
+        imgui_text("Some settings are not available while using the editor.")
     }
 
 
@@ -97,6 +100,10 @@ if(global.shellworks_imgui_menuOpen){
     gml_Script_shellworks_imgui_newcolorpicker("Color Noclip Indicator", "setting_noclip_indicator_color")
     gml_Script_shellworks_imgui_newslider("Transparency Noclip Indicator", "setting_noclip_indicator_transparency", 0, 1)
     gml_Script_shellworks_imgui_newboolean("Input Display", "setting_input_display")
+
+    imgui_separator_text("Squid Visuals")
+    gml_Script_shellworks_imgui_newslider("Squid Opacity", "setting_squid_opacity", 0, 1)
+
 
     imgui_end()
 
@@ -172,6 +179,29 @@ if(global.shellworks_imgui_menuOpen){
     gml_Script_shellworks_imgui_newbutton_doFunc("Special Hat Select", gml_Script_scr_go_to_room_custom, [bonus_hat_room])
     if(global.shellworks_C10_secret)
         gml_Script_shellworks_imgui_newbutton_doFunc("C10", gml_Script_scr_go_to_room_custom, [C_03_fish_mania])
+
+    /*
+    imgui_separator_text("Basic Settings")
+    gml_Script_shellworks_imgui_newslider("Master Volume", "setting_volume_master", 0, 1.5)
+    gml_Script_shellworks_imgui_newslider("SFX Volume", "setting_volue_fx", 0, 1.5) //Yes, Jonas spelled "volume" wrong. Not my fault. :P
+    gml_Script_shellworks_imgui_newslider("Music Volume", "setting_volue_music", 0, 1.5)
+    gml_Script_shellworks_imgui_newslider("Squid Voice Volume", "setting_volue_voice", 0, 1.5)
+    gml_Script_shellworks_imgui_newslider("Screenshake", "setting_screenshake", 0, 2)
+    */
+
+    imgui_separator_text("Display")
+    gml_Script_shellworks_imgui_newbutton_doFunc("Fullscreen", scr_set_window_mode, [0])
+    imgui_same_line()
+    gml_Script_shellworks_imgui_newbutton_doFunc("Windowed", scr_set_window_mode, [3])
+
+    imgui_separator_text("Speedrun Features")
+    gml_Script_shellworks_imgui_newboolean("Game Timer", "setting_speedrun_timer_game")
+    gml_Script_shellworks_imgui_newboolean("Chapter Timer", "setting_speedrun_timer_chapter")
+    gml_Script_shellworks_imgui_newboolean("Level Timer", "setting_speedrun_timer_level")
+    gml_Script_shellworks_imgui_newboolean("Attempt Timer", "setting_speedrun_timer_attempt")
+    gml_Script_shellworks_imgui_newboolean("Show FPS", "setting_speedrun_show_fps")
+    //gml_Script_shellworks_imgui_newboolean("Input Display", "setting_input_displays")
+    
 
     imgui_end()
 

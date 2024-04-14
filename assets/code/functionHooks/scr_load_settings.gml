@@ -160,6 +160,10 @@ if(file_exists("Shellworks_SettoIngs23-2.set")){
                 global.setting_enter_value_manually = file_text_read_real(file)
                 file_text_readln(file)
                 break
+            case "Save Reset Button":
+                global.setting_speedrun_reset_button = file_text_read_real(file)
+                file_text_readln(file)
+                break
         }
     }
     file_text_close(file)

@@ -113,3 +113,10 @@ if(instance_exists(obj_player)){
 
 gml_Script_scr_check_if_speedrun_legit()
 
+if(room != level_editor && room != level_editor_play_mode && room != menu && room != main_menu_dark){
+    if(global.setting_speedrun_reset_button){
+        if(keyboard_check(vk_control) && keyboard_check(vk_shift) && keyboard_check_pressed(ord("R"))){
+            gml_Script_scr_reset_save_speedrun()
+        }
+    }
+}

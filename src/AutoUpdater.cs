@@ -29,22 +29,31 @@ public class AutoUpdater
         client.DefaultRequestHeaders.Add("Accept", "application/vnd.github+json");
         client.DefaultRequestHeaders.Add("User-Agent", "Shellworks updater");
 
-        var task = Task.Run(() => client.GetAsync("https://api.github.com/repos/rgc-exists/Shellworks/releases/latest"));
-        task.Wait();
-        using HttpResponseMessage response = task.Result;
-        response.EnsureSuccessStatusCode();
-        var task2 = Task.Run(() => response.Content.ReadAsStringAsync());
-        task2.Wait();
-        json = JsonSerializer.Deserialize<JsonNode>(task2.Result);
+        try {
+            var task = Task.Run(() => client.GetAsync("https://api.github.com/repos/rgc-exists/Shellworks/releases/latest"));
+            task.Wait();
+            using HttpResponseMessage response = task.Result;
+            response.EnsureSuccessStatusCode();
+            if(response.IsSuccessStatusCode){
+                var task2 = Task.Run(() => response.Content.ReadAsStringAsync());
+                task2.Wait();
+                json = JsonSerializer.Deserialize<JsonNode>(task2.Result);
 
-        var versionFile = Path.Combine(wysPath, "Shellworks_AutoUpdater", "shellworks_version.txt");
+                var versionFile = Path.Combine(wysPath, "Shellworks_AutoUpdater", "shellworks_version.txt");
 
-        if (File.Exists(versionFile))
-        {
-            return File.ReadAllText(versionFile) != json["tag_name"].GetValue<string>();
+                if (File.Exists(versionFile))
+                {
+                    return File.ReadAllText(versionFile) != json["tag_name"].GetValue<string>();
+                }
+                else
+                    return true;
+            } else
+                Console.WriteLine("Error while trying to check if there is a new version. Ensure your wifi is working. Continuing...");
+                return false;
+        } catch {
+            Console.WriteLine("Error while trying to check if there is a new version. Ensure your wifi is working. Continuing...");
+            return false;
         }
-        else
-            return true;
     }
 
     private static void UpdateAutoUpdater(){

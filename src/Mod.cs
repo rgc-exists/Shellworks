@@ -695,6 +695,7 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
 
 
         data.InsertMenuOption(Menus.Vanilla.Speedrun, 3, data.CreateToggleOption("\"Attempt Timer\"", "SrTimerAttempt", "global.setting_speedrun_timer_attempt = argument0", "selectedItem = global.setting_speedrun_timer_attempt", "global.setting_speedrun_timer_attempt", tooltipScript: "gml_Script_scr_return_input", tooltipArgument: "\"\""));
+        data.InsertMenuOptionFromEnd(Menus.Vanilla.Speedrun, 0, data.CreateToggleOption("\"Savefile Reset Keybind\n(CTRL+SHIFT+R)\"", "SavefileResetButton", "global.setting_speedrun_reset_button = argument0", "selectedItem = global.setting_speedrun_reset_button", "global.setting_speedrun_reset_button", tooltipScript: "gml_Script_scr_return_input", tooltipArgument: "\"Reset your entire savefile with the press of a keybind: CTRL+SHIFT+R.\n\nIMPORTANT: If you accidentally delete a savefile you shouldn't have, savefile backups can be found in the WYS AppData location.\""));
 
     }
 

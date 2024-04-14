@@ -39,3 +39,4 @@ global.setting_noclip_indicator_color = c_red
 global.setting_noclip_indicator_transparency = 0.2
 global.setting_speedrun_timer_attempt = false 
 global.setting_enter_value_manually = true
+global.setting_speedrun_reset_button = false
