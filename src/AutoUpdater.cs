@@ -76,7 +76,7 @@ public class AutoUpdater
         if (!Directory.Exists(autoUpdaterPath))
             Directory.CreateDirectory(autoUpdaterPath);
 
-        Console.WriteLine($"Downloading new shellworks version {json["tag_name"].GetValue<string>()}");
+        Console.WriteLine($"Downloading latest shellworks auto-updater version {json["tag_name"].GetValue<string>()}");
         using var task3 = Task.Run(() => client.GetStreamAsync(json["assets"][0]["browser_download_url"].GetValue<string>()));
         task3.Wait();
 
