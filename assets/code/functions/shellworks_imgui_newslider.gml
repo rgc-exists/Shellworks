@@ -16,7 +16,7 @@ var global_var_value = variable_global_get(global_var_name)
 var new_value = imgui_slider(label, minimum, maximum, global_var_value)
 
 if(imgui_deselected_after_edit() || !wait_until_deselect){
-    if(global.shellworks_imgui_time_menu_open > 60){
+    if(global.shellworks_imgui_time_menu_open > 5){
         variable_global_set(global_var_name, new_value)
         
         if(global_var_value != new_value){

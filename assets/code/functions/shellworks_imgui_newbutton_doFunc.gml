@@ -9,7 +9,7 @@ if(save_settings == undefined)
 
 var new_value = imgui_button(label)
 if(new_value){
-    if(global.shellworks_imgui_time_menu_open > 60){
+    if(global.shellworks_imgui_time_menu_open > 5){
         script_execute_ext(func_to_do, args, 0)
         if(save_settings){
             scr_save_settings()

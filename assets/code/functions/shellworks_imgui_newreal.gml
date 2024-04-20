@@ -21,7 +21,7 @@ var global_var_value = variable_global_get(global_var_name)
 var new_value = imgui_input_real(label, global_var_value, format)
 
 if(imgui_deselected_after_edit()){
-    if(global.shellworks_imgui_time_menu_open > 60){
+    if(global.shellworks_imgui_time_menu_open > 5){
         variable_global_set(global_var_name, new_value)
         if(doClamp){
             var clamped_value = clamp(variable_global_get(global_var_name), clampMin, clampMax)

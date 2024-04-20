@@ -18,7 +18,7 @@ if(apply_button){
 }
 
 if(!apply_button || button_val){
-    if(global.shellworks_imgui_time_menu_open > 60){
+    if(global.shellworks_imgui_time_menu_open > 5){
         variable_global_set(global_var_name, new_value)
         if(global_var_value != new_value){
             if(save_settings){

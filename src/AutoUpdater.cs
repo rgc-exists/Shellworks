@@ -23,6 +23,10 @@ public class AutoUpdater
         if (CheckOutdated()){
             Shellworks.ShowConsole();
             UpdateAutoUpdater();
+            string blacklistTxtPath = Path.Combine(wysPath, "gmsl", "mods", "blacklist.txt");
+            if(File.Exists(blacklistTxtPath)){
+                File.WriteAllText(blacklistTxtPath, File.ReadAllText(blacklistTxtPath).Replace("ImGUIGM", ""));
+            }
             UpdateShellworks();
         }
     }

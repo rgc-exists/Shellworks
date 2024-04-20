@@ -21,4 +21,3 @@ global.spr_lvlico_auto = sprite_add(global.betterSE_assets + "sprites/" + "spr_l
 
 global.room_remember = room
 global.player_exists_remember = false
-

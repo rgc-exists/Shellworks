@@ -60,6 +60,7 @@ global.musroom_names = ["1 - Another Simulation", "2 - Jump And Die", "3 - Simul
 global.musroom_songs = [sou_music_logo_theme, sou_music_main, sou_music_LightOcean, sou_music_silent, sou_music_LightPain, sou_music_NoHope, SnailCombat_02, sou_music_BlockyBoss, sou_music_disco, sou_music_disco_silent, sou_music_mrDance, sou_music_underwater, sou_music_MamaSquid, DeathByNanobots, sou_music_helpy, sou_music_winter, ArtificialFun, sou_music_tension, BossFightWIP_04, AwaitingTheHorizon, music_credits, BossVictoryJingle, sou_music_squid_kill, sou_InBrainAmbientLooped, ArtificialWinter, AnotherSimulation_Winter, sou_music_LevelEditor, sou_music_Elevator, audio_create_stream(global.betterSE_assets + "audio/" + "Hello AI Ancestry.ogg"), audio_create_stream(global.betterSE_assets + "audio/" + "Hello AI Ancestry Ft. Jason Hanes.ogg"), audio_create_stream(global.betterSE_assets + "audio/" + "Hello AI v1.ogg"), audio_create_stream(global.betterSE_assets + "audio/" + "Snailax Editor Theme.ogg"), audio_create_stream(global.betterSE_assets + "audio/" + "AnnoyingRageGameMusic.ogg")]
 global.cheat_player_speed = 1
 global.cheat_jump_height = 1
+global.cheat_max_fall_speed = 7
 
 should_restart_after_exit_menu = 0
 
@@ -194,6 +195,8 @@ if(!file_exists("shellworks_hasBeenBootedUp.dontDelete")){
         "shellworks_first_time")
     }
 }
+
+
 
 global.manual_textbox_selected = false
 

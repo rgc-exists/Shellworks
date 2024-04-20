@@ -48,6 +48,7 @@ if(global.shellworks_imgui_menuOpen){
     gml_Script_shellworks_imgui_newboolean("Infinite Double Jumps", "infinite_jumps")
     gml_Script_shellworks_imgui_newreal("Player Speed", "cheat_player_speed")
     gml_Script_shellworks_imgui_newreal("Jump Height", "cheat_jump_height")
+    gml_Script_shellworks_imgui_newreal("Max Fall Speed\n(Underwater Only)", "cheat_max_fall_speed")
     
     imgui_separator_text("Speedhack")
     var prevGameSpeed = global.save_game_speed
