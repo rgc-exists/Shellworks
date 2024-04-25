@@ -211,6 +211,11 @@ file_text_writeln(file)
 file_text_write_real(file, global.setting_speedrun_reset_button)
 repeat (2)
     file_text_writeln(file)
+file_text_write_string(file, "Console Visible")
+file_text_writeln(file)
+file_text_write_real(file, global.setting_show_console)
+repeat (2)
+    file_text_writeln(file)
 
 
 file_text_close(file)

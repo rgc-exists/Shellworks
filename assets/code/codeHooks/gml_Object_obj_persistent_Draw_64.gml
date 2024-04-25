@@ -55,7 +55,7 @@ if(room == level_editor){
             draw_set_valign(fa_top)
             var hotkeys_message = "SHELLWORKS HOTKEYS
 
-HOLD WHILE PLACING:
+WHILE PLACING:
 LEFT_ALT - No size limit
 RIGHT_ALT - Fill with tiles
 B - Fill with stripes
@@ -63,7 +63,7 @@ C - Wall-like pattern
 Z - Place multiple players (only nessecary of the \"Place multiple players\" setting is off.)
 X - Delete ALL object types (like you are holding the delete tool)
 
-HOLD WHILE ROTATING:
+WHILE ROTATING:
 LEFT_ALT - Rotate 15 degrees
 RIGHT_ALT - Rotate 1 degree
 H - Flip horizontally 
@@ -86,6 +86,7 @@ PRESS O TO CLOSE"
 draw_set_alpha(1)
 
 if(global.setting_legitimacy_marker){
+    var existing_color = draw_get_color()
     if(global.is_legit_right_now){
         draw_set_color(make_color_rgb(0, 150, 0))
     } else {
@@ -96,6 +97,7 @@ if(global.setting_legitimacy_marker){
     draw_set_alpha(0.9)
     draw_set_color(c_black)
     draw_rectangle(2, 2, 7, 7, true)
+    draw_set_color(existing_color)
 }
 
 

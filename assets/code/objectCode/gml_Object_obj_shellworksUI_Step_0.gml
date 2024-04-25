@@ -201,7 +201,15 @@ if(global.shellworks_imgui_menuOpen){
     gml_Script_shellworks_imgui_newboolean("Level Timer", "setting_speedrun_timer_level")
     gml_Script_shellworks_imgui_newboolean("Attempt Timer", "setting_speedrun_timer_attempt")
     gml_Script_shellworks_imgui_newboolean("Show FPS", "setting_speedrun_show_fps")
-    //gml_Script_shellworks_imgui_newboolean("Input Display", "setting_input_displays")
+    gml_Script_shellworks_imgui_newboolean("Input Display", "setting_input_display")
+    
+    var prev_speedrun_reset_button = global.setting_speedrun_reset_button
+    gml_Script_shellworks_imgui_newboolean("Quick Savefile Reset\n(CTRL+SHIFT+R)", "setting_speedrun_reset_button")
+    if(global.setting_speedrun_reset_button != prev_speedrun_reset_button && global.setting_speedrun_reset_button){
+        gml_Script_shellworks_imgui_createpopup_message("DANGEROUS FEATURE ENABLED!",
+        "You have just enabled a SAVEFILE RESET KEYBIND!\n\nThis means that whenever you press CTRL+SHIFT+R, intentional or not, your savefile will be reset with auto-difficulty turned off.\n\nBE SURE TO TURN THIS FEATURE OFF WHEN YOU ARE NOT DOING SPEEDRUNS.\nI am not responsible for any savefile data loss.", "I understand.")
+    }
+    
     
 
     imgui_end()
@@ -227,6 +235,14 @@ if(global.shellworks_imgui_menuOpen){
     if(global.shw_setting_do_updates != prevDoUpdates){
         gml_Script_scr_change_autoupdater(global.shw_setting_do_updates)
     }
+
+    imgui_separator_text("GMSL")
+    var prevShowConsole = global.setting_show_console
+    gml_Script_shellworks_imgui_newboolean("Show Console", "setting_show_console")
+    if(global.setting_show_console != prevShowConsole){
+        toggle_console(global.setting_show_console)
+    }
+
 
     imgui_end()
 

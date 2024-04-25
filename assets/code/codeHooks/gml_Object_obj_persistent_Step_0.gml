@@ -55,6 +55,8 @@ if(global.room_remember != room && room != menu){
 }
 
 if(global.frames_since_startup == 2){
+    toggle_console(global.setting_show_console)
+    
     global.shellworks_cache_directory = "Shellworks_Cache\\"
     show_debug_message("Cache directory: " + global.shellworks_cache_directory)
     if(!directory_exists(global.shellworks_cache_directory)){

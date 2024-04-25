@@ -45,6 +45,8 @@ if(character_save_path != ""){
 
     file_text_close(file)
 
+    gml_Script_scr_revert_selected_player_colors()
+    
     scr_save_settings()
     obj_persistent.should_restart_after_exit_menu = true
 }

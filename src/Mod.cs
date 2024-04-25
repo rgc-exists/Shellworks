@@ -559,13 +559,13 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
 
         data.InsertMenuOptionFromEnd(Menus.Vanilla.Hacks, 0, data.CreateChangeOption("\"Player Speed\"", "player_speed", "global.cheat_player_speed = clamp(global.cheat_player_speed + argument0 / 100, 0, 10)", "return string(global.cheat_player_speed * 100) + \"%\"", 10));
         data.InsertMenuOptionFromEnd(Menus.Vanilla.Hacks, 0, data.CreateChangeOption("\"Player Jump Height\"", "player_jump_height", "global.cheat_jump_height = clamp(global.cheat_jump_height + argument0 / 100, 0, 10)", "return string(global.cheat_jump_height * 100) + \"%\"", 10));
-        data.InsertMenuOptionFromEnd(Menus.Vanilla.Hacks, 0, data.CreateChangeOption("\"Max Fall Speed\n(Underwater Only)\"", "cheat_max_fall_speed", "global.cheat_max_fall_speed = clamp(global.cheat_max_fall_speed + argument0 / 100, 0, 100)", "return string(global.cheat_max_fall_speed * 100) + \"%\"", 10));
+        data.InsertMenuOptionFromEnd(Menus.Vanilla.Hacks, 0, data.CreateChangeOption("\"Max Fall Speed\n(Underwater Only)\"", "cheat_max_fall_speed", "global.cheat_max_fall_speed = clamp(global.cheat_max_fall_speed + argument0 / 100, 0, 100)", "return string(global.cheat_max_fall_speed)", 10));
         //data.InsertMenuOptionFromEnd(Menus.Vanilla.Gameplay, 0, data.CreateChangeOption("\"Player Respawn Time\"", "respawn_time", "global.setting_respawn_time = clamp(global.setting_respawn_time + argument0, 0, 10)", "return gml_Script_scr_return_respawn_time()", 0.25));
 
         
 
         
-
+        /*
         UndertaleGameObject advancedSpecialMenu = data.CreateMenu("advanced_special", 
         data.CreateToggleOption("\"Global Inspector (Press F5)\"", "global_inspector", "global.setting_global_inspector_available = argument0", "selectedItem = global.setting_global_inspector_available", "global.setting_global_inspector_available", tooltipScript: "gml_Script_scr_return_input", tooltipArgument: "\"With this on, you can press F5 to open the global object inspector.\"")
         );
@@ -573,6 +573,7 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
         {
             instance = advancedSpecialMenu.Name.Content
         });
+        */
 
 
 
@@ -808,6 +809,20 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
     public static void ShowConsole(){
         var handle = GetConsoleWindow();
         ShowWindow(handle, SW_SHOW);
+    }
+    public static void HideConsole(){
+        var handle = GetConsoleWindow();
+        ShowWindow(handle, SW_HIDE);
+    }
+
+    [GmlInterop("toggle_console", 1)]
+    public double InteropToggleConsole(double isOn){
+        if(isOn == 1){
+            ShowConsole();
+        } else {
+            HideConsole();
+        }
+        return 1;
     }
 
     private static string cursedInlineFunctionName_GetPressedPlus = "gml_Script_scr_fallback_function";
