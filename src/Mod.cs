@@ -37,7 +37,7 @@ public class Shellworks : IGMSLMod
     const int SW_HIDE = 0;
     const int SW_SHOW = 5;
 
-    public void Load(UndertaleData loadedData)
+    public void Load(UndertaleData loadedData, ModInfo modInfo)
     {
         data = loadedData;
         baseDirectory = Path.Combine(Assembly.GetExecutingAssembly().Location, "..");
