@@ -29,3 +29,20 @@ public class HookFile_Hook_Asm
     public string File { get; set; }
 
 }
+public class ReplaceFile
+{
+    public string Script { get; set; }
+    public ReplaceFile_Replacement[] Replacements { get; set; }
+}
+
+public class ReplaceFile_Replacement
+{
+    public string ToFind { get; set; }
+    public string Type { get; set; }
+    public string ToReplace { get; set; }
+    public bool ReplaceIsExternalFile { get; set; }
+    public bool FindIsExternalFile { get; set; }
+    public string FindFile { get; set; }
+    public string ReplaceFile { get; set; }
+
+}

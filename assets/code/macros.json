@@ -8,5 +8,11 @@
     "END": "2",
     "HOVER": "4",
     "REAL_MIN": "-2147483648",
-    "REAL_MAX": "2147483647"
+    "REAL_MAX": "2147483647",
+    "ImGuiCol_TitleBgNormal": "0",
+    "ImGuiCol_TitleBgActive": "1",
+    "ImGuiCol_TitleBgCollapsed": "2",
+    "ImGuiCol_Text": "3",
+    "ImGuiCol_TextDisabled": "4",
+    "ImGuiCol_WindowBg": "5"
 }

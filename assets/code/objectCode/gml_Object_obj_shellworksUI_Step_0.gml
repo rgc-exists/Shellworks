@@ -236,6 +236,7 @@ if(global.shellworks_imgui_menuOpen){
         gml_Script_scr_change_autoupdater(global.shw_setting_do_updates)
     }
 
+
     imgui_separator_text("GMSL")
     var prevShowConsole = global.setting_show_console
     gml_Script_shellworks_imgui_newboolean("Show Console", "setting_show_console")

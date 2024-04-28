@@ -40,4 +40,10 @@ global.setting_noclip_indicator_transparency = 0.2
 global.setting_speedrun_timer_attempt = false 
 global.setting_enter_value_manually = true
 global.setting_speedrun_reset_button = false
+
+global.setting_shw_theme_titleBar = make_color_rgb(0.04 * 255, 0.04 * 255, 0.04 * 255)
+global.setting_shw_theme_titleBarActive = make_color_rgb(0.16 * 255, 0.29 * 255, 0.48 * 255)
+global.setting_shw_theme_titleBarCollapsed = make_color_rgb(0.0 * 255, 0.0 * 255, 0.0 * 255)
+global.setting_shw_theme_windowBG = make_color_rgb(0.06 * 255, 0.06 * 255, 0.06 * 255)
+
 global.setting_show_console = true

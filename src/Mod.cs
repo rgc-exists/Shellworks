@@ -15,6 +15,8 @@ using System.Runtime.Serialization;
 using Shellworks_AutoUpdater;
 using System.ComponentModel;
 using shellworks;
+using System.Reflection.Metadata.Ecma335;
+using System.Threading.Tasks.Dataflow;
 
 namespace shellworks;
 
@@ -23,10 +25,10 @@ public class Shellworks : IGMSLMod
 
     public bool DEVELOPMENT_BUILD = false;
 
-    private static string baseDirectory = "UNDEFINED_BASE_DIRECTORY";
+    public static string baseDirectory = "UNDEFINED_BASE_DIRECTORY";
     private static string appDataDirectory = "UNDEFINED_APPDATA_DIRECTORY";
     private static UndertaleData data;
-    private static bool failedHook = false;
+    public static bool failedHook = false;
 
     [DllImport("kernel32.dll")]
     static extern IntPtr GetConsoleWindow();
@@ -51,6 +53,8 @@ public class Shellworks : IGMSLMod
             AutoUpdater.DoUpdate(wysPath);
         }
 
+
+
         string needsToBeUpdated = Path.Combine(baseDirectory, "needsToBeUpdated.txt");
 
         if(File.Exists(needsToBeUpdated) && File.ReadAllText(needsToBeUpdated).Trim() == "1"){
@@ -63,8 +67,11 @@ public class Shellworks : IGMSLMod
             ExtraStuff();
             LoadCode();
             BuildRooms();
+            AddCustomKeybinds();
             AddMenuItems();
-
+            
+            Console.WriteLine("Finalizing function hooks...");
+            data.FinalizeHooks();
             
 
             if(failedHook){
@@ -418,6 +425,7 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
 
                 string assembly_str = undertaleCode.Disassemble(data.Variables, data.CodeLocals.For(undertaleCode)).Replace("\r\n", "\n").Replace("\r", "\n");
 
+
                 string find = hookData.ToFind;
 
                 string replace = hookData.ToReplace;
@@ -430,9 +438,54 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
 
                     assemblyStr_out = assemblyStr_out.Replace("\"inputaction_shellworks_openmenu\"@3382", "\"inputaction_shellworks_openmenu\"@" + data.Strings.IndexOf(data.Strings.MakeString("inputaction_shellworks_openmenu")));
 
+
                     undertaleCode.Replace(Assembler.Assemble(assemblyStr_out, data));
                 } else {
                     Console.WriteLine("\n\nWARNING: could not find place to assembly inline hook for " + Path.GetFileNameWithoutExtension(file) + "\n\n\n");
+                    failedHook = true;
+                }
+            }
+        });
+
+        handlers.Add("inlinereplacements", (code, file) =>
+        {
+            if (file.EndsWith(".gml")) return;
+
+            var hookFile = JsonSerializer.Deserialize<ReplaceFile>(code);
+            if (hookFile == null) return;
+
+            Console.WriteLine("Adding inline replacement(s) for " + Path.GetFileNameWithoutExtension(file));
+            
+            
+            foreach(ReplaceFile_Replacement replaceData in hookFile.Replacements){
+                UndertaleCode undertaleCode = data.Code.ByName(hookFile.Script);
+
+                string assembly_str = undertaleCode.Disassemble(data.Variables, data.CodeLocals.For(undertaleCode)).Replace("\r\n", "\n").Replace("\r", "\n").Replace("\t", "").Replace(" ", "");
+                GlobalDecompileContext globalDecompileContext = new GlobalDecompileContext(data, false);
+                string decompiledStr = Decompiler.Decompile(undertaleCode, globalDecompileContext);
+
+
+                string find = replaceData.ToFind;
+
+                string replace = replaceData.ToReplace;
+
+                if(replaceData.FindIsExternalFile){
+                    find = File.ReadAllText(Path.Combine(baseDirectory, "code", replaceData.FindFile)).Trim();
+                }
+                if(replaceData.ReplaceIsExternalFile){
+                    replace = File.ReadAllText(Path.Combine(baseDirectory, "code", replaceData.ReplaceFile)).Trim();
+                }
+                //find = find.Replace("\r\n", "\n").Replace("\r", "\n");
+                //replace = replace.Replace("\r\n", "\n").Replace("\r", "\n");
+
+                try {
+                    string decompiledStr_out = decompiledStr.Replace(find, replace);
+
+                    undertaleCode.ReplaceGmlSafe(decompiledStr_out, data);
+                    
+                } catch(Exception e) {
+                    Console.WriteLine(e.Message + "\n" + e.StackTrace);
+                    Console.WriteLine("\n\nWARNING: could not find place to put inline replacement for " + Path.GetFileNameWithoutExtension(file) + "\n\n\n");
                     failedHook = true;
                 }
             }
@@ -454,6 +507,10 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
                 return t;
         }
         return null;
+    }
+
+    private static void AddCustomKeybinds(){
+        data.AddWYSKeybind("inputaction_shellworks_openmenu", 115);
     }
 
     private static void AddMenuItems()
@@ -814,12 +871,15 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
         var handle = GetConsoleWindow();
         ShowWindow(handle, SW_HIDE);
     }
-
+    
     [GmlInterop("toggle_console", 1)]
     public double InteropToggleConsole(double isOn){
+        Console.WriteLine("Showing console...");
         if(isOn == 1){
+            Console.WriteLine("Showing console...");
             ShowConsole();
         } else {
+            Console.WriteLine("Hiding console...");
             HideConsole();
         }
         return 1;

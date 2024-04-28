@@ -6,7 +6,7 @@
             "ToReplace":"",
             "Type": "replace",
             "IsExternalFile":true,
-            "File":"inlineAssemblyHooks/gml_GlobalScript_keybinding_system.asm"
+            "File":"hacky/gml_GlobalScript_keybinding_system.asm"
         }
     ]
 }
