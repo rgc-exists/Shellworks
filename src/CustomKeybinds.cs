@@ -50,8 +50,8 @@ public static class WYS_CustomKeybinds {
             if(assembly_str.Contains(find)){
                 string assemblyStr_out = assembly_str.Replace(find, replace);
 
-                assemblyStr_out = assemblyStr_out.Replace("\"inputaction_shellworks_openmenu\"@3382", "\"inputaction_shellworks_openmenu\"@" + data.Strings.IndexOf(data.Strings.MakeString("inputaction_shellworks_openmenu")));
-
+                Regex regex = new Regex("\"inputaction_shellworks_openmenu\"@(\\d+$)");
+                assemblyStr_out = regex.Replace(assemblyStr_out, "\"inputaction_shellworks_openmenu\"@" + data.Strings.IndexOf(data.Strings.MakeString("inputaction_shellworks_openmenu")));
 
                 undertaleCode.Replace(Assembler.Assemble(assemblyStr_out, data));
             } else {

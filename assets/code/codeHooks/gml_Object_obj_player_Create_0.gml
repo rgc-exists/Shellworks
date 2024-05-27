@@ -90,3 +90,5 @@ if(room == disco_copy_me){ //If is snail from the music player room
     just_hit_fuse = false
     is_first_frame = true
 }
+
+cool_interop_function(1)

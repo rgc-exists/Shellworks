@@ -65,9 +65,9 @@ public class Shellworks : IGMSLMod
 
             CreateObjects();
             ExtraStuff();
+            AddCustomKeybinds();
             LoadCode();
             BuildRooms();
-            AddCustomKeybinds();
             AddMenuItems();
             
             Console.WriteLine("Finalizing function hooks...");
@@ -176,7 +176,10 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
     }
 
     private static void ExtraStuff(){
-        data.Strings.MakeString("inputaction_shellworks_openmenu");
+        UndertaleString str = data.Strings.MakeString("inputaction_shellworks_openmenu");
+        data.CreateLegacyScript("shellworks_stupid_thing_because_i_cant_find_how_to_properly_init_a_var", @"
+        global.inputaction_shellworks_openmenu = undefined
+        ", 0);
     }
 
     private static void LoadCode()
@@ -872,6 +875,7 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
         ShowWindow(handle, SW_HIDE);
     }
     
+    
     [GmlInterop("toggle_console", 1)]
     public double InteropToggleConsole(double isOn){
         Console.WriteLine("Showing console...");
@@ -883,6 +887,14 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
             HideConsole();
         }
         return 1;
+    }
+        
+    [GmlInterop("cool_interop_function", 1)]
+    public double InteropFunc(double val)
+    {
+        Console.WriteLine(val);
+
+        return 0;
     }
 
     private static string cursedInlineFunctionName_GetPressedPlus = "gml_Script_scr_fallback_function";

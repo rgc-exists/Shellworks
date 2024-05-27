@@ -149,7 +149,7 @@ public static class CreateExtensions {
         code.Replace(Assembler.Assemble(@$"
 b [func_def]
 
-{code.Disassemble(data.Variables, locals).Replace("\n:[end]", "")}
+{code.Disassemble(data.Variables, locals).Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n:[end]", "")}
 
 exit.i
 
