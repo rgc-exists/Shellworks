@@ -164,22 +164,6 @@ if(file_exists("Shellworks_SettoIngs23-2.set")){
                 global.setting_speedrun_reset_button = file_text_read_real(file)
                 file_text_readln(file)
                 break
-            case "Tile Bar Color":
-                global.setting_shw_theme_titleBar = file_text_read_real(file)
-                file_text_readln(file)
-                break
-            case "Title Bar Active Color":
-                global.setting_shw_theme_titleBarActive = file_text_read_real(file)
-                file_text_readln(file)
-                break
-            case "Title Bar Collapsed Color":
-                global.setting_shw_theme_titleBarCollapsed = file_text_read_real(file)
-                file_text_readln(file)
-                break
-            case "Window BG Color":
-                global.setting_shw_theme_windowBG = file_text_read_real(file)
-                file_text_readln(file)
-                break
         }
     }
     file_text_close(file)
