@@ -888,15 +888,7 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
         }
         return 1;
     }
-        
-    [GmlInterop("cool_interop_function", 1)]
-    public double InteropFunc(double val)
-    {
-        Console.WriteLine(val);
-
-        return 0;
-    }
-
+    
     private static string cursedInlineFunctionName_GetPressedPlus = "gml_Script_scr_fallback_function";
 
 }
