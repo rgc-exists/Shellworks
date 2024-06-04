@@ -46,4 +46,4 @@ global.setting_shw_theme_titleBarActive = make_color_rgb(0.16 * 255, 0.29 * 255,
 global.setting_shw_theme_titleBarCollapsed = make_color_rgb(0.0 * 255, 0.0 * 255, 0.0 * 255)
 global.setting_shw_theme_windowBG = make_color_rgb(0.06 * 255, 0.06 * 255, 0.06 * 255)
 
-global.setting_show_console = true
+global.setting_show_console = false
