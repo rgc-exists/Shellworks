@@ -52,3 +52,5 @@ part_type_speed(global.part_type_playerTrail, 0.4, 0.6, 0, 0)
 part_type_orientation(global.part_type_playerTrail, 0, 360, 0, 0, 0)
 part_type_direction(global.part_type_playerTrail, 0, 360, 0, 0)
 part_type_size(global.part_type_playerTrail, 1.25, 1.25, 0, 0)
+
+global.levelstyler_colors_need_to_be_reloaded = true

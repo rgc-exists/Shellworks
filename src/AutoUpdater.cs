@@ -17,7 +17,7 @@ public class AutoUpdater
 
     public static void DoUpdate(string wysPath_arg)
     {
-        Console.WriteLine("Starting update...");
+        Console.WriteLine("Checking for updates...");
         wysPath = wysPath_arg;
         autoUpdaterPath = Path.Combine(wysPath, "Shellworks_AutoUpdater");
         if (CheckOutdated()){

@@ -180,6 +180,7 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
         data.CreateLegacyScript("shellworks_stupid_thing_because_i_cant_find_how_to_properly_init_a_var", @"
         global.inputaction_shellworks_openmenu = undefined
         ", 0);
+        
     }
 
     private static void LoadCode()
@@ -888,7 +889,10 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
         }
         return 1;
     }
+
+
     
+
     private static string cursedInlineFunctionName_GetPressedPlus = "gml_Script_scr_fallback_function";
 
 }

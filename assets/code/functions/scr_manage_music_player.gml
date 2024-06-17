@@ -1,3 +1,5 @@
+event_user(2)
+
 if(instance_exists(obj_player)){
     instance_destroy(obj_player)
     instance_destroy(obj_music_disco)
@@ -10,19 +12,19 @@ with(obj_performance_test_snail){
     image_speed = 0
     image_index = 4
 }
-if(!audio_exists(global.cur_musroom_sound) || keyboard_check_pressed(vk_right) || keyboard_check_pressed(vk_left) || keyboard_check_pressed(ord("A")) || keyboard_check_pressed(ord("D"))){
+if(!audio_exists(global.cur_musroom_sound) || global.input_x_pressed != 0){
     if(audio_exists(global.cur_musroom_sound)){
         if(audio_is_playing(global.cur_musroom_sound)){
             audio_stop_sound(global.cur_musroom_sound)
         }
     }
-    if(keyboard_check_pressed(vk_right) || keyboard_check_pressed(ord("D"))){
+    if(global.input_x_pressed > 0){
         global.cur_musroom_song += 1
         if(global.cur_musroom_song >= array_length(global.musroom_songs)){
             global.cur_musroom_song = 0
         }
     }
-    if(keyboard_check_pressed(vk_left) || keyboard_check_pressed(ord("A"))){
+    if(global.input_x_pressed < 0){
         global.cur_musroom_song -= 1
         if(global.cur_musroom_song < 0){
             global.cur_musroom_song = array_length(global.musroom_songs) - 1

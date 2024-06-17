@@ -14,5 +14,6 @@
     "ImGuiCol_TitleBgCollapsed": "2",
     "ImGuiCol_Text": "3",
     "ImGuiCol_TextDisabled": "4",
-    "ImGuiCol_WindowBg": "5"
+    "ImGuiCol_WindowBg": "5",
+    "MAX_OFFICIAL_COLORSCHEME":"8"
 }

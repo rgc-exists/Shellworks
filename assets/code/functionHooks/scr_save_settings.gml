@@ -206,11 +206,12 @@ file_text_writeln(file)
 file_text_write_real(file, global.setting_enter_value_manually)
 repeat (2)
     file_text_writeln(file)
-file_text_write_string(file, "Save Reset Button")
+file_text_write_string(file, "Show Console")
 file_text_writeln(file)
-file_text_write_real(file, global.setting_speedrun_reset_button)
+file_text_write_real(file, global.setting_show_console)
 repeat (2)
     file_text_writeln(file)
+
 
 
 file_text_close(file)

@@ -215,3 +215,5 @@ alarm[0] = 3
 global.frames_since_startup = 0
 
 global.coming_from_room = level_select
+
+gml_Script_scr_colorscheme_database_ini()
