@@ -1,6 +1,3 @@
-var restart_room = argument0 
-if(is_undefined(restart_room)) restart_room = true
-
 
 if(instance_exists(obj_levelstyler)){
 
@@ -14,8 +11,7 @@ if(instance_exists(obj_levelstyler)){
 
         with(obj_levelstyler){
             var global_var_name = value + "_selected"
-            if(variable_global_exists(global_var_name))
-                variable_instance_set(id, value, variable_global_get(global_var_name))
+            variable_global_set(global_var_name, variable_instance_get(id, value))
         }
     }
 
@@ -30,8 +26,8 @@ if(instance_exists(obj_levelstyler)){
 
         var global_var_name = value + "_selected"
         if(global_var_name == "col_lvlselect_moretoexplore_arrow_selected") global_var_name = "col_lvlselect_moretoexplore_arrow_selected_2"
-        if(variable_global_exists(global_var_name))
-            variable_global_set(value, variable_global_get(global_var_name))
+
+        variable_global_set(global_var_name, variable_global_get(value))
     }
 
     var global_threepartcolors = global.color_scheme_database.global_threepartcolors
@@ -47,11 +43,9 @@ if(instance_exists(obj_levelstyler)){
         var global_var_name_r = r + "_selected"
         var global_var_name_g = g + "_selected"
         var global_var_name_b = b + "_selected"
-        if(variable_global_exists(global_var_name_r) && variable_global_exists(global_var_name_g) && variable_global_exists(global_var_name_b)){
-            variable_global_set(r, variable_global_get(global_var_name_r))
-            variable_global_set(g, variable_global_get(global_var_name_g))
-            variable_global_set(b, variable_global_get(global_var_name_b))
-        }
+        variable_global_set(global_var_name_r, variable_global_get(r))
+        variable_global_set(global_var_name_g, variable_global_get(g))
+        variable_global_set(global_var_name_b, variable_global_get(b))
     }
 
 
@@ -63,18 +57,11 @@ if(instance_exists(obj_levelstyler)){
         var value = variable_struct_get(global_reals, name)
 
         var global_var_name = value + "_selected"
-        if(variable_global_exists(global_var_name))
-            variable_global_set(value, variable_global_get(global_var_name))
+        variable_global_set(global_var_name, variable_global_get(value))
     }
 
 
     file_text_close(file)
-
-    if(restart_room)
-        room_restart()
-
-    with(obj_shellworksUI) alarm[0] = 1 //Try commenting this out if this dont work
-    
 } else {
-    show_debug_message("obj_levelstyler does not exist! You cannot apply colors at this time!")
+    show_debug_message("obj_levelstyler does not exists! You cannot apply colors at this time!")
 }

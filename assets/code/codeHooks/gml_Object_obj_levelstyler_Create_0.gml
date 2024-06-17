@@ -1,3 +1,8 @@
+if(!file_exists("Colors/" + string(global.setting_color_scheme) + "/" + "Normal.txt")){
+    show_debug_message("The selected color scheme was deleted! Reverting to color scheme #2...")
+    global.setting_color_scheme = 2
+}
+
 #orig#()
 if global.save_pump_is_inverted
 {
@@ -54,3 +59,5 @@ part_type_direction(global.part_type_playerTrail, 0, 360, 0, 0)
 part_type_size(global.part_type_playerTrail, 1.25, 1.25, 0, 0)
 
 global.levelstyler_colors_need_to_be_reloaded = true
+just_started_level = true
+alarm[4] = 1

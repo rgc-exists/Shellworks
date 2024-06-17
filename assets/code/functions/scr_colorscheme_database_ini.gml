@@ -22,7 +22,6 @@ levelstyler_local_colors =  [
     "SnailEye", "col_snail_eye",
     "Dallin", "col_dallin",
     "DialogFiles", "col_dialog_files",
-    "DialogFiles", "col_dialog_files",
     "Bubbles", "col_bubbles",
     "UnderwCurrents", "col_underw_currents",
     "SnailFlare", "col_underw_currents",

@@ -36,8 +36,16 @@ gml_Script_shellworks_imgui_newbutton_doFunc("Apply Selected Colors", gml_Script
 gml_Script_shellworks_imgui_newbutton_doFunc("Save Color Scheme", gml_Script_scr_save_color_scheme, [theme_type])
 imgui_end()
 
-imgui_begin("IMPORTANT INFO")
+imgui_begin("CURRENT THEME")
 imgui_text("IMPORTANT: The colors in this menu will only change for the room type you are in,\nThis includes the theme, such as underwater/bubblegum,\nand SOMETIMES whether or not the level is \"dark\"")
+
+imgui_separator_text("Current Theme Info")
+imgui_text("Level theme: " + theme_type)
+var dark_light_txt = "Light"
+if(instance_exists(obj_dark_level)) dark_light_txt = "Dark"
+imgui_text("Dark/light: " + dark_light_txt)
+override_txt = "(NONE)"
+imgui_text("Override: " + override_txt)
 imgui_end()
 
 
@@ -87,10 +95,21 @@ imgui_end()
 
 
 imgui_begin("ENEMIES/ENTITIES")
-imgui_separator_text("Colors")
+imgui_separator_text("Enemies")
+gml_Script_shellworks_imgui_newcolorpicker("Enemies", "col_traps_selected")
+gml_Script_shellworks_imgui_newcolorpicker("Enemy Warnings", "col_spike_warning_selected")
+gml_Script_shellworks_imgui_newcolorpicker("Enemy Warnings", "col_spike_warning_selected")
+
+
+imgui_separator_text("Objects")
 gml_Script_shellworks_imgui_newcolorpicker("Conveyor Belts", "col_conveyor_belts_selected")
 gml_Script_shellworks_imgui_newcolorpicker("Bubbles", "col_bubbles_selected_selected")
 gml_Script_shellworks_imgui_newcolorpicker("Underwater Currents", "col_underw_currents_selected")
+
+imgui_separator_text("Tower Defense")
+gml_Script_shellworks_imgui_newcolorpicker("Basic Turret", "col_td_turret_1_selected")
+gml_Script_shellworks_imgui_newcolorpicker("Sniper Turret", "col_td_turret_2_selected")
+gml_Script_shellworks_imgui_newcolorpicker("Splash Turret", "col_td_turret_3_selected")
 
 imgui_separator_text("Boss Colors")
 gml_Script_shellworks_imgui_newcolorpicker("FinalBoss Part1 A", "col_finalboss_1a_selected")
@@ -119,7 +138,7 @@ gml_Script_shellworks_imgui_newcolorpicker("Portal Story Back", "col_lvlselect_l
 gml_Script_shellworks_imgui_newcolorpicker("Portal Story Back", "col_lvlselect_lvl_story_front_selected")
 gml_Script_shellworks_imgui_newcolorpicker("Portal Secret Back", "col_lvlselect_lvl_secret_back_selected")
 gml_Script_shellworks_imgui_newcolorpicker("Portal Secret Back", "col_lvlselect_lvl_secret_front_selected")
-gml_Script_shellworks_imgui_newcolorpicker("QuestionMark Indicator", "col_lvlselect_moretoexplore_arrow_selected")
+gml_Script_shellworks_imgui_newcolorpicker("QuestionMark Indicator", "col_lvlselect_moretoexplore_arrow_selected_2") //Named this way because "col_lvlselect_moretoexplore_arrow_selected" is already used in the game.
 gml_Script_shellworks_imgui_newcolorpicker("Selected QuestionMark Indicator", "col_lvlselect_moretoexplore_arrow_selected_selected") //Yes, this intentionally has selected_selected.
 
 imgui_separator_text("Misc. Colors")

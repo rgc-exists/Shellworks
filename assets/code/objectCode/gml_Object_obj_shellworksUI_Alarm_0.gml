@@ -1,6 +1,3 @@
-var restart_room = argument0 
-if(is_undefined(restart_room)) restart_room = true
-
 
 if(instance_exists(obj_levelstyler)){
 
@@ -30,6 +27,7 @@ if(instance_exists(obj_levelstyler)){
 
         var global_var_name = value + "_selected"
         if(global_var_name == "col_lvlselect_moretoexplore_arrow_selected") global_var_name = "col_lvlselect_moretoexplore_arrow_selected_2"
+
         if(variable_global_exists(global_var_name))
             variable_global_set(value, variable_global_get(global_var_name))
     }
@@ -68,13 +66,9 @@ if(instance_exists(obj_levelstyler)){
     }
 
 
-    file_text_close(file)
-
-    if(restart_room)
-        room_restart()
-
-    with(obj_shellworksUI) alarm[0] = 1 //Try commenting this out if this dont work
-    
+    //file_text_close(file)
 } else {
     show_debug_message("obj_levelstyler does not exist! You cannot apply colors at this time!")
 }
+
+global.just_applied_colors = true

@@ -19,7 +19,10 @@ if(instance_exists(obj_levelstyler)){
         var value = variable_struct_get(global_colors, names[i])
 
         if(variable_global_exists(value)){
-            variable_global_set(value + "_selected", variable_global_get(value))
+            var global_var_name = value + "_selected"
+            if(global_var_name == "col_lvlselect_moretoexplore_arrow_selected") global_var_name = "col_lvlselect_moretoexplore_arrow_selected_2"
+            
+            variable_global_set(global_var_name, variable_global_get(value))
         }
     }
 
