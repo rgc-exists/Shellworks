@@ -1,7 +1,6 @@
 if(room != level_editor && room != menu && room != main_menu_dark && instance_exists(obj_levelstyler)){
     theme_type = "Normal"
     theme_path = "Normal.txt"
-
     if(instance_nearest(0, 0, obj_levelstyler).object_index == obj_levelstyler){
         theme_type = "Normal"
         theme_path = "Normal.txt"
@@ -142,11 +141,13 @@ if(room != level_editor && room != menu && room != main_menu_dark && instance_ex
         gml_Script_shellworks_imgui_newcolorpicker("Smiley 1", "col_smiley_1_selected")
         gml_Script_shellworks_imgui_newcolorpicker("Smiley 2", "col_smiley_2_selected")
         
-
         imgui_separator_text("Puzzles/Wires")
         gml_Script_shellworks_imgui_newcolorpicker("Corrupted Antenna", "col_currupted_antenna_selected")
         gml_Script_shellworks_imgui_newcolorpicker("Doors", "col_doors_selected")
         
+        imgui_separator_text("Scheme Settings")
+        gml_Script_shellworks_imgui_newboolean("Minimalist Color Mode", "minimalist_color_mode_selected")
+
         imgui_end()
 
 
@@ -155,12 +156,12 @@ if(room != level_editor && room != menu && room != main_menu_dark && instance_ex
         imgui_separator_text("Level Select")
         gml_Script_shellworks_imgui_newcolorpicker("Portal Locked Front", "col_lvlselect_lvl_locked_front_selected")
         gml_Script_shellworks_imgui_newcolorpicker("Portal Locked Back", "col_lvlselect_lvl_locked_back_selected")
-        gml_Script_shellworks_imgui_newcolorpicker("Portal Normal Back", "col_lvlselect_lvl_normal_front_selected")
+        gml_Script_shellworks_imgui_newcolorpicker("Portal Normal Front", "col_lvlselect_lvl_normal_front_selected")
         gml_Script_shellworks_imgui_newcolorpicker("Portal Normal Back", "col_lvlselect_lvl_normal_back_selected")
+        gml_Script_shellworks_imgui_newcolorpicker("Portal Story Front", "col_lvlselect_lvl_story_front_selected")
         gml_Script_shellworks_imgui_newcolorpicker("Portal Story Back", "col_lvlselect_lvl_story_back_selected")
-        gml_Script_shellworks_imgui_newcolorpicker("Portal Story Back", "col_lvlselect_lvl_story_front_selected")
+        gml_Script_shellworks_imgui_newcolorpicker("Portal Secret Front", "col_lvlselect_lvl_secret_front_selected")
         gml_Script_shellworks_imgui_newcolorpicker("Portal Secret Back", "col_lvlselect_lvl_secret_back_selected")
-        gml_Script_shellworks_imgui_newcolorpicker("Portal Secret Back", "col_lvlselect_lvl_secret_front_selected")
         gml_Script_shellworks_imgui_newcolorpicker("QuestionMark Indicator", "col_lvlselect_moretoexplore_arrow_selected_2") //Named this way because "col_lvlselect_moretoexplore_arrow_selected" is already used in the game.
         gml_Script_shellworks_imgui_newcolorpicker("Selected QuestionMark Indicator", "col_lvlselect_moretoexplore_arrow_selected_selected") //Yes, this intentionally has selected_selected.
 
@@ -201,6 +202,9 @@ if(room != level_editor && room != menu && room != main_menu_dark && instance_ex
         gml_Script_shellworks_imgui_newbutton_toggleVar("Main Shellworks Menu", "shellworks_imgui_colorSchemeEditor_open")
 
         imgui_end()
+
+        global.prev_theme_type = theme_type
+
     }
 } else {
     imgui_begin("YOU CANNOT EDIT COLORS IN THIS ROOM!")

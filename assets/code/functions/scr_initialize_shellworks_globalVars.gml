@@ -25,3 +25,5 @@ global.player_exists_remember = false
 global.shellworks_imgui_colorSchemeEditor_open = false
 
 global.just_applied_colors = false
+global.just_copied_color_scheme = false
+global.prev_theme_type = ""

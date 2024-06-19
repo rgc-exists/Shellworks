@@ -22,7 +22,7 @@ file_copy(old_scheme_directory + "Underwater.txt", new_scheme_directory + "Under
 file_copy(old_scheme_directory + "Bubblegum.txt", new_scheme_directory + "Bubblegum.txt")
 file_copy(old_scheme_directory + "Winter.txt", new_scheme_directory + "Winter.txt")
 file_copy(old_scheme_directory + "Brain.txt", new_scheme_directory + "Brain.txt")
-file_copy(old_scheme_directory + "Preview.png", new_scheme_directory + "Brain.txt")
+file_copy(old_scheme_directory + "Preview.png", new_scheme_directory + "Preview.png")
 
 /*
 var file_name = file_find_first(old_scheme_directory + "Overrides/", 0)
@@ -38,12 +38,14 @@ file_find_close()
 
 global.setting_color_scheme = max_scheme
 
+global.just_copied_color_scheme = 2
 global.levelstyler_colors_need_to_be_reloaded = true
 if(room == level_editor_play_mode){
     global.levelstyler_colors_need_to_be_reloaded = true
-    with(obj_levelstyler) color_scheme_backup = -1
+    //with(obj_levelstyler) color_scheme_backup = -1
     leveleditor_play_current_level(false)
 } else if(room != level_editor /* && room != level_editor_play_mode */ && room != menu && room != main_menu_dark){
+    //with(obj_levelstyler) color_scheme_backup = -1
     room_restart()
 }
 

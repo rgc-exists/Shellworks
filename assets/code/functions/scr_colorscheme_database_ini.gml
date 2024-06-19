@@ -94,7 +94,8 @@ levelstyler_local_reals = [
     "BackgroundParallaxMin", "background_parallax_min",
     "BackgroundParallaxMax", "background_parallax_max",
     "BackgroundScrollSpeedMax", "background_scroll_speed",
-    "BackgroundScrollSpeedMin", "background_scroll_speed_min"
+    "BackgroundScrollSpeedMin", "background_scroll_speed_min",
+    "MinimalistColorMode", "minimalist_color_mode"
 ]
 
 database = [

@@ -1,1 +1,1 @@
-gml_Script_scr_apply_selected_colors(false)
+//gml_Script_scr_apply_selected_colors(false)
