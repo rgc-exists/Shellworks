@@ -48,8 +48,7 @@ levelstyler_local_colors =  [
 ]
 
 global_colors = [
-    "BloomColor", "pp_bloom_color",
-    "LvlLockedFront", "pp_bloom_color",
+    "LvlLockedFront", "col_lvlselect_lvl_locked_front",
     "LvlLockedBack", "col_lvlselect_lvl_locked_back",
     "LvlNormalFront", "col_lvlselect_lvl_normal_front",
     "LvlNormalBack", "col_lvlselect_lvl_normal_back",
@@ -58,23 +57,27 @@ global_colors = [
     "LvlSecretFront", "col_lvlselect_lvl_secret_front",
     "LvlSecretBack", "col_lvlselect_lvl_secret_back",
     "LvlQuestionmarkIndicator", "col_lvlselect_moretoexplore_arrow",
-    "LvlQuestionmarkIndicatorSelected", "col_lvlselect_moretoexplore_arrow_selected"
+    "LvlQuestionmarkIndicatorSelected", "col_lvlselect_moretoexplore_arrow_selected",
+    "BloomColor", "pp_bloom_color"
 
 ]
 
 global_threepartcolors = [
     "PostProcessingContrast", ["pp_curve_strength_r", "pp_curve_strength_g", "pp_curve_strength_b"],
-    "PostProcessingContrastOffset", ["pp_curve_mid_r", "pp_curve_mid_g", "pp_curve_mid_b"],
+    "PostProcessingContrastOffset", ["pp_curve_mid_r", "pp_curve_mid_g", "pp_curve_mid_b"]
+]
+
+global_threeparts_butnormal_colors = [
     "OverlayGradientColorTop", ["pp_curve_ol_top_r", "pp_curve_ol_top_g", "pp_curve_ol_top_b"],
     "OverlayGradientColorBot", ["pp_curve_ol_bot_r", "pp_curve_ol_bot_g", "pp_curve_ol_bot_b"],
-    "OverlayGradientColorBot", ["pp_curve_ol_bot_r", "pp_curve_ol_bot_g", "pp_curve_ol_bot_b"]
+    "OverlayVignetteColor", ["pp_curve_ol_bot_r", "pp_curve_ol_bot_g", "pp_curve_vignette_b"]
 ]
+
 
 global_reals = [
     "OverlayVignetteAlpha", "pp_curve_vignette_a",
     "OverlayVignetteSize", "pp_curve_vignette_size",
     "BloomAlpha", "pp_bloom_strength",
-    "BloomColor", "pp_bloom_color",
     "WallBrightnessWhenLightsAreOut", "walls_brightness_when_lights_are_out",
     "DiscoLightHueOffset", "col_disco_light_hue_offset",
     "DiscoLightHueSpread", "col_disco_light_hue_spread",
@@ -98,6 +101,7 @@ database = [
     "levelstyler_local_colors", gml_Script_shellworks_modhelper_array_to_struct(levelstyler_local_colors),
     "global_colors", gml_Script_shellworks_modhelper_array_to_struct(global_colors),
     "global_threepartcolors", gml_Script_shellworks_modhelper_array_to_struct(global_threepartcolors),
+    "global_threeparts_butnormal_colors", gml_Script_shellworks_modhelper_array_to_struct(global_threeparts_butnormal_colors),
     "global_reals", gml_Script_shellworks_modhelper_array_to_struct(global_reals),
     "levelstyler_local_reals", gml_Script_shellworks_modhelper_array_to_struct(levelstyler_local_reals)
 ]

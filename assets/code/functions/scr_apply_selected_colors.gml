@@ -54,6 +54,25 @@ if(instance_exists(obj_levelstyler)){
         }
     }
 
+    var global_threeparts_butnormal_colors = global.color_scheme_database.global_threeparts_butnormal_colors
+    var names = variable_struct_get_names(global_threeparts_butnormal_colors)
+
+    for(var i = 0; i < array_length(names); i++){
+        var name = names[i]
+        var color_names = variable_struct_get(global_threeparts_butnormal_colors, name)
+        var r = color_names[0]
+        var g = color_names[1]
+        var b = color_names[2]
+
+        var global_var_name_r = r + "_selected"
+        var global_var_name_g = g + "_selected"
+        var global_var_name_b = b + "_selected"
+        if(variable_global_exists(global_var_name_r) && variable_global_exists(global_var_name_g) && variable_global_exists(global_var_name_b)){
+            variable_global_set(r, variable_global_get(global_var_name_r))
+            variable_global_set(g, variable_global_get(global_var_name_g))
+            variable_global_set(b, variable_global_get(global_var_name_b))
+        }
+    }
 
     var global_reals = global.color_scheme_database.global_reals
     var names = variable_struct_get_names(global_reals)
@@ -68,12 +87,33 @@ if(instance_exists(obj_levelstyler)){
     }
 
 
-    file_text_close(file)
 
-    if(restart_room)
+    var levelstyler_local_reals = global.color_scheme_database.levelstyler_local_reals
+    var names = variable_struct_get_names(levelstyler_local_reals)
+
+    for(var i = 0; i < array_length(names); i++){
+        var name = names[i]
+        var value = variable_struct_get(levelstyler_local_reals, name)
+
+        with(obj_levelstyler){
+            var global_var_name = value + "_selected"
+            if(variable_global_exists(global_var_name))
+                variable_instance_set(id, value, variable_global_get(global_var_name))
+        }
+    }
+
+
+    if(restart_room && room == level_editor_play_mode){
+        global.levelstyler_colors_need_to_be_reloaded = true
+        global.just_applied_colors = true
+        with(obj_levelstyler) color_scheme_backup = -1
+        leveleditor_play_current_level(false)
+    }
+    else if(restart_room && room != level_editor  /* && room != level_editor_play_mode */ && room != menu && room != main_menu_dark)
         room_restart()
+    
 
-    with(obj_shellworksUI) alarm[0] = 1 //Try commenting this out if this dont work
+    with(obj_shellworksUI) alarm[0] = 1
     
 } else {
     show_debug_message("obj_levelstyler does not exist! You cannot apply colors at this time!")

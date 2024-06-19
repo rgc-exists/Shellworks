@@ -19,6 +19,7 @@ if(global.just_applied_colors){
 
 
 if(needs_reload){
+    gml_Script_scr_update_backdraw()
     gml_Script_scr_load_to_selected_colors()
 }
 needs_reload = false

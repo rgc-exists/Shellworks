@@ -24,6 +24,7 @@ file_copy(old_scheme_directory + "Winter.txt", new_scheme_directory + "Winter.tx
 file_copy(old_scheme_directory + "Brain.txt", new_scheme_directory + "Brain.txt")
 file_copy(old_scheme_directory + "Preview.png", new_scheme_directory + "Brain.txt")
 
+/*
 var file_name = file_find_first(old_scheme_directory + "Overrides/", 0)
 
 while(file_name != ""){
@@ -33,9 +34,16 @@ while(file_name != ""){
 }
 
 file_find_close()
+*/
 
 global.setting_color_scheme = max_scheme
 
 global.levelstyler_colors_need_to_be_reloaded = true
-room_restart()
+if(room == level_editor_play_mode){
+    global.levelstyler_colors_need_to_be_reloaded = true
+    with(obj_levelstyler) color_scheme_backup = -1
+    leveleditor_play_current_level(false)
+} else if(room != level_editor /* && room != level_editor_play_mode */ && room != menu && room != main_menu_dark){
+    room_restart()
+}
 

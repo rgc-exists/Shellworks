@@ -110,7 +110,6 @@ if(global.shellworks_imgui_menuOpen){
 
         imgui_begin("PLAYER CHARACTER")
         imgui_separator_text("Colors")
-        gml_Script_shellworks_imgui_newbutton_doFunc("Character Customization UI", gml_Script_scr_go_to_character_select)
 
         gml_Script_shellworks_imgui_newboolean("Body", "setting_player_body_selected_enabled")
         imgui_same_line()
@@ -164,6 +163,7 @@ if(global.shellworks_imgui_menuOpen){
         imgui_separator_text("Other")
         gml_Script_shellworks_imgui_newboolean("Unicorn Hat Pops Ball", "setting_unicorn_horn_ball_override")
 
+        gml_Script_shellworks_imgui_newbutton_doFunc("Character Customization UI (DEPRECATED)", gml_Script_scr_go_to_character_select)
 
         imgui_end()
 
@@ -175,7 +175,7 @@ if(global.shellworks_imgui_menuOpen){
         gml_Script_shellworks_imgui_newbutton_doFunc("Campaign Select", gml_Script_scr_go_to_room_custom, [the_elevator])
         gml_Script_shellworks_imgui_newbutton_doFunc("Editor Select", gml_Script_scr_go_to_room_custom, [level_select_side])
         gml_Script_shellworks_imgui_newbutton_doFunc("Soundtrack Player", gml_Script_scr_go_to_music_player)
-        gml_Script_shellworks_imgui_newbutton_doFunc("Character Customization UI", gml_Script_scr_go_to_character_select)
+        //gml_Script_shellworks_imgui_newbutton_doFunc("Character Customization UI", gml_Script_scr_go_to_character_select)
         gml_Script_shellworks_imgui_newbutton_doFunc("Hat Select", gml_Script_scr_go_to_room_custom, [RoomOfHats])
         gml_Script_shellworks_imgui_newbutton_doFunc("Special Hat Select", gml_Script_scr_go_to_room_custom, [bonus_hat_room])
         if(global.shellworks_C10_secret)

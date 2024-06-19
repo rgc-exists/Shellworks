@@ -62,6 +62,24 @@ if(instance_exists(obj_levelstyler)){
     }
 
 
+    var global_threeparts_butnormal_colors = global.color_scheme_database.global_threeparts_butnormal_colors
+    var names = variable_struct_get_names(global_threeparts_butnormal_colors)
+    
+    for(var i = 0; i < array_length(names); i++){
+        var name = names[i]
+        var color_names = variable_struct_get(global_threeparts_butnormal_colors, name)
+        var r = color_names[0]
+        var g = color_names[1]
+        var b = color_names[2]
+
+        if(variable_global_exists(r) && variable_global_exists(g) && variable_global_exists(b)){
+            file_text_write_string(file, name)
+            file_text_writeln(file)
+            file_text_write_string(file, "RGB: " + string(variable_global_get(r)) + ", " + string(variable_global_get(g)) + ", " + string(variable_global_get(b)))
+            repeat(2) file_text_writeln(file)
+        }
+    }
+
     var global_reals = global.color_scheme_database.global_reals
     var names = variable_struct_get_names(global_reals)
 
@@ -76,6 +94,26 @@ if(instance_exists(obj_levelstyler)){
                 file_text_writeln(file)
                 file_text_write_real(file, real_val)
                 repeat(2) file_text_writeln(file)
+            }
+        }
+    }
+
+    var levelstyler_local_reals = global.color_scheme_database.levelstyler_local_reals
+    var names = variable_struct_get_names(levelstyler_local_reals)
+
+    for(var i = 0; i < array_length(names); i++){
+        var name = names[i]
+        var value = variable_struct_get(levelstyler_local_reals, name)
+
+        with(obj_levelstyler){
+            if(variable_instance_exists(id, value)){
+                if(!is_undefined(variable_instance_get(id, value))){
+                    var real_val = variable_instance_get(id, value)
+                    file_text_write_string(file, name)
+                    file_text_writeln(file)
+                    file_text_write_real(file, real_val)
+                    repeat(2) file_text_writeln(file)
+                }
             }
         }
     }
