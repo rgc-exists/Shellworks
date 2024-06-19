@@ -112,7 +112,7 @@ if(room != level_editor && room != menu && room != main_menu_dark && instance_ex
 
         imgui_separator_text("Objects")
         gml_Script_shellworks_imgui_newcolorpicker("Conveyor Belts", "col_conveyor_belts_selected")
-        gml_Script_shellworks_imgui_newcolorpicker("Bubbles", "col_bubbles_selected_selected")
+        gml_Script_shellworks_imgui_newcolorpicker("Bubbles", "col_bubbles_selected")
         gml_Script_shellworks_imgui_newcolorpicker("Underwater Currents", "col_underw_currents_selected")
 
         imgui_separator_text("Tower Defense")

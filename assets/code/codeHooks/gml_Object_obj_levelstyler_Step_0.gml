@@ -14,6 +14,7 @@ just_started_level = false
 
 if(global.just_applied_colors){
     global.just_applied_colors = false 
+    gml_Script_scr_apply_selected_colors(false)
     return false;
 }
 
