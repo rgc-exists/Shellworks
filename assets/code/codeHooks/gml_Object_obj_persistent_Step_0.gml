@@ -57,12 +57,6 @@ if(global.room_remember != room && room != menu){
 if(global.frames_since_startup == 2){
     toggle_console(global.setting_show_console)
     
-    global.shellworks_cache_directory = "Shellworks_Cache\\"
-    show_debug_message("Cache directory: " + global.shellworks_cache_directory)
-    if(!directory_exists(global.shellworks_cache_directory)){
-        show_debug_message(global.shellworks_cache_directory + " doesn't exist.")
-        directory_create(global.shellworks_cache_directory)
-    }
     global.dont_do_updates_cache_path = global.shellworks_cache_directory + "DoUpdates.txt"
     if(file_exists(global.dont_do_updates_cache_path)){
         var f = file_text_open_read(global.dont_do_updates_cache_path)

@@ -16,7 +16,7 @@
 
 
         /*
-        BE SURE TO SET THE OBJECT collision_rectangle_list IS LOOKING FOR TO BE THE OBJ NAME AND NOT THE INDEX, DUMBASS!!!
+        BE SURE TO SET THE OBJECT collision_rectangle_list IS LOOKING FOR TO BE THE OBJ NAME AND NOT THE INDEX!!!
         */
         collision_rectangle_list((mouse_drag_box_xmin + 2), (mouse_drag_box_ymin + 2), (mouse_drag_box_xmax - 2), (mouse_drag_box_ymax - 2), obj_lvlobj_parent, 1, 1, li_objects_in_box, 0)
         

@@ -4,7 +4,7 @@ global.is_Shellworks_client = true
 //Just use if(variable_global_exists("is_Shellworks_client")) to detect if it's Shellworks or not.
 //Sorry for anyone that needs to detect whether or not it's Shellworks before obj_persistent_Create_0 is run, I couldn't figure out how to get global init scripts to work with GMML.
 
-global.shellworks_version = "v0.3.1a"
+global.shellworks_version = "v0.3.2a"
 
 if(directory_exists(working_directory + "gmsl/mods/Shellworks/Shellworks_Assets/")){
     global.betterSE_assets = working_directory + "gmsl/mods/Shellworks/Shellworks_Assets/"
@@ -216,4 +216,17 @@ global.frames_since_startup = 0
 
 global.coming_from_room = level_select
 
-gml_Script_scr_colorscheme_database_ini()
+global.shellworks_cache_directory = "Shellworks_Cache\\"
+show_debug_message("Cache directory: " + global.shellworks_cache_directory)
+if(!directory_exists(global.shellworks_cache_directory)){
+    show_debug_message(global.shellworks_cache_directory + " doesn't exist.")
+    directory_create(global.shellworks_cache_directory)
+}
+
+var version_f = file_text_open_read(global.shellworks_cache_directory + "prev_version.txt")
+global.shellworks_prev_version = file_text_read_string(version_f)
+file_text_close(version_f)
+
+version_f = file_text_open_write(global.shellworks_cache_directory + "prev_version.txt")
+file_text_write_string(version_f, global.shellworks_version)
+file_text_close(version_f)

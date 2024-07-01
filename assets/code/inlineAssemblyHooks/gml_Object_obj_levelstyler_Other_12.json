@@ -9,8 +9,8 @@
             "File":""
         },
         {
-            "ToFind":"call.i @@try_unhook@@(argc=0)\npopz.v",
-            "ToReplace":"call.i @@try_unhook@@(argc=0)\npopz.v\npush.v self.file\ncall.i file_text_close(argc=1)",
+            "ToFind":"pop.v.v local.ex\ncall.i @@try_unhook@@(argc=0)\npopz.v\ncall.i @@finish_catch@@(argc=0)\npopz.v",
+            "ToReplace":"pop.v.v local.ex\ncall.i @@try_unhook@@(argc=0)\npopz.v\ncall.i @@finish_catch@@(argc=0)\npopz.v\npush.v self.file\ncall.i file_text_close(argc=1)",
             "Type": "replace",
             "IsExternalFile":false,
             "File":""

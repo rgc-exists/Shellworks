@@ -213,5 +213,4 @@ repeat (2)
     file_text_writeln(file)
 
 
-
 file_text_close(file)
