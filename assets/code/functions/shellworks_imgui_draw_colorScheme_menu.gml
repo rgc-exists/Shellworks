@@ -60,11 +60,8 @@ if(room != level_editor && room != menu && room != main_menu_dark && instance_ex
 
         gml_Script_shellworks_imgui_newcolorpicker("Wall A", "col_wall_A_selected")
         gml_Script_shellworks_imgui_newcolorpicker("Wall B", "col_wall_B_selected")
-        if(!instance_exists(obj_dark_level)){
-        } else {
-            gml_Script_shellworks_imgui_newcolorpicker("Wall A DARK", "col_wall_A_dark_selected")
-            gml_Script_shellworks_imgui_newcolorpicker("Wall B DARK", "col_wall_B_dark_selected")
-        }
+        gml_Script_shellworks_imgui_newcolorpicker("Wall A DARK", "col_wall_A_dark_selected")
+        gml_Script_shellworks_imgui_newcolorpicker("Wall B DARK", "col_wall_B_dark_selected")
         gml_Script_shellworks_imgui_newcolorpicker("Wall Outline A", "col_wall_outline_selected")
         gml_Script_shellworks_imgui_newcolorpicker("Wall Outline B", "col_wall_outline2_selected")
 
@@ -76,13 +73,10 @@ if(room != level_editor && room != menu && room != main_menu_dark && instance_ex
 
         imgui_separator_text("Colors")
 
-        if(!instance_exists(obj_dark_level)){
-            gml_Script_shellworks_imgui_newcolorpicker("Background", "col_back_selected")
-            gml_Script_shellworks_imgui_newcolorpicker("Background Pattern", "col_back_pattern_selected")
-        } else {
-            gml_Script_shellworks_imgui_newcolorpicker("Background (DARK)", "col_back_in_darkness_selected")
-            gml_Script_shellworks_imgui_newcolorpicker("Background Pattern (DARK)", "col_back_pattern_in_darkness_selected")
-        }
+        gml_Script_shellworks_imgui_newcolorpicker("Background", "col_back_selected")
+        gml_Script_shellworks_imgui_newcolorpicker("Background Pattern", "col_back_pattern_selected")
+        gml_Script_shellworks_imgui_newcolorpicker("Background (DARK)", "col_back_in_darkness_selected")
+        gml_Script_shellworks_imgui_newcolorpicker("Background Pattern (DARK)", "col_back_pattern_in_darkness_selected")
 
         imgui_separator_text("Settings")
         gml_Script_shellworks_imgui_newreal("Minimum Background Size", "background_size_min_selected")
@@ -151,7 +145,7 @@ if(room != level_editor && room != menu && room != main_menu_dark && instance_ex
         imgui_end()
 
 
-        imgui_begin("MISCELLANEOUS")
+        imgui_begin("OTHER MISCELLANEOUS")
 
         imgui_separator_text("Level Select")
         gml_Script_shellworks_imgui_newcolorpicker("Portal Locked Front", "col_lvlselect_lvl_locked_front_selected")
@@ -197,7 +191,7 @@ if(room != level_editor && room != menu && room != main_menu_dark && instance_ex
         imgui_end()
 
 
-        imgui_begin("SEPARATE MENUS")
+        imgui_begin("BACK TO MAIN MENU")
 
         gml_Script_shellworks_imgui_newbutton_toggleVar("Main Shellworks Menu", "shellworks_imgui_colorSchemeEditor_open")
 
