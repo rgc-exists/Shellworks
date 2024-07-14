@@ -76,6 +76,7 @@ if(global.shellworks_imgui_menuOpen){
     gml_Script_shellworks_imgui_newboolean("\"O for hotkeys\" message", "setting_show_hotkeys_overlay")
 
     imgui_separator_text("Other")
+    gml_Script_shellworks_imgui_newboolean("Disable Editor Music", "setting_disable_editor_music")
     if(room != level_editor){
         gml_Script_shellworks_imgui_newboolean("Manual Value Textbox", "setting_enter_value_manually")
         gml_Script_shellworks_imgui_newboolean("Squid In Editor", "setting_squid_in_editor")

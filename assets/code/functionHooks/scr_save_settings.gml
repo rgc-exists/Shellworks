@@ -8,7 +8,11 @@ if(variable_global_exists("is_resetting_settings")){
         return false;
     }
 }
+
+
 #orig#()
+
+
 if(variable_global_exists("is_resetting_settings")){
     if(global.is_resetting_settings == 2){
         global.is_resetting_settings = 0
@@ -17,7 +21,7 @@ if(variable_global_exists("is_resetting_settings")){
 }
 
 file = file_text_open_write("Shellworks_SettoIngs23-2.set")
-file_text_write_string(file, "Hello, human. Welcome to the advanced version of the Shellworkss exclusive settings.")
+file_text_write_string(file, "Hello, human. Welcome to the advanced version of the Shellworks exclusive settings.")
 file_text_writeln(file)
 file_text_write_string(file, "Make sure you know what you're doing before you change anything here.")
 repeat (2)
@@ -209,6 +213,11 @@ repeat (2)
 file_text_write_string(file, "Show Console")
 file_text_writeln(file)
 file_text_write_real(file, global.setting_show_console)
+repeat (2)
+    file_text_writeln(file)
+file_text_write_string(file, "Disable Editor Music")
+file_text_writeln(file)
+file_text_write_real(file, global.setting_disable_editor_music)
 repeat (2)
     file_text_writeln(file)
 
