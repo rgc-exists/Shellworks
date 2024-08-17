@@ -1,0 +1,1 @@
+    return audio_sound_get_pitch(argument0 / global.save_game_speed)

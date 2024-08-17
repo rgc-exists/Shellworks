@@ -41,6 +41,7 @@ global.setting_speedrun_timer_attempt = false
 global.setting_enter_value_manually = true
 global.setting_speedrun_reset_button = false
 global.setting_disable_editor_music = false
+global.setting_mute_when_unfocused = false
 
 /*
 //Old attempt at custom ImGUI theming

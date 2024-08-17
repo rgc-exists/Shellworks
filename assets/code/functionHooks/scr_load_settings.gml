@@ -168,6 +168,10 @@ if(file_exists("Shellworks_SettoIngs23-2.set")){
                 global.setting_disable_editor_music = file_text_read_real(file)
                 file_text_readln(file)
                 break
+            case "Mute When Unfocused":
+                global.setting_mute_when_unfocused = file_text_read_real(file)
+                file_text_readln(file)
+                break
         }
     }
     file_text_close(file)

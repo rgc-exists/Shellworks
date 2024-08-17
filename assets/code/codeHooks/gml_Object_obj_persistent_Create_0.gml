@@ -4,7 +4,7 @@ global.is_Shellworks_client = true
 //Just use if(variable_global_exists("is_Shellworks_client")) to detect if it's Shellworks or not.
 //Sorry for anyone that needs to detect whether or not it's Shellworks before obj_persistent_Create_0 is run, I couldn't figure out how to get global init scripts to work with GMML.
 
-global.shellworks_version = "v0.4.0a"
+global.shellworks_version = "v0.4.0b"
 
 global.shellworks_imgui_menuOpen = false
 
@@ -175,6 +175,12 @@ prevMouseInInspector = false
 
 
 
+global.shellworks_cache_directory = "Shellworks_Cache\\"
+if(!directory_exists(global.shellworks_cache_directory)){
+    show_debug_message(global.shellworks_cache_directory + " doesn't exist.")
+    directory_create(global.shellworks_cache_directory)
+}
+
 gml_Script_scr_initialize_BSE_settings()
 gml_Script_scr_initialize_shellworks_globalVars()
 
@@ -185,13 +191,6 @@ noclip_deathFX_fadeout = 0
 noclip_fadeout_speed = 0.05
 
 
-
-global.shellworks_cache_directory = "Shellworks_Cache\\"
-show_debug_message("Cache directory: " + global.shellworks_cache_directory)
-if(!directory_exists(global.shellworks_cache_directory)){
-    show_debug_message(global.shellworks_cache_directory + " doesn't exist.")
-    directory_create(global.shellworks_cache_directory)
-}
 
 if(file_exists(global.shellworks_cache_directory + "prev_version.txt")){
     var version_f = file_text_open_read(global.shellworks_cache_directory + "prev_version.txt")

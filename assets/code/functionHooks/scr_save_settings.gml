@@ -220,6 +220,12 @@ file_text_writeln(file)
 file_text_write_real(file, global.setting_disable_editor_music)
 repeat (2)
     file_text_writeln(file)
+file_text_write_string(file, "Mute When Unfocused")
+file_text_writeln(file)
+file_text_write_real(file, global.setting_mute_when_unfocused)
+repeat (2)
+    file_text_writeln(file)
 
 
 file_text_close(file)
+
