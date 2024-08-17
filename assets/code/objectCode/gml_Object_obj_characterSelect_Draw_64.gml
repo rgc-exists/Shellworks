@@ -136,13 +136,15 @@ for(var md = 0; md < array_length(menus_data); md++){
 }
 
 
-draw_set_color(c_white)
-draw_set_alpha(1)
-draw_set_halign(fa_left)
-draw_set_valign(fa_top)
-draw_text_transformed(10, 10, "NOTE: This UI is deprecated and can often lead to way brighter colors than expected.\nAlso, it does not have a way to see colors that only apply in NON-DARK levels.\nPreferably use the color sliders in the Shellworks mod menu overlay.", 1, 1, 0)
+
 
 
 draw_set_alpha(0.7)
 draw_set_color(c_green)
 draw_arrow(mouseX + 30, mouseY + 45, mouseX, mouseY, 140)
+
+draw_set_color(c_white)
+draw_set_alpha(1)
+draw_set_halign(fa_left)
+draw_set_valign(fa_top)
+draw_text_transformed(10, 10, "NOTE: This UI is deprecated and can often lead to way brighter colors than expected.\nAlso, it does not have a way to see colors that only apply in NON-DARK levels.\nPreferably use the color sliders in the Shellworks mod menu overlay.", 1, 1, 0)

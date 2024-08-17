@@ -1,6 +1,3 @@
-
-
-
 gml_Script_shellworks_imgui_createpopup_message("SHELLWORKS CHANGELOG " + global.shellworks_version,
 "CHANGELOG
 

@@ -20,7 +20,6 @@ var new_value = imgui_slider(label, minimum, maximum, global_var_value)
 if(imgui_deselected_after_edit() || !wait_until_deselect){
     if(global.shellworks_imgui_time_menu_open > 5){
         variable_global_set(global_var_name, round(new_value / step) * step)
-        
         if(global_var_value != new_value){
             if(save_settings){
                 scr_save_settings()

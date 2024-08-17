@@ -23,15 +23,3 @@ global.room_remember = room
 global.player_exists_remember = false
 
 global.shellworks_cache_settings_directory = global.shellworks_cache_directory + "Settings/"
-
-
-
-
-var path = global.shellworks_cache_settings_directory + "Speedhack Audio.txt"
-if(file_exists(path)){
-    var file = file_text_open_read(path)
-    global.special_setting_speedhack_audio = file_text_read_real(file)
-    file_text_close(file)
-} else {
-    global.special_setting_speedhack_audio = false
-}

@@ -20,11 +20,13 @@ public class AutoUpdater
         Console.WriteLine("Checking for updates...");
         wysPath = wysPath_arg;
         autoUpdaterPath = Path.Combine(wysPath, "Shellworks_AutoUpdater");
-        if (CheckOutdated()){
+        if (CheckOutdated())
+        {
             Shellworks.ShowConsole();
             UpdateAutoUpdater();
             string blacklistTxtPath = Path.Combine(wysPath, "gmsl", "mods", "blacklist.txt");
-            if(File.Exists(blacklistTxtPath)){
+            if (File.Exists(blacklistTxtPath))
+            {
                 File.WriteAllText(blacklistTxtPath, File.ReadAllText(blacklistTxtPath).Replace("ImGUIGM", ""));
             }
             UpdateShellworks();
@@ -36,12 +38,14 @@ public class AutoUpdater
         client.DefaultRequestHeaders.Add("Accept", "application/vnd.github+json");
         client.DefaultRequestHeaders.Add("User-Agent", "Shellworks updater");
 
-        try {
+        try
+        {
             var task = Task.Run(() => client.GetAsync("https://api.github.com/repos/rgc-exists/Shellworks/releases/latest"));
             task.Wait();
             using HttpResponseMessage response = task.Result;
             response.EnsureSuccessStatusCode();
-            if(response.IsSuccessStatusCode){
+            if (response.IsSuccessStatusCode)
+            {
                 var task2 = Task.Run(() => response.Content.ReadAsStringAsync());
                 task2.Wait();
                 json = JsonSerializer.Deserialize<JsonNode>(task2.Result);
@@ -54,16 +58,20 @@ public class AutoUpdater
                 }
                 else
                     return true;
-            } else
+            }
+            else
                 Console.WriteLine("Error while trying to check if there is a new version. Ensure your wifi is working. Continuing...");
-                return false;
-        } catch {
+            return false;
+        }
+        catch
+        {
             Console.WriteLine("Error while trying to check if there is a new version. Ensure your wifi is working. Continuing...");
             return false;
         }
     }
 
-    private static void UpdateAutoUpdater(){
+    private static void UpdateAutoUpdater()
+    {
         Console.WriteLine("Updating the Shellworks auto updater...");
 
         client.DefaultRequestHeaders.Add("Accept", "application/vnd.github+json");
@@ -100,7 +108,8 @@ public class AutoUpdater
         System.IO.Compression.ZipFile.ExtractToDirectory(shellworksZip, extracted, true);
     }
 
-    private static void UpdateShellworks(){
+    private static void UpdateShellworks()
+    {
         var process = new System.Diagnostics.Process();
         process.StartInfo.FileName = Path.Combine(wysPath, "Shellworks_AutoUpdater", "UpdaterExe.exe");
         process.StartInfo.Arguments = "\"" + wysPath + "\"";

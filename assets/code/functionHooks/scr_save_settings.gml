@@ -8,11 +8,7 @@ if(variable_global_exists("is_resetting_settings")){
         return false;
     }
 }
-
-
 #orig#()
-
-
 if(variable_global_exists("is_resetting_settings")){
     if(global.is_resetting_settings == 2){
         global.is_resetting_settings = 0
@@ -228,4 +224,3 @@ repeat (2)
 
 
 file_text_close(file)
-

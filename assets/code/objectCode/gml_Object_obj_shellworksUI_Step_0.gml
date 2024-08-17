@@ -55,26 +55,6 @@ if(global.shellworks_imgui_menuOpen){
     gml_Script_shellworks_imgui_newreal("Game Speed", "save_game_speed", "%.2f", true, 0.01, 100)
     if(global.save_game_speed != prevGameSpeed){
         scr_change_gamespeed(0)
-        if(global.special_setting_speedhack_audio){
-            gml_Script_SPH_change_speed(prevGameSpeed, global.save_game_speed)
-        }
-    }
-
-    var prev_speedhack_speedhack_audio = global.special_setting_speedhack_audio
-    gml_Script_shellworks_imgui_newboolean("Speedhack Audio (REQUIRES RESTART)", "special_setting_speedhack_audio")
-    if(global.special_setting_speedhack_audio != prev_speedhack_speedhack_audio){
-        if(global.special_setting_speedhack_audio){
-            gml_Script_shellworks_imgui_createpopup_message("THIS FEATURE REQUIRES A GAME RESTART!",
-        "Due to how the speedhack audio setting works, you must restart the game to use it.
-
-More technical info:
-When enabled, this setting makes Shellworks go through EVERY instance of an audio sound function being called and adds a pitch modifier by redirecting it to its own function.
-Because the mod is adding an extra function in between every time a sound is played, THIS COULD IMPACT PERFORMANCE.", "I understand.")
-        }
-        var path = global.shellworks_cache_settings_directory + "Speedhack Audio.txt"
-        var file = file_text_open_write(path)
-        file_text_write_real(file, global.special_setting_speedhack_audio)
-        file_text_close(file)
     }
 
     imgui_end()
@@ -131,6 +111,7 @@ Because the mod is adding an extra function in between every time a sound is pla
 
     imgui_begin("PLAYER CHARACTER")
     imgui_separator_text("Colors")
+    gml_Script_shellworks_imgui_newbutton_doFunc("Character Customization UI\n(DEPRECATED)", gml_Script_scr_go_to_character_select)
 
     gml_Script_shellworks_imgui_newboolean("Body", "setting_player_body_selected_enabled")
     imgui_same_line()
@@ -195,7 +176,7 @@ Because the mod is adding an extra function in between every time a sound is pla
     gml_Script_shellworks_imgui_newbutton_doFunc("Campaign Select", gml_Script_scr_go_to_room_custom, [the_elevator])
     gml_Script_shellworks_imgui_newbutton_doFunc("Editor Select", gml_Script_scr_go_to_room_custom, [level_select_side])
     gml_Script_shellworks_imgui_newbutton_doFunc("Soundtrack Player", gml_Script_scr_go_to_music_player)
-    gml_Script_shellworks_imgui_newbutton_doFunc("Character Customization UI (DEPRECATED)", gml_Script_scr_go_to_character_select)
+    gml_Script_shellworks_imgui_newbutton_doFunc("Character Customization UI", gml_Script_scr_go_to_character_select)
     gml_Script_shellworks_imgui_newbutton_doFunc("Hat Select", gml_Script_scr_go_to_room_custom, [RoomOfHats])
     gml_Script_shellworks_imgui_newbutton_doFunc("Special Hat Select", gml_Script_scr_go_to_room_custom, [bonus_hat_room])
     if(global.shellworks_C10_secret)
@@ -215,7 +196,6 @@ Because the mod is adding an extra function in between every time a sound is pla
     imgui_same_line()
     gml_Script_shellworks_imgui_newbutton_doFunc("Windowed", scr_set_window_mode, [3])
     gml_Script_shellworks_imgui_newboolean("Mute On Unfocused Window", "setting_mute_when_unfocused")
-
     imgui_separator_text("Speedrun Features")
     gml_Script_shellworks_imgui_newboolean("Game Timer", "setting_speedrun_timer_game")
     gml_Script_shellworks_imgui_newboolean("Chapter Timer", "setting_speedrun_timer_chapter")

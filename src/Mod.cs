@@ -69,13 +69,6 @@ public class Shellworks : IGMSLMod
             LoadCode();
             BuildRooms();
             AddMenuItems();
-            string speedhackAudioPath = Path.Combine(appDataDirectory, "Shellworks_Cache", "Settings", "Speedhack Audio.txt");
-            if(File.Exists(speedhackAudioPath)){
-                if(File.ReadAllText(speedhackAudioPath).Trim() == "1"){
-                    Console.WriteLine("Speedhack audio is enabled. Replacing audio functions...");
-                    EnableSpeedhackAudio();
-                }
-            }
             
             Console.WriteLine("Finalizing function hooks...");
             data.FinalizeHooks();
@@ -873,44 +866,6 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
         }
     }
 
-    private static Dictionary<string, string> audioFunctionReplacements = new Dictionary<string, string>{
-        //{"audio_play_sound_ext", "SPH_play_sound_ext"},
-        
-        {"audio_play_sound_at", "SPH_play_sound_at"},
-        {"audio_play_sound_on", "SPH_play_sound_on"},
-        {"audio_sound_pitch", "SPH_sound_pitch"},
-        {"audio_sound_get_pitch", "SPH_sound_get_pitch"},
-        {"audio_play_sound", "SPH_play_sound"},
-    };
-
-    private static void EnableSpeedhackAudio(){
-        /*
-        data.CreateGlobalScript("speedhack_audio_scripts",
-        File.ReadAllText(Path.Combine(baseDirectory, "code", "hacky", "speedhack_audio_scripts.gml")),
-        0, out UndertaleCodeLocals locals);
-        */
-
-        
-        foreach(UndertaleCode code in data.Code) {
-            if(code.ParentEntry is not null) continue;
-            if(code.Name.Content.Contains("SPH_")) continue;
-            if(code.Name.Content.Contains("speedhack_audio_scripts")) continue;
-            
-            //Console.WriteLine(code.Name.Content);
-            UndertaleCodeLocals locals = data.CodeLocals.ByName(code.Name.Content);
-            string assembly = code.Disassemble(data.Variables, data.CodeLocals.For(code));
-            for(int i = 0; i < audioFunctionReplacements.Count; i++){
-                for(int j = 0; j < 9; j++){
-                    AsmCursor cursor = new(data, code, locals);
-                    while(cursor.GotoNext($"call.i {audioFunctionReplacements.Keys.ToList()[0]}(argc={j})")){
-                        cursor.Replace($"call.i {audioFunctionReplacements.Values.ToList()[0]}(argc={j})");
-                    }
-                }
-            }
-        
-        }
-    }
-    
     public static void ShowConsole(){
         var handle = GetConsoleWindow();
         ShowWindow(handle, SW_SHOW);

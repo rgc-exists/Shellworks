@@ -55,8 +55,14 @@ if(global.room_remember != room && room != menu){
 }
 
 if(global.frames_since_startup == 2){
-    //toggle_console(global.setting_show_console)
+    toggle_console(global.setting_show_console)
     
+    global.shellworks_cache_directory = "Shellworks_Cache\\"
+    show_debug_message("Cache directory: " + global.shellworks_cache_directory)
+    if(!directory_exists(global.shellworks_cache_directory)){
+        show_debug_message(global.shellworks_cache_directory + " doesn't exist.")
+        directory_create(global.shellworks_cache_directory)
+    }
     global.dont_do_updates_cache_path = global.shellworks_cache_directory + "DoUpdates.txt"
     if(file_exists(global.dont_do_updates_cache_path)){
         var f = file_text_open_read(global.dont_do_updates_cache_path)
@@ -88,10 +94,4 @@ if(global.frames_since_startup == 2){
         if(!global.setting_player_trail_selected_enabled)
             global.setting_player_trail_selected = obj_levelstyler.col_player_trail
     }
-}
-
-if(global.setting_mute_when_unfocused && !window_has_focus()){
-    audio_master_gain(0)
-} else {
-    audio_master_gain(global.setting_volume_master * global.setting_volume_master)
 }
