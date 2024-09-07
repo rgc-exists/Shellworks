@@ -17,19 +17,6 @@ if(room == disco_copy_me){ //If is snail from the music player room
     particletraveldist = 0
     xlast = x
     ylast = y
-    if (!instance_exists(obj_persistent))
-        instance_create_layer(0, 0, "Walls", obj_persistent)
-    if (!instance_exists(obj_camera_control))
-        instance_create_layer(0, 0, layer, obj_camera_control)
-    if (!instance_exists(obj_levelstyler))
-        instance_create_layer(0, 0, layer, obj_levelstyler)
-    if (!instance_exists(obj_wall_shader))
-        instance_create_layer(0, 0, "Walls", obj_wall_shader)
-    if instance_exists(obj_dark_level)
-    {
-        if (!instance_exists(obj_darkFollowFlare))
-            instance_create_layer(0, 0, "AI_Representation", obj_darkFollowFlare)
-    }
     nomovement_timer = 0
     eye1 = instance_create_layer(x, y, "Player_Eyes", obj_snaili_eye)
     eye1.eye = 1
@@ -67,12 +54,6 @@ if(room == disco_copy_me){ //If is snail from the music player room
     if (room == level_select || room == story_library || room == community_campaign_lvlselect)
         extra_speed_mode = 1
     started_playing = 0
-    scr_spawn_correct_hat()
-    with (obj_hat_parent)
-    {
-        if (dead == 0)
-            y = (obj_player.y - 30)
-    }
     holding_jump_without_moving_timer = 0
     glitch_mode_and_dir = -1
     global.player_using_glitch_timer = 0

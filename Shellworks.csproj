@@ -9,11 +9,13 @@
     <EnableDefaultCompileItems>False</EnableDefaultCompileItems>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
-  
+
+
   <ItemGroup>
-    <ProjectReference Include="vendor\gmsl\vendor\undertalemodtool-src\UndertaleModLib\UndertaleModLib.csproj" />
-		<ProjectReference Include="vendor\gmsl\gmsl-modapi\gmsl-modapi.csproj" />
-	</ItemGroup>
+    <ProjectReference
+      Include="vendor\gmsl\vendor\undertalemodtool-src\UndertaleModLib\UndertaleModLib.csproj" />
+    <ProjectReference Include="vendor\gmsl\gmsl-modapi\gmsl-modapi.csproj" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Include="**\*.cs" Exclude="vendor\**\*.*" />
@@ -27,7 +29,12 @@
     <ItemGroup>
       <Assets Include="assets/**/*.*" />
     </ItemGroup>
-    <Copy SourceFiles="@(Assets)" DestinationFolder="$(TargetDir)/%(RecursiveDir)" SkipUnchangedFiles="false" />
+    <Copy SourceFiles="@(Assets)" DestinationFolder="$(TargetDir)/%(RecursiveDir)"
+      SkipUnchangedFiles="false" />
   </Target>
-  
+
+  <Target Name="CreateSymlink" AfterTargets="AfterBuild">
+    <Exec Command="mklink /D &quot;$(TargetDir)code&quot; &quot;$(ProjectDir)code&quot;" />
+  </Target>
+
 </Project>
