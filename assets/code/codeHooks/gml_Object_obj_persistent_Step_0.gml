@@ -52,6 +52,8 @@ if(instance_exists(obj_player)){
 if(global.room_remember != room && room != menu){
     global.room_remember = room
     global.player_exists_remember = false
+    global.total_half_jumps_so_far_can_change = true
+
 }
 
 if(global.frames_since_startup == 2){
@@ -94,4 +96,11 @@ if(global.frames_since_startup == 2){
         if(!global.setting_player_trail_selected_enabled)
             global.setting_player_trail_selected = obj_levelstyler.col_player_trail
     }
+}
+
+
+if(global.setting_mute_when_unfocused && !window_has_focus()){
+    audio_master_gain(0)
+} else {
+    audio_master_gain(global.setting_volume_master * global.setting_volume_master)
 }

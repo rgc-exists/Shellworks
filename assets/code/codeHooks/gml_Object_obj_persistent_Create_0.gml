@@ -171,6 +171,7 @@ global.preset_character_data = [
 
 prevMouseInInspector = false
 
+global.shellworks_cache_directory = "Shellworks_Cache\\"
 
 
 gml_Script_scr_initialize_BSE_settings()
@@ -183,19 +184,32 @@ noclip_deathFX_fadeout = 0
 noclip_fadeout_speed = 0.05
 
 global.shellworks_imgui_menuOpen = false
+if(file_exists(global.shellworks_cache_directory + "prev_version.txt")){
+    var version_f = file_text_open_read(global.shellworks_cache_directory + "prev_version.txt")
+    global.shellworks_prev_version = file_text_read_string(version_f)
+    file_text_close(version_f)
+} else {
+    global.shellworks_prev_version = "UNKNOWN"
+}
 
-global.shellworks_first_time = false
-global.shellworks_first_menu_press = false
-if(!file_exists("shellworks_hasBeenBootedUp.dontDelete")){
-    global.shellworks_first_time = true
-    global.shellworks_first_menu_press = true
-    if(!variable_global_exists("has_persistentCreate0_run_already")){
+version_f = file_text_open_write(global.shellworks_cache_directory + "prev_version.txt")
+file_text_write_string(version_f, global.shellworks_version)
+file_text_close(version_f)
+
+if(!variable_global_exists("has_persistentCreate0_run_already")){
+    global.shellworks_first_time = false
+    global.shellworks_first_menu_press = false
+    if(!file_exists("shellworks_hasBeenBootedUp.dontDelete")){
+        global.shellworks_first_time = true
+        global.shellworks_first_menu_press = true
         gml_Script_shellworks_imgui_createpopup_togglevar("WELCOME!",
         "Welcome to Shellworks!\n\n\nBy default, you can press F4 to enter the shellworks menu.\n\nThe menu open key can be changed in the vanilla menu just like any other keybind.",
         "shellworks_first_time")
+
+    } /* else*/ if(global.shellworks_prev_version != global.shellworks_version){
+        gml_Script_scr_show_changelog()
     }
 }
-
 
 
 global.manual_textbox_selected = false

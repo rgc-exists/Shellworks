@@ -89,4 +89,16 @@ if(room == disco_copy_me){ //If is snail from the music player room
     #orig#()
     just_hit_fuse = false
     is_first_frame = true
+
+    global.attempt_jumps_so_far = 0
+
+    if(global.room_remember != room && room != menu){
+        global.total_half_jumps_so_far_can_change = true
+    }
+    if (global.input_jump && (!global.input_jump_pressed) && global.total_half_jumps_so_far_can_change){
+        global.total_jumps_so_far += 0.5
+        global.attempt_jumps_so_far += 0.5
+        global.total_half_jumps_so_far += 1
+    }
+
 }

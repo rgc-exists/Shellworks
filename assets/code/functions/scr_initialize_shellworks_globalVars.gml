@@ -23,3 +23,12 @@ global.room_remember = room
 global.player_exists_remember = false
 
 global.shellworks_cache_settings_directory = global.shellworks_cache_directory + "Settings/"
+
+global.total_jumps_so_far = 0 
+global.attempt_jumps_so_far = 0 
+global.total_half_jumps_so_far = 0 
+
+global.total_jumps_so_far_enabled = false
+global.attempt_jumps_so_far_enabled = false
+global.total_half_jumps_so_far_enabled = false
+global.total_half_jumps_so_far_can_change = true

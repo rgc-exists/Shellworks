@@ -49,7 +49,8 @@ public class Shellworks : IGMSLMod
         string doAutoUpdates_path = Path.Combine(appDataDirectory, "Shellworks_Cache", "DoUpdates.txt");
 
 
-        if(!(File.Exists(doAutoUpdates_path) && File.ReadAllText(doAutoUpdates_path).Trim() == "0")){
+        if (!(File.Exists(doAutoUpdates_path) && File.ReadAllText(doAutoUpdates_path).Trim() == "0"))
+        {
             AutoUpdater.DoUpdate(wysPath);
         }
 
@@ -57,11 +58,13 @@ public class Shellworks : IGMSLMod
 
         string needsToBeUpdated = Path.Combine(baseDirectory, "needsToBeUpdated.txt");
 
-        if(File.Exists(needsToBeUpdated) && File.ReadAllText(needsToBeUpdated).Trim() == "1"){
+        if (File.Exists(needsToBeUpdated) && File.ReadAllText(needsToBeUpdated).Trim() == "1")
+        {
             Console.WriteLine("Shellworks was disabled until the next updated. To re-enable it, delete or change the file " + needsToBeUpdated);
             return;
         }
-        try {
+        try
+        {
 
             CreateObjects();
             ExtraStuff();
@@ -69,12 +72,13 @@ public class Shellworks : IGMSLMod
             LoadCode();
             BuildRooms();
             AddMenuItems();
-            
+
             Console.WriteLine("Finalizing function hooks...");
             data.FinalizeHooks();
-            
 
-            if(failedHook){
+
+            if (failedHook)
+            {
                 Console.WriteLine(@"
 
 
@@ -88,15 +92,21 @@ ARE YOU SURE YOU WANT TO CONTINUE?
 Type ""y"" to continue. Otherwise, SHELLWORKS will throw an error and the mod will be skipped.");
                 ShowConsole();
                 string answer = Console.ReadLine();
-                if(answer != null){
-                    if(answer.ToLower() == "y"){
+                if (answer != null)
+                {
+                    if (answer.ToLower() == "y")
+                    {
 
-                    } else {
+                    }
+                    else
+                    {
                         throw new Exception("There were missing assembly hooks, and the user said not to continue.");
                     }
                 }
             }
-        } catch(Exception e) {
+        }
+        catch (Exception e)
+        {
             Console.WriteLine("Shellworks encountered an error:\n" + e.Message + "\n" + e.StackTrace);
             Console.WriteLine(@"
 
@@ -112,21 +122,23 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
             );
             ShowConsole();
             string answer = Console.ReadLine();
-        
-            if(answer.ToLower() == "y"){
+
+            if (answer.ToLower() == "y")
+            {
                 File.WriteAllText(needsToBeUpdated, "1");
             }
             throw new Exception("\n\n\n\nShellworks encountered an error. Check previous output for more details.");
-            
+
         }
     }
-        
+
 
     private static void CreateObjects()
     {
         UndertaleString name = new UndertaleString("obj_characterSelect");
         data.Strings.Add(name);
-        UndertaleGameObject obj_characterSelect = new UndertaleGameObject(){
+        UndertaleGameObject obj_characterSelect = new UndertaleGameObject()
+        {
             Name = name,
             Visible = true,
             Solid = false
@@ -135,7 +147,8 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
 
         UndertaleString name2 = new UndertaleString("obj_input_overrider_disable_allowRestart");
         data.Strings.Add(name2);
-        UndertaleGameObject obj_input_overrider_disable_allowRestart = new UndertaleGameObject(){
+        UndertaleGameObject obj_input_overrider_disable_allowRestart = new UndertaleGameObject()
+        {
             Name = name2,
             Visible = false,
             Solid = false,
@@ -145,37 +158,51 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
 
         UndertaleString name3 = new UndertaleString("obj_shellworksUI");
         data.Strings.Add(name3);
-        UndertaleGameObject obj_shellworksUI = new UndertaleGameObject(){
+        UndertaleGameObject obj_shellworksUI = new UndertaleGameObject()
+        {
             Name = name3,
             Visible = true,
             Solid = false,
-            Persistent=true
+            Persistent = true
         };
         data.GameObjects.Add(obj_shellworksUI);
 
         UndertaleString name4 = new UndertaleString("obj_menu_cOpenShellworks");
         data.Strings.Add(name4);
-        UndertaleGameObject obj_menu_cOpenShellworks = new UndertaleGameObject(){
+        UndertaleGameObject obj_menu_cOpenShellworks = new UndertaleGameObject()
+        {
             Name = name4,
             Visible = true,
             Solid = false,
             ParentId = data.GameObjects.ByName("obj_menu_ControlAddRemove")
         };
         data.GameObjects.Add(obj_menu_cOpenShellworks);
-        
+
         UndertaleString name5 = new UndertaleString("obj_shellworksUI_popup");
         data.Strings.Add(name5);
-        UndertaleGameObject obj_shellworksUI_popup = new UndertaleGameObject(){
+        UndertaleGameObject obj_shellworksUI_popup = new UndertaleGameObject()
+        {
             Name = name5,
             Visible = true,
             Solid = false,
-            Persistent=true
+            Persistent = true
         };
         data.GameObjects.Add(obj_shellworksUI_popup);
 
+        UndertaleString name6 = new UndertaleString("obj_shellworks_extra_feature_handler");
+        data.Strings.Add(name6);
+        UndertaleGameObject shellworks_extra_feature_handler = new UndertaleGameObject()
+        {
+            Name = name6,
+            Visible = true,
+            Solid = false,
+            Persistent = true
+        };
+        data.GameObjects.Add(shellworks_extra_feature_handler);
     }
 
-    private static void ExtraStuff(){
+    private static void ExtraStuff()
+    {
         UndertaleString str = data.Strings.MakeString("inputaction_shellworks_openmenu");
         data.CreateLegacyScript("shellworks_stupid_thing_because_i_cant_find_how_to_properly_init_a_var", @"
         global.inputaction_shellworks_openmenu = undefined
@@ -190,10 +217,10 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
         var directoryJsonPath = Path.Combine(baseDirectory, "code", "directories.json");
         var directories = JsonSerializer.Deserialize<Dictionary<string, string>>(File.ReadAllText(directoryJsonPath));
         if (directories == null) return;
-        
+
 
         var handlers = SetupHandlers();
-        
+
         foreach (var directory in directories)
         {
             var path = Path.Combine(baseDirectory, "code", directory.Key);
@@ -203,15 +230,20 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
             }
             else
             {
-                if (directory.Value == "custom_tools"){
+                /*
+                if (directory.Value == "custom_tools")
+                {
                     foreach (string file in GetFilesRecursively(path))
                     {
                         var code = File.ReadAllText(file);
                         code = ReplaceMacros(code);
-                        
+
                         handlers["functions"].Invoke(code, file);
                     }
-                } else if (!handlers.ContainsKey(directory.Value))
+                }
+                //Might add this at some point, but for now it's unsupported.
+                */
+                if (!handlers.ContainsKey(directory.Value))
                 {
                     Console.WriteLine($"Path {path} has handler {directory.Value} which isn't in handlers");
                 }
@@ -221,17 +253,18 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
                     {
                         var code = File.ReadAllText(file);
                         code = ReplaceMacros(code);
-                        
+
                         handlers[directory.Value].Invoke(code, file);
                     }
                 }
             }
         }
 
-        
+
     }
 
-    public static string[] GetFilesRecursively(string path){
+    public static string[] GetFilesRecursively(string path)
+    {
         List<string> pathsSoFar = new List<string>();
 
         foreach (var file in Directory.GetFiles(path))
@@ -248,7 +281,8 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
     }
 
 
-    public static List<string> GetFilesRecursively_Internal(string path,  List<string> pathsSoFar){
+    public static List<string> GetFilesRecursively_Internal(string path, List<string> pathsSoFar)
+    {
         foreach (var file in Directory.GetFiles(path))
         {
             pathsSoFar.Add(file);
@@ -265,7 +299,7 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
 
     private static string ReplaceMacros(string code)
     {
-        var macroJsonPath = Path.Combine(baseDirectory, "code", "macros.json"); 
+        var macroJsonPath = Path.Combine(baseDirectory, "code", "macros.json");
         var macros = JsonSerializer.Deserialize<Dictionary<string, string>>(File.ReadAllText(macroJsonPath));
 
         // We do a double pass to try to replace nested macros
@@ -276,11 +310,11 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
     private static Dictionary<string, Action<string, string>> SetupHandlers()
     {
         var handlers = new Dictionary<string, Action<string, string>>();
-        
+
         handlers.Add("functions", (code, file) =>
         {
             var functionName = Path.GetFileNameWithoutExtension(file);
-            
+
             MatchCollection matchList = Regex.Matches(code, @"(?<=argument)\d+");
             ushort argCount;
             if (matchList.Count > 0)
@@ -290,19 +324,19 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
             Console.WriteLine("Creating new function " + functionName + " with argument count " + argCount.ToString());
             data.CreateFunction(functionName, code, argCount);
         });
-        
+
         handlers.Add("codehooks", (code, file) =>
         {
             Console.WriteLine("Hooking to object code " + Path.GetFileNameWithoutExtension(file));
             data.HookCode(Path.GetFileNameWithoutExtension(file), code);
         });
-        
+
         handlers.Add("functionhooks", (code, file) =>
         {
             Console.WriteLine("Hooking to function " + Path.GetFileNameWithoutExtension(file));
             data.HookFunction(Path.GetFileNameWithoutExtension(file), code);
         });
-        
+
         handlers.Add("objectcode", (code, file) =>
         {
             if (file.EndsWith(".gml")) return;
@@ -316,7 +350,7 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
 
             if (!objectFile.HasSubtype) subtype = uint.Parse(objectFile.Subtype);
             else subtype = (uint)Enum.Parse(FindType("UndertaleModLib.Models.EventSubtype" + objectFile.Type), objectFile.Subtype);
-            
+
 
             string code_str = File.ReadAllText(Path.Combine(Path.GetDirectoryName(file), objectFile.File));
             code_str = ReplaceMacros(code_str);
@@ -335,16 +369,18 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
             if (hookFile == null) return;
 
             Console.WriteLine("Adding inline hook(s) to " + file);
-            
-            
-            foreach(HookFile_Hook hookData in hookFile.Hooks){
+
+
+            foreach (HookFile_Hook hookData in hookFile.Hooks)
+            {
                 UndertaleCode undertaleCode = data.Code.ByName(hookFile.Script);
 
                 string assembly_str = undertaleCode.Disassemble(data.Variables, data.CodeLocals.For(undertaleCode));
                 List<string> lines = assembly_str.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None).ToList();
-                
+
                 bool foundAtAll = false;
-                for(var l = 0; l < lines.Count; l++){
+                for (var l = 0; l < lines.Count; l++)
+                {
                     int cur_l = l;
                     int before = l;
                     var found = true;
@@ -356,27 +392,34 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
                     }
 
                     if (!found) continue;
-                    
+
                     foundAtAll = true;
                     string fileContents = File.ReadAllText(Path.Combine(baseDirectory, "code", hookData.File));
                     string scriptName = Path.GetFileNameWithoutExtension(hookData.File);
                     string functionArgs = "";
-                    for(int a = 0; a < hookData.InArgs.Length; a++){
+                    for (int a = 0; a < hookData.InArgs.Length; a++)
+                    {
                         var argument = hookData.InArgs[a];
-                        if(!argument.StartsWith("local")){
-                            if(a < hookData.InArgs.Length - 1){
+                        if (!argument.StartsWith("local"))
+                        {
+                            if (a < hookData.InArgs.Length - 1)
+                            {
                                 functionArgs += argument.Replace("arg.", "") + ", ";
-                            } else {
+                            }
+                            else
+                            {
                                 functionArgs += argument.Replace("arg.", "");
                             }
                         }
                     }
                     Console.WriteLine("Adding inlineHook function for " + Path.GetFileNameWithoutExtension(hookData.File));
                     string hookStr = "function " + scriptName + "(" + functionArgs + "){\n" + fileContents + "\n}";
-                    if(data.Code.ByName(Path.GetFileNameWithoutExtension(hookData.File)) == null){
+                    if (data.Code.ByName(Path.GetFileNameWithoutExtension(hookData.File)) == null)
+                    {
                         data.CreateLegacyScript(Path.GetFileNameWithoutExtension(hookData.File), hookStr, (ushort)hookData.InArgs.Length);
                     }
-                    if(hookData.Type == "replace"){
+                    if (hookData.Type == "replace")
+                    {
                         lines.RemoveRange(before, hookData.Sig.Length);
                     }
                     int insertionIndex = hookData.Type == "append" ? cur_l : before;
@@ -392,19 +435,23 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
                     lines.Insert(curInsertIndex, "popz.v");
                     curInsertIndex++;
                     string assemblyStr_out = "";
-                    foreach(string li in lines){
+                    foreach (string li in lines)
+                    {
                         assemblyStr_out += li + "\n";
                     }
                     undertaleCode.Replace(Assembler.Assemble(assemblyStr_out, data));
-                    if(hookData.Type == "prepend"){
+                    if (hookData.Type == "prepend")
+                    {
                         l = curInsertIndex;
                     }
                 }
 
-                if(!foundAtAll){
+                if (!foundAtAll)
+                {
 
                     string assemblyLookedFor = "";
-                    foreach(string l in hookData.Sig){
+                    foreach (string l in hookData.Sig)
+                    {
                         assemblyLookedFor += l + "\n";
                     }
                     Console.WriteLine("\n\nWARNING: could not find place to assembly hook for " + Path.GetFileNameWithoutExtension(file) + "\n" + assemblyLookedFor + "\n\n\n");
@@ -421,9 +468,10 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
             if (hookFile == null) return;
 
             Console.WriteLine("Adding inline assembly hook(s) to " + file);
-            
-            
-            foreach(HookFile_Hook_Asm hookData in hookFile.Hooks){
+
+
+            foreach (HookFile_Hook_Asm hookData in hookFile.Hooks)
+            {
                 UndertaleCode undertaleCode = data.Code.ByName(hookFile.Script);
 
                 string assembly_str = undertaleCode.Disassemble(data.Variables, data.CodeLocals.For(undertaleCode)).Replace("\r\n", "\n").Replace("\r", "\n");
@@ -432,18 +480,22 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
                 string find = hookData.ToFind;
 
                 string replace = hookData.ToReplace;
-                if(hookData.IsExternalFile){
+                if (hookData.IsExternalFile)
+                {
                     replace = File.ReadAllText(Path.Combine(baseDirectory, "code", hookData.File));
                 }
 
-                if(assembly_str.Contains(find)){
+                if (assembly_str.Contains(find))
+                {
                     string assemblyStr_out = assembly_str.Replace(find, replace);
 
                     assemblyStr_out = assemblyStr_out.Replace("\"inputaction_shellworks_openmenu\"@3382", "\"inputaction_shellworks_openmenu\"@" + data.Strings.IndexOf(data.Strings.MakeString("inputaction_shellworks_openmenu")));
 
 
                     undertaleCode.Replace(Assembler.Assemble(assemblyStr_out, data));
-                } else {
+                }
+                else
+                {
                     Console.WriteLine("\n\nWARNING: could not find place to assembly inline hook for " + Path.GetFileNameWithoutExtension(file) + "\n\n\n");
                     failedHook = true;
                 }
@@ -458,9 +510,10 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
             if (hookFile == null) return;
 
             Console.WriteLine("Adding inline replacement(s) for " + Path.GetFileNameWithoutExtension(file));
-            
-            
-            foreach(ReplaceFile_Replacement replaceData in hookFile.Replacements){
+
+
+            foreach (ReplaceFile_Replacement replaceData in hookFile.Replacements)
+            {
                 UndertaleCode undertaleCode = data.Code.ByName(hookFile.Script);
 
                 string assembly_str = undertaleCode.Disassemble(data.Variables, data.CodeLocals.For(undertaleCode)).Replace("\r\n", "\n").Replace("\r", "\n").Replace("\t", "").Replace(" ", "");
@@ -472,21 +525,26 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
 
                 string replace = replaceData.ToReplace;
 
-                if(replaceData.FindIsExternalFile){
+                if (replaceData.FindIsExternalFile)
+                {
                     find = File.ReadAllText(Path.Combine(baseDirectory, "code", replaceData.FindFile)).Trim();
                 }
-                if(replaceData.ReplaceIsExternalFile){
+                if (replaceData.ReplaceIsExternalFile)
+                {
                     replace = File.ReadAllText(Path.Combine(baseDirectory, "code", replaceData.ReplaceFile)).Trim();
                 }
                 //find = find.Replace("\r\n", "\n").Replace("\r", "\n");
                 //replace = replace.Replace("\r\n", "\n").Replace("\r", "\n");
 
-                try {
+                try
+                {
                     string decompiledStr_out = decompiledStr.Replace(find, replace);
 
                     undertaleCode.ReplaceGmlSafe(decompiledStr_out, data);
-                    
-                } catch(Exception e) {
+
+                }
+                catch (Exception e)
+                {
                     Console.WriteLine(e.Message + "\n" + e.StackTrace);
                     Console.WriteLine("\n\nWARNING: could not find place to put inline replacement for " + Path.GetFileNameWithoutExtension(file) + "\n\n\n");
                     failedHook = true;
@@ -496,7 +554,7 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
 
         return handlers;
     }
-    
+
     private static Type? FindType(string qualifiedTypeName)
     {
         Type? t = Type.GetType(qualifiedTypeName);
@@ -512,14 +570,15 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
         return null;
     }
 
-    private static void AddCustomKeybinds(){
+    private static void AddCustomKeybinds()
+    {
         data.AddWYSKeybind("inputaction_shellworks_openmenu", 115);
     }
 
     private static void AddMenuItems()
     {
-        
-        data.InsertMenuOptionFromEnd("obj_menu_Controls", 0, new Menus.WysMenuOption("\"Open Shellworks Menu\"", instance:"obj_menu_cOpenShellworks"));
+
+        data.InsertMenuOptionFromEnd("obj_menu_Controls", 0, new Menus.WysMenuOption("\"Open Shellworks Menu\"", instance: "obj_menu_cOpenShellworks"));
 
         UndertaleGameObject specialMenu = data.CreateMenu("special");
         data.InsertMenuOptionFromEnd(Menus.Vanilla.Settings, 1, new Menus.WysMenuOption("\"Special\"")
@@ -539,7 +598,7 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
         data.AddMenuOption("obj_menu_ExplorationMode", new Menus.WysMenuOption("\"Extra + DIALOG SPRINGS\"", script: "gml_Script_scr_set_explore_mode", scriptArgument: "3", tooltipScript: "gml_Script_scr_return_input", tooltipArgument: "\"Unlocks ALL levels AND dialog springs.\""));
         //data.AddMenuOption("obj_menu_StayInBack", new Menus.WysMenuOption("\"Stay In FOREGROUND\"", script: "gml_Script_scr_set_stay_in_back_gml_Object_obj_menu_StayInBack_Other_10", scriptArgument: "2", tooltipScript: "gml_Script_scr_return_input", tooltipArgument: "\"Makes it so squid ALWAYS stays in the foreground, and never goes into the background.\""));
         //UndertaleGameObject squidInEditorMenu =
-        UndertaleGameObject levelEditorMenu = data.CreateMenu("level_editor", 
+        UndertaleGameObject levelEditorMenu = data.CreateMenu("level_editor",
         data.CreateToggleOption("\"Squid In Editor\"", "squidInEditorMenu", "global.setting_squid_in_editor = argument0", "selectedItem = global.setting_squid_in_editor", "global.setting_squid_in_editor", tooltipScript: "gml_Script_scr_return_input", tooltipArgument: "\"Have squid present in your editor. He will not talk, but he will keep you company while you build.\"")
         );
         data.InsertMenuOptionFromEnd(Menus.Vanilla.Settings, 2, new Menus.WysMenuOption("\"Level Editor\"")
@@ -586,7 +645,7 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
         //data.AddMenuOption(Menus.Vanilla.AdvancedGraphics, data.CreateToggleOption("\"Unlimited FPS (IDK if this does anything)\"", "unlimited_fps", "scr_set_unlimited_fps(argument0)", "scr_preselect_unlimited_fps()", "obj_persistent.unlimited_frame_rate", "gml_Script_scr_return_input", "\"Makes it so your framerate can go as high as you want. (I ACTUALLY HAVE NO CLUE IF THIS DOES ANYTHING BUT IT WAS IN THE CODE OF THE GAME SO WHY NOT.)\""));
 
         data.AddMenuOption("obj_menu_wysapi_level_editor", data.CreateToggleOption("\"\\\"Press O for hotkeys\\\" message\"", "press_for_hotkeys", "global.setting_show_hotkeys_overlay = argument0", "selectedItem = global.setting_show_hotkeys_overlay", "global.setting_show_hotkeys_overlay", "gml_Script_scr_return_input", "\"Turn on/off the \\\"Press O to show list of BSE-Exclusive Hotkeys\\\" overlay that shows when you enter the editor.\""));
-        
+
         data.AddMenuOption("obj_menu_wysapi_level_editor", data.CreateToggleOption("\"Place Multiple Players\"", "place_multiple_players", "global.setting_place_multiple_players = argument0", "selectedItem = global.setting_place_multiple_players", "global.setting_place_multiple_players", "gml_Script_scr_return_input", "\"Turn on to disable the feature that removes existing player objects when you place a new one. Useful for double shelly levels.\""));
         data.AddMenuOption("obj_menu_wysapi_level_editor", data.CreateToggleOption("\"Place Multiple 1-At-A-Time Objects\"", "place_multiple_1atATimeObjs", "global.setting_place_multiple_oneAtATime_objs = argument0", "selectedItem = global.setting_place_multiple_oneAtATime_objs", "global.setting_place_multiple_oneAtATime_objs", "gml_Script_scr_return_input", "\"Turn on to disable the feature that removes existing instances of certain objects when you place a new one. Useful for double shelly levels. (Includes the player object.)\""));
 
@@ -609,7 +668,7 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
         });
 
 
-        
+
 
         UndertaleGameObject MusicPlayer = data.CreateMenu("Music_Player", new Menus.WysMenuOption("\"Soundtrack Player\"", Menus.Vanilla.More, "gml_Script_scr_go_to_music_player()", null, "gml_Script_scr_return_input", "\"Go to the OST music player room\""));
         data.InsertMenuOptionFromEnd(specialMenu.Name.Content, 0, new Menus.WysMenuOption("\"Soundtrack Player\"")
@@ -622,9 +681,9 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
         data.InsertMenuOptionFromEnd(Menus.Vanilla.Hacks, 0, data.CreateChangeOption("\"Max Fall Speed\n(Underwater Only)\"", "cheat_max_fall_speed", "global.cheat_max_fall_speed = clamp(global.cheat_max_fall_speed + argument0 / 100, 0, 100)", "return string(global.cheat_max_fall_speed)", 10));
         //data.InsertMenuOptionFromEnd(Menus.Vanilla.Gameplay, 0, data.CreateChangeOption("\"Player Respawn Time\"", "respawn_time", "global.setting_respawn_time = clamp(global.setting_respawn_time + argument0, 0, 10)", "return gml_Script_scr_return_respawn_time()", 0.25));
 
-        
 
-        
+
+
         /*
         UndertaleGameObject advancedSpecialMenu = data.CreateMenu("advanced_special", 
         data.CreateToggleOption("\"Global Inspector (Press F5)\"", "global_inspector", "global.setting_global_inspector_available = argument0", "selectedItem = global.setting_global_inspector_available", "global.setting_global_inspector_available", tooltipScript: "gml_Script_scr_return_input", tooltipArgument: "\"With this on, you can press F5 to open the global object inspector.\"")
@@ -656,7 +715,7 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
 
 
         data.InsertMenuOptionFromEnd("obj_menu_Controls", 0, data.CreateToggleOption("\"Input Display\"", "input_display", "global.setting_input_display = argument0", "selectedItem = global.setting_input_display", "global.setting_input_display", tooltipScript: "gml_Script_scr_return_input", tooltipArgument: "\"Display the keys you are currently pressing on the screen.\n\nOnly works with keyboard for now.\""));
-        
+
 
         data.InsertMenuOptionFromEnd(specialMenu.Name.Content, 0, data.CreateToggleOption("\"Cheat Indicator\"", "cheat_indicator", "global.setting_legitimacy_marker = argument0", "selectedItem = global.setting_legitimacy_marker", "global.setting_legitimacy_marker", "gml_Script_scr_return_input", "\"Displays a tiny rectangle at the top right of the screen. Green if your run is legit, red if not.\""));
 
@@ -665,14 +724,15 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
         data.InsertMenuOptionFromEnd(Menus.Vanilla.Speedrun, 0, data.CreateToggleOption("\"Savefile Reset Keybind\n(CTRL+SHIFT+R)\"", "SavefileResetButton", "global.setting_speedrun_reset_button = argument0", "selectedItem = global.setting_speedrun_reset_button", "global.setting_speedrun_reset_button", tooltipScript: "gml_Script_scr_return_input", tooltipArgument: "\"Reset your entire savefile with the press of a keybind: CTRL+SHIFT+R.\n\nIMPORTANT: If you accidentally delete a savefile you shouldn't have, savefile backups can be found in the WYS AppData location.\""));
 
     }
-    private static void BuildRooms() 
+    private static void BuildRooms()
     {
         BuildMusicRoom();
         BuildCharacterSelect();
         BuildEmptyStartRoom();
     }
 
-    private static void BuildEmptyStartRoom(){
+    private static void BuildEmptyStartRoom()
+    {
 
         UndertaleRoom empty_start_room = data.Rooms.ByName("empty_start_room");
         UndertaleGameObject obj_shellworksUI = data.GameObjects.ByName("obj_shellworksUI");
@@ -682,27 +742,44 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
         {
             InstanceID = data.GeneralInfo.LastObj,
             ObjectDefinition = obj_shellworksUI,
-            X = 120,
-            Y = 120
+            X = -120,
+            Y = -120
         };
 
         empty_start_room.Layers.First(layer => layer.LayerName.Content == "FadeOutIn").InstancesData.Instances.Add(obj_shellworksUI_inst);
 
         empty_start_room.GameObjects.Add(obj_shellworksUI_inst);
 
+
+        UndertaleGameObject obj_shellworks_extra_feature_handler = data.GameObjects.ByName("obj_shellworks_extra_feature_handler");
+        data.GeneralInfo.LastObj++;
+        UndertaleRoom.GameObject obj_shellworks_extra_feature_handler_inst = new UndertaleRoom.GameObject()
+        {
+            InstanceID = data.GeneralInfo.LastObj,
+            ObjectDefinition = obj_shellworks_extra_feature_handler,
+            X = -120,
+            Y = -120
+        };
+
+        empty_start_room.Layers.First(layer => layer.LayerName.Content == "FadeOutIn").InstancesData.Instances.Add(obj_shellworks_extra_feature_handler_inst);
+
+        empty_start_room.GameObjects.Add(obj_shellworks_extra_feature_handler_inst);
+
     }
 
-    private static void BuildCharacterSelect(){
+    private static void BuildCharacterSelect()
+    {
         UndertaleRoom bubbleg_dark_copy_me = data.Rooms.ByName("bubbleg_dark_copy_me");
         UndertaleGameObject obj_input_overrider_disable_allowRestart = data.GameObjects.ByName("obj_input_overrider_disable_allowRestart");
 
-        foreach(UndertaleRoom.GameObject g in bubbleg_dark_copy_me.GameObjects.ToList())
+        foreach (UndertaleRoom.GameObject g in bubbleg_dark_copy_me.GameObjects.ToList())
         {
-            if(g.ObjectDefinition.Name.Content == "obj_player")
+            if (g.ObjectDefinition.Name.Content == "obj_player")
             {
                 g.X += 120;
             }
-            if(g.ObjectDefinition.Name.Content == "obj_dark_level"){
+            if (g.ObjectDefinition.Name.Content == "obj_dark_level")
+            {
                 bubbleg_dark_copy_me.GameObjects.Remove(g);
 
                 //Used UndertaleModTool source code as reference
@@ -726,7 +803,7 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
         bubbleg_dark_copy_me.GameObjects.Add(obj_inputOverride_inst);
 
         UndertaleGameObject obj_characterSelect = data.GameObjects.ByName("obj_characterSelect");
- 
+
         data.GeneralInfo.LastObj++;
         UndertaleRoom.GameObject obj_characterSelect_inst = new UndertaleRoom.GameObject()
         {
@@ -760,9 +837,9 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
     {
 
         UndertaleRoom disco_copy_me = data.Rooms.ByName("disco_copy_me");
-        foreach(UndertaleRoom.GameObject g in disco_copy_me.GameObjects)
+        foreach (UndertaleRoom.GameObject g in disco_copy_me.GameObjects)
         {
-            if(g.ObjectDefinition.Name.Content == "obj_wall")
+            if (g.ObjectDefinition.Name.Content == "obj_wall")
             {
                 g.X = -600;
                 g.Y = -600;
@@ -852,43 +929,53 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
         disco_copy_me.GameObjects.Add(obj_wall_inst);
     }
 
-    private static void GetCursedInlineFunctionName(){
+    private static void GetCursedInlineFunctionName()
+    {
         UndertaleCode keybindingSystem = data.Code.ByName("gml_GlobalScript_keybinding_system");
         string assembly_str = keybindingSystem.Disassemble(data.Variables, data.CodeLocals.For(keybindingSystem)).Replace("\r\n", "\n").Replace("\r", "\n");
-        
+
         string pattern = @">(.*) \(locals=1, argc=0\)\n:\[\d+\]\ncall\.i @@This@@\(argc=0\)\npush\.v builtin\.GetValue\ncallv\.v 0\npopz\.v\npush\.v self\.current_value\npushi\.e 0\ncmp\.i\.v LTE";
         Match match = Regex.Match(assembly_str, pattern);
-        if(match == null){
+        if (match == null)
+        {
             Console.WriteLine("\n\nCould not find the function name for the INCREDIBLY CURSED inline function \"GetPressedPlus\" in gml_GlobalScript_keybinding_system.\n\n");
             failedHook = true;
-        } else {
+        }
+        else
+        {
             cursedInlineFunctionName_GetPressedPlus = match.Groups[1].Value;
         }
     }
 
-    public static void ShowConsole(){
+    public static void ShowConsole()
+    {
         var handle = GetConsoleWindow();
         ShowWindow(handle, SW_SHOW);
     }
-    public static void HideConsole(){
+    public static void HideConsole()
+    {
         var handle = GetConsoleWindow();
         ShowWindow(handle, SW_HIDE);
     }
-    
-    
+
+
     [GmlInterop("toggle_console", 1)]
-    public double InteropToggleConsole(double isOn){
+    public double InteropToggleConsole(double isOn)
+    {
         Console.WriteLine("Showing console...");
-        if(isOn == 1){
+        if (isOn == 1)
+        {
             Console.WriteLine("Showing console...");
             ShowConsole();
-        } else {
+        }
+        else
+        {
             Console.WriteLine("Hiding console...");
             HideConsole();
         }
         return 1;
     }
-    
+
     private static string cursedInlineFunctionName_GetPressedPlus = "gml_Script_scr_fallback_function";
 
 }

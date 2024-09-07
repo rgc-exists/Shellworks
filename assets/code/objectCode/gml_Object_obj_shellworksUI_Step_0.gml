@@ -4,7 +4,7 @@ depth = -14000
 with(global.inputaction_shellworks_openmenu){
     if(#cursed_inline_funcname_getpressedplus#()){
         global.shellworks_imgui_menuOpen = !global.shellworks_imgui_menuOpen
-        global.shellworks_C10_secret = (irandom(10) == 0)
+        global.shellworks_C10_secret = (irandom(100) == 1)
 
         if(global.shellworks_first_menu_press){
             var f = file_text_open_write("shellworks_hasBeenBootedUp.dontDelete")
@@ -111,7 +111,6 @@ if(global.shellworks_imgui_menuOpen){
 
     imgui_begin("PLAYER CHARACTER")
     imgui_separator_text("Colors")
-    gml_Script_shellworks_imgui_newbutton_doFunc("Character Customization UI\n(DEPRECATED)", gml_Script_scr_go_to_character_select)
 
     gml_Script_shellworks_imgui_newboolean("Body", "setting_player_body_selected_enabled")
     imgui_same_line()
@@ -165,7 +164,8 @@ if(global.shellworks_imgui_menuOpen){
     imgui_separator_text("Other")
     gml_Script_shellworks_imgui_newboolean("Unicorn Hat Pops Ball", "setting_unicorn_horn_ball_override")
 
-
+    gml_Script_shellworks_imgui_newbutton_doFunc("Character Customization UI\n(DEPRECATED)", gml_Script_scr_go_to_character_select)
+    
     imgui_end()
 
 
@@ -176,7 +176,6 @@ if(global.shellworks_imgui_menuOpen){
     gml_Script_shellworks_imgui_newbutton_doFunc("Campaign Select", gml_Script_scr_go_to_room_custom, [the_elevator])
     gml_Script_shellworks_imgui_newbutton_doFunc("Editor Select", gml_Script_scr_go_to_room_custom, [level_select_side])
     gml_Script_shellworks_imgui_newbutton_doFunc("Soundtrack Player", gml_Script_scr_go_to_music_player)
-    gml_Script_shellworks_imgui_newbutton_doFunc("Character Customization UI", gml_Script_scr_go_to_character_select)
     gml_Script_shellworks_imgui_newbutton_doFunc("Hat Select", gml_Script_scr_go_to_room_custom, [RoomOfHats])
     gml_Script_shellworks_imgui_newbutton_doFunc("Special Hat Select", gml_Script_scr_go_to_room_custom, [bonus_hat_room])
     if(global.shellworks_C10_secret)
@@ -211,8 +210,14 @@ if(global.shellworks_imgui_menuOpen){
         "You have just enabled a SAVEFILE RESET KEYBIND!\n\nThis means that whenever you press CTRL+SHIFT+R, intentional or not, your savefile will be reset with auto-difficulty turned off.\n\nBE SURE TO TURN THIS FEATURE OFF WHEN YOU ARE NOT DOING SPEEDRUNS.\nI am not responsible for any savefile data loss.", "I understand.")
     }
     
+    imgui_separator_text("Speedrun Challenge: Minimum Jumps")
+    gml_Script_shellworks_imgui_newboolean("Total Jumps", "total_jumps_so_far_enabled")
+    gml_Script_shellworks_imgui_newboolean("Attempt Jumps", "attempt_jumps_so_far_enabled")
+    gml_Script_shellworks_imgui_newboolean("Total Half Jumps", "total_half_jumps_so_far_enabled")
+    gml_Script_shellworks_imgui_newbutton_doFunc("Reset Jump Counters", gml_Script_reset_jump_counters, [])
+    imgui_text("EXPLANATION:\nMinimum Jumps is a challenge in which you try\ntobeat the game (or a certain level)\nin as little jumps as possible.")
+    imgui_text("Join the WYS Challenges discord\nto play and help with strategies!\n(Click the link under the\n\"Affiliates\" section of the Shellworks menu.)")
     
-
     imgui_end()
 
 
@@ -229,6 +234,7 @@ if(global.shellworks_imgui_menuOpen){
     gml_Script_shellworks_imgui_newbutton_doFunc("WYS: The Movie\nDiscord server", gml_Script_scr_open_link, ["https://discord.gg/CyRxYHraqt"])
     gml_Script_shellworks_imgui_newbutton_doFunc("Goodbye AI (Fangame)\nDiscord server", gml_Script_scr_open_link, ["https://discord.gg/A5cHBPxEKP"])
     gml_Script_shellworks_imgui_newbutton_doFunc("Will You Speedrun\nDiscord server", gml_Script_scr_open_link, ["https://discord.gg/sTr5eaYfms"])
+    gml_Script_shellworks_imgui_newbutton_doFunc("WYS Challenges\n(Blindfolded, Minimum Jumps, etc.)", gml_Script_scr_open_link, ["https://discord.gg/gF89zs2b7X"])
     
     imgui_separator_text("Shellworks Updates")
     var prevDoUpdates = global.shw_setting_do_updates
