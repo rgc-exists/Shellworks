@@ -52,6 +52,7 @@ for(var i = 0; i < variable_struct_names_count(copy_tool); i += 1){
 variable_struct_set(copy_tool_copy_4, "custom_tool_or_object_id", "advanced_copy_tool")
 variable_struct_set(copy_tool_copy_4, "preview_color", "col_spike_warning")
 variable_struct_set(copy_tool_copy_4, "placement_script", gml_Script_toolplace_advanced_copy_paste)
+
 var toolProps = [
     modhelper_createprop_help("hlp", "editor_prop_info", spr_propico_help, "advanced_copy_tool_help"),
     modhelper_createprop_int("copyxoff", false, -120, 120, "editor_prop_xoff", spr_propico_global, 0, "editor_prop_xoff_copy_tip"),
@@ -74,17 +75,24 @@ var toolProps = [
     modhelper_createprop_float("randomY_max", false, -360, 360, 1, 0.01666666, "random_offset_y_max", spr_propico_global, 0, "random_offset_tip")
 
 ]
-variable_struct_set(copy_tool_copy_4, "tool_properties", toolProps)
 
+variable_struct_set(copy_tool_copy_4, "tool_properties", toolProps)
 ds_list_add(global.li_level_editor_database, copy_tool_copy_4)
 
-
-
-
-
-
-
-
-
-
 global.dont_save_these_objects = ["inspector_tool", "ruler_tool", "advanced_copy_tool"]
+
+
+
+
+
+//NameTheMPGuy's Code
+
+for (var i = 0; i < ds_list_size(global.li_level_editor_database); i++) { 
+    var check = ds_list_find_value(global.li_level_editor_database, i);
+
+    if (check.custom_tool_or_object_id == "move_tool")
+    {
+        check.deletion_script = asset_get_index("toolplace_get_blocks_in_rect");
+    } 
+}
+

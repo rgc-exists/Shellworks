@@ -33,8 +33,13 @@
       SkipUnchangedFiles="false" />
   </Target>
 
-  <Target Name="CreateSymlink" AfterTargets="AfterBuild">
-    <Exec Command="mklink /D &quot;$(TargetDir)code&quot; &quot;$(ProjectDir)code&quot;" />
+  <!-- TODO: This isnt crossplatform -->
+  <Target Name="CreateSymbolicLink" AfterTargets="AfterBuild">
+    <Exec Command="mklink /J &quot;$(TargetDir)code&quot; &quot;$(ProjectDir)gmlCode&quot;"
+      Condition="!Exists('$(TargetDir)code')" />
+    <Exec
+      Command="mklink /H &quot;$(TargetDir)code/directories.json&quot; &quot;$(ProjectDir)gmlCode/directories.json&quot;"
+      Condition="!Exists('$(TargetDir)code/directories.json')" />
   </Target>
 
 </Project>

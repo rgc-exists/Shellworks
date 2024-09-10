@@ -1,9 +1,11 @@
 {
     "functions": "functions",
+    "Other People's Code\\namethempguy\\functions": "functions",
     "inlineAssemblyHooks_before": "inlineassemblyhooks",
     "inlineHooks": "inlinehooks",
     "codeHooks": "codehooks",
     "objectCode": "objectcode",
     "functionHooks": "functionhooks",
+    "Other People's Code\\namethempguy\\functionHooks": "functionhooks",
     "inlineAssemblyHooks": "inlineassemblyhooks"
 }
