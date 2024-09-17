@@ -4,7 +4,7 @@ switch argument1
         hlp_toolplace_start_dragging_box(argument0)
         break
     case 1:
-        hlp_toolplace_drag_box_step(argument0, 4, obj_levelstyler.col_bubbles, 108, 1.3, 0.1)
+        hlp_toolplace_drag_box_step(argument0, 4, obj_levelstyler.col_bubbles, sou_laser_04, 1.3, 0.1)
 
         mouse_drag_box_xmin = min(mouse_drag_box_start_x, mouse_drag_box_current_x)
         mouse_drag_box_xmax = (max(mouse_drag_box_start_x, mouse_drag_box_current_x) + 1)

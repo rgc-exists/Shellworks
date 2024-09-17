@@ -4,7 +4,7 @@ switch argument1
         hlp_toolplace_start_dragging_box(argument0)
         break
     case HOLD:
-        hlp_toolplace_drag_box_step(argument0, 4, obj_levelstyler.col_snail, 32, 0.7, 0.1)
+        hlp_toolplace_drag_box_step(argument0, 4, obj_levelstyler.col_snail, sou_jump_06, 0.7, 0.1)
         break
     case END:
         mouse_drag_box_xmin = (min(mouse_drag_box_start_x, mouse_drag_box_current_x) * 60)

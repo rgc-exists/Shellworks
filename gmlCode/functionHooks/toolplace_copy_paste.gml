@@ -7,7 +7,7 @@ switch argument1
         hlp_toolplace_start_dragging_box(argument0)
         break
     case HOLD:
-        hlp_toolplace_drag_box_step_one_by_one(argument0, 4, 16777215, 108, 1.3, 0.1)
+        hlp_toolplace_drag_box_step_one_by_one(argument0, 4, 16777215, sou_laser_04, 1.3, 0.1)
         var mx = mouse_drag_box_current_x
         var my = mouse_drag_box_current_y
         for (var i = 0; i < array_length(clipboard); i++)

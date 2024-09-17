@@ -42,7 +42,7 @@ switch argument1
         gml_Script_hlp_toolplace_start_dragging_box_advanced(argument0, grid_xscale, grid_yscale)
         break
     case HOLD:
-        gml_Script_hlp_toolplace_drag_box_step_advanced(argument0, 4, 16777215, 108, 1.3, 0.1, grid_xscale, grid_yscale)
+        gml_Script_hlp_toolplace_drag_box_step_advanced(argument0, 4, 16777215, sou_laser_04, 1.3, 0.1, grid_xscale, grid_yscale)
         var mx = mouse_drag_box_current_x
         var my = mouse_drag_box_current_y
         var valid_copyable_objects = ds_list_create()
