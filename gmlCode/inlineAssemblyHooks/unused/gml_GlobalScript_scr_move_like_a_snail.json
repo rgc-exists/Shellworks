@@ -1,0 +1,19 @@
+{
+    "Script":"gml_GlobalScript_scr_move_like_a_snail",
+    "Hooks": [
+        {
+            "ToFind":"push.v self.vspeed\npush.v self.gravity_mult\nmul.v.v\npushi.e 7\ncmp.i.v GT",
+            "ToReplace":"push.v self.vspeed\npush.v self.gravity_mult\nmul.v.v\npushglb.v global.cheat_max_fall_speed\nmul.v.v\npushi.e 7\ncmp.i.v GT",
+            "Type": "replace",
+            "IsExternalFile":false,
+            "File":""
+        },
+        {
+            "ToFind":"pushi.e 7\npush.v self.gravity_mult\nmul.v.i\npop.v.v self.vspeed",
+            "ToReplace":"pushi.e 7\npush.v self.gravity_mult\nmul.v.i\npushglb.v global.cheat_max_fall_speed\nmul.v.v\npop.v.v self.vspeed",
+            "Type": "replace",
+            "IsExternalFile":false,
+            "File":""
+        }
+    ]
+}

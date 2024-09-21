@@ -32,3 +32,6 @@ global.total_jumps_so_far_enabled = false
 global.attempt_jumps_so_far_enabled = false
 global.total_half_jumps_so_far_enabled = false
 global.total_half_jumps_so_far_can_change = true
+
+global.current_clipboard = []
+global.current_clipboard_wires = []

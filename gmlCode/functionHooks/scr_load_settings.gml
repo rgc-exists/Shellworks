@@ -172,6 +172,32 @@ if(file_exists("Shellworks_SettoIngs23-2.set")){
                 global.setting_mute_when_unfocused = file_text_read_real(file)
                 file_text_readln(file)
                 break
+            case "Optimized Saving":
+                global.setting_optimized_saving = file_text_read_real(file)
+                file_text_readln(file)
+                break
+            /*
+            case "Persistent Clipboard":
+                global.setting_persistent_clipboard = file_text_read_real(file)
+                file_text_readln(file)
+                break
+            */
+            case "Copyable Wires":
+                global.setting_copyable_wires = file_text_read_real(file)
+                file_text_readln(file)
+                break
+            case "Preserve Copy Order":
+                global.setting_preserve_copy_order = file_text_read_real(file)
+                file_text_readln(file)
+                break
+            case "Spawnpoint Switcher":
+                global.setting_spawnpoint_switcher = file_text_read_real(file)
+                file_text_readln(file)
+                break
+            case "Grid Contrast":
+                global.setting_editorGrid_contrast = file_text_read_real(file)
+                file_text_readln(file)
+                break
         }
     }
     file_text_close(file)

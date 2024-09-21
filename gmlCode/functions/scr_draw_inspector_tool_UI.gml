@@ -267,15 +267,24 @@ if(global.rendering_enabled || room = menu){
                         if(!string_starts_with(thisKey, "editorProperty_")){
                             variable_instance_set(thisInst, thisKey, real(string_digits_answer))
                             var width = thisInst.bbox_right - thisInst.bbox_left
-                            while(width < 1){
-                                thisInst.image_xscale += 0.01
-                                width = thisInst.bbox_right - thisInst.bbox_left
+                            if(width == 0){
+                                thisInst.image_xscale = max(thisInst.image_xscale, 0.1)
+                            } else {
+                                while(width < 1){
+                                    thisInst.image_xscale += 0.01
+                                    width = thisInst.bbox_right - thisInst.bbox_left
+                                }
                             }
                             var height = thisInst.bbox_bottom - thisInst.bbox_top
-                            while(height < 1){
-                                thisInst.image_yscale += 0.01
-                                height = thisInst.bbox_bottom - thisInst.bbox_top
+                            if(height == 0){
+                                thisInst.image_yscale = max(thisInst.image_yscale, 0.1)
+                            } else {
+                                while(height < 1){
+                                    thisInst.image_yscale += 0.01
+                                    height = thisInst.bbox_bottom - thisInst.bbox_top
+                                }
                             }
+                            
 
                         } else {
                             ds_map_set(thisInstToolProp, string_delete(thisKey, 1, string_length("editorProperty_")), real(string_digits_answer))

@@ -104,3 +104,37 @@ if(global.setting_mute_when_unfocused && !window_has_focus()){
 } else {
     audio_master_gain(global.setting_volume_master * global.setting_volume_master)
 }
+
+if(room == level_editor_play_mode){
+    if(global.setting_spawnpoint_switcher){
+        if(keyboard_lastchar == "." || keyboard_lastchar == ">"){
+            if(!holding_spawnSwitchButton){
+                keyboard_lastchar = ""
+                holding_spawnSwitchButton = true
+                spawn_switched_timer = 120
+                show_debug_message("Moving forward to next spawnpoint")
+
+                global.current_spawnpoint += 1
+                if(global.current_spawnpoint >= array_length(global.current_spawnpoints_list)) global.current_spawnpoint = 0
+
+                gml_Script_scr_spawnpoint_switcher_switch(global.current_spawnpoint)
+            }
+        } else if(keyboard_lastchar == "," || keyboard_lastchar == "<"){
+            if(!holding_spawnSwitchButton){
+                keyboard_lastchar = ""
+                holding_spawnSwitchButton = true
+                spawn_switched_timer = 120
+                show_debug_message("Moving backward to previous spawnpoint")
+
+                global.current_spawnpoint -= 1
+                if(global.current_spawnpoint < 0) global.current_spawnpoint = array_length(global.current_spawnpoints_list) - 1
+
+                gml_Script_scr_spawnpoint_switcher_switch(global.current_spawnpoint)
+            }
+        } else {
+            holding_spawnSwitchButton = false
+        }
+    }
+}
+
+spawn_switched_timer -= 1

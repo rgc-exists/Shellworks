@@ -1,1 +1,1 @@
-vspeed = -11  * global.cheat_jump_height
+vspeed = -11  * global.cheat_jump_height * gravity_mult

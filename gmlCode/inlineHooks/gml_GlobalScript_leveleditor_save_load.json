@@ -1,0 +1,14 @@
+{
+    "Script":"gml_GlobalScript_leveleditor_save_load",
+    "Hooks": [
+        {
+            "File": "inlineHooks/gml_GlobalScript_leveleditor_save_load_hook1.gml",
+            "Sig": [
+                "call.i gml_Script_scr_update_conveyor_visuals(argc=0)",
+                "popz.v"
+            ],
+            "Type": "append",
+            "InArgs": []
+        }
+    ]
+}

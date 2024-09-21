@@ -23,7 +23,11 @@ for(var i = 0; i < ds_list_size(obj_level_editor.li_quicktool_slots); i++){
     }
 }
 
-var return_value = #orig#()
+if(global.setting_optimized_saving){
+    var return_value = gml_Script_leveleditor_save_with_buffer()
+} else {
+    var return_value = #orig#()
+}
 
 ds_list_clear(global.li_level_editor_database)
 ds_list_copy(global.li_level_editor_database, global.li_level_editor_database_backup)

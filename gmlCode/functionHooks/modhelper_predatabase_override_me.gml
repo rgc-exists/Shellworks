@@ -84,8 +84,9 @@ global.dont_save_these_objects = ["inspector_tool", "ruler_tool", "advanced_copy
 
 
 
-
+/*
 //NameTheMPGuy's Code
+//Removed for now due to bugs
 
 for (var i = 0; i < ds_list_size(global.li_level_editor_database); i++) { 
     var check = ds_list_find_value(global.li_level_editor_database, i);
@@ -95,4 +96,4 @@ for (var i = 0; i < ds_list_size(global.li_level_editor_database); i++) {
         check.deletion_script = asset_get_index("toolplace_get_blocks_in_rect");
     } 
 }
-
+*/

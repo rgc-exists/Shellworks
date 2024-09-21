@@ -38,6 +38,8 @@ if(global.shellworks_imgui_menuOpen){
     gml_Script_shellworks_imgui_newboolean("Inverted Pump", "save_pump_is_inverted")
     gml_Script_shellworks_imgui_newboolean("Fixed Squid", "save_heart_fixed")
     gml_Script_shellworks_imgui_newboolean("Show AI Predictions", "setting_show_ai_predictions")
+    gml_Script_shellworks_imgui_newboolean("Spawnpoint Switcher", "setting_spawnpoint_switcher")
+    imgui_text("(Press , and . on your keyboard to switch spawnpoints.)")
     
     imgui_separator_text("Cheats")
     gml_Script_shellworks_imgui_newboolean("Noclip", "invincible_mode")
@@ -48,7 +50,8 @@ if(global.shellworks_imgui_menuOpen){
     gml_Script_shellworks_imgui_newboolean("Infinite Double Jumps", "infinite_jumps")
     gml_Script_shellworks_imgui_newreal("Player Speed", "cheat_player_speed")
     gml_Script_shellworks_imgui_newreal("Jump Height", "cheat_jump_height")
-    gml_Script_shellworks_imgui_newreal("Max Fall Speed\n(Underwater Only)", "cheat_max_fall_speed")
+    imgui_text("(Underwater Max Fall Speed has been temporarily removed due to a last-minute bug discovery.)")
+    //gml_Script_shellworks_imgui_newreal("Max Fall Speed\n(Underwater Only)", "cheat_max_fall_speed")
     
     imgui_separator_text("Speedhack")
     var prevGameSpeed = global.save_game_speed
@@ -66,7 +69,6 @@ if(global.shellworks_imgui_menuOpen){
     imgui_separator_text("Bypass")
     gml_Script_shellworks_imgui_newboolean("Multiple 1-at-a-time Objects", "setting_place_multiple_oneAtATime_objs")
     gml_Script_shellworks_imgui_newboolean("Place Multiple Players", "setting_place_multiple_players")
-    gml_Script_shellworks_imgui_newboolean("All Objects Copyable", "setting_copy_tool_bypass")
 
     imgui_separator_text("Camera")
     gml_Script_shellworks_imgui_newreal("Minimum Zoom", "setting_camzoom_min")
@@ -74,9 +76,13 @@ if(global.shellworks_imgui_menuOpen){
 
     imgui_separator_text("Shellworks")
     gml_Script_shellworks_imgui_newboolean("\"O for hotkeys\" message", "setting_show_hotkeys_overlay")
+    gml_Script_shellworks_imgui_newslider("Grid Contrast", "setting_editorGrid_contrast", 1, 2)
+
 
     imgui_separator_text("Other")
     gml_Script_shellworks_imgui_newboolean("Disable Editor Music", "setting_disable_editor_music")
+    //gml_Script_shellworks_imgui_newboolean("Persistent Clipboard", "setting_persistent_clipboard")
+    //Disabled for now due to major crashes.
     if(room != level_editor){
         gml_Script_shellworks_imgui_newboolean("Manual Value Textbox", "setting_enter_value_manually")
         gml_Script_shellworks_imgui_newboolean("Squid In Editor", "setting_squid_in_editor")
@@ -84,8 +90,22 @@ if(global.shellworks_imgui_menuOpen){
         imgui_text("Some settings are not available while using the editor.")
     }
 
+    imgui_separator_text("Copy Tool")
+    gml_Script_shellworks_imgui_newboolean("All Objects Copyable", "setting_copy_tool_bypass")
+    gml_Script_shellworks_imgui_newboolean("Copyable Wires", "setting_copyable_wires")
+    gml_Script_shellworks_imgui_newboolean("Preserve Copy Order", "setting_preserve_copy_order")
+    imgui_text("(Fixes inconsistent layering when copying objects.)")
+
+    
+    imgui_separator_text("Advanced")
+    gml_Script_shellworks_imgui_newboolean("Optimized Saving", "setting_optimized_saving")
+    imgui_text("(DRASTICALLY speeds up saving large levels using buffers.)")
+
 
     imgui_end()
+
+
+
 
     imgui_begin("COSMETIC")
 

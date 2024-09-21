@@ -62,7 +62,7 @@ if variable_struct_exists(_toolStruct, "custom_draw")
         case "path_tool":
             break
         default:
-            _toolStruct.custom_draw(_toolStruct, alphana)
+            script_execute(_toolStruct.custom_draw, _toolStruct, alphana)
             break
     }
 

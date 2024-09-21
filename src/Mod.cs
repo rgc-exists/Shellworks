@@ -76,7 +76,6 @@ public class Shellworks : IGMSLMod
             Console.WriteLine("Finalizing function hooks...");
             data.FinalizeHooks();
 
-
             if (failedHook)
             {
                 Console.WriteLine(@"
@@ -87,6 +86,8 @@ public class Shellworks : IGMSLMod
 
 WHILE LOADING SHELLWORKS, AN ASSEMBLY HOOK WAS UNABLE TO BE MADE.
 THIS LIKELY MEANS YOU ARE USING AN OUTDATED VERSION OF SHELLWORKS, OR SHELLWORKS HAS NOT BEEN UPDATED TO YOUR CURRENT BUILD OF THE GAME.
+
+CONTINUING THIS WAY COULD (in theory) LEAD TO ISSUES RANGING FROM CRASHES TO FULL-ON SAVE DATA LOSS! You have been warned.
 
 ARE YOU SURE YOU WANT TO CONTINUE?
 Type ""y"" to continue. Otherwise, SHELLWORKS will throw an error and the mod will be skipped.");
@@ -386,7 +387,7 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
                     var found = true;
                     for (int i = 0; i < hookData.Sig.Length && cur_l < lines.Count; i++)
                     {
-                        if (lines[cur_l] == hookData.Sig[i]) { cur_l++; continue; }
+                        if (lines[cur_l] == ReplaceAssetsWithIndexes_ASM(hookData.Sig[i])) { cur_l++; continue; }
                         found = false;
                         break;
                     }
@@ -437,7 +438,7 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
                     string assemblyStr_out = "";
                     foreach (string li in lines)
                     {
-                        assemblyStr_out += li + "\n";
+                        assemblyStr_out += ReplaceAssetsWithIndexes_ASM(li) + "\n";
                     }
                     undertaleCode.Replace(Assembler.Assemble(assemblyStr_out, data));
                     if (hookData.Type == "prepend")
@@ -452,7 +453,7 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
                     string assemblyLookedFor = "";
                     foreach (string l in hookData.Sig)
                     {
-                        assemblyLookedFor += l + "\n";
+                        assemblyLookedFor += ReplaceAssetsWithIndexes_ASM(l) + "\n";
                     }
                     Console.WriteLine("\n\nWARNING: could not find place to assembly hook for " + Path.GetFileNameWithoutExtension(file) + "\n" + assemblyLookedFor + "\n\n\n");
                     failedHook = true;
@@ -476,6 +477,7 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
 
                 string assembly_str = undertaleCode.Disassemble(data.Variables, data.CodeLocals.For(undertaleCode)).Replace("\r\n", "\n").Replace("\r", "\n");
 
+                assembly_str = ReplaceAssetsWithIndexes_ASM(assembly_str);
 
                 string find = hookData.ToFind;
 
@@ -553,6 +555,43 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
         });
 
         return handlers;
+    }
+
+    private static string ReplaceAssetsWithIndexes_ASM(string assemblyStr)
+    {
+        string assemblyStr_out = assemblyStr;
+
+        Regex regex = new Regex("UNINITIALIZED_PATTERN");
+
+        MatchCollection objMatches = Regex.Matches(assemblyStr_out, @"#OBJECT_INDEX#\((.*)\)");
+        foreach (Match match in objMatches)
+        {
+            assemblyStr_out = assemblyStr_out.Replace(@$"#OBJECT_INDEX#({match.Groups[1].Value})", data.GameObjects.IndexOf(data.GameObjects.ByName(match.Groups[1].Value)).ToString());
+        }
+
+        MatchCollection spriteMatches = Regex.Matches(assemblyStr_out, @"#SPRITE_INDEX#\((.*)\)");
+        foreach (Match match in spriteMatches)
+        {
+            assemblyStr_out = assemblyStr_out.Replace(@$"#SPRITE_INDEX#({match.Groups[1].Value})", data.Sprites.IndexOf(data.Sprites.ByName(match.Groups[1].Value)).ToString());
+
+        }
+
+        MatchCollection soundMatches = Regex.Matches(assemblyStr_out, @"#SOUND_INDEX#\((.*)\)");
+        foreach (Match match in soundMatches)
+        {
+            assemblyStr_out = assemblyStr_out.Replace(@$"#SOUND_INDEX#({match.Groups[1].Value})", data.Sounds.IndexOf(data.Sounds.ByName(match.Groups[1].Value)).ToString());
+
+        }
+
+        MatchCollection stringMatces = Regex.Matches(assemblyStr_out, @"""(.*)""@(.*)$");
+        foreach (Match match in stringMatces)
+        {
+            assemblyStr_out = assemblyStr_out.Replace(@$"""{match.Groups[1].Value}""@{match.Groups[2].Value}", @$"""{match.Groups[1].Value}""@{data.Strings.IndexOf(data.Strings.MakeString(match.Groups[1].Value))}");
+
+        }
+
+
+        return assemblyStr_out;
     }
 
     private static Type? FindType(string qualifiedTypeName)
@@ -678,7 +717,7 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
 
         data.InsertMenuOptionFromEnd(Menus.Vanilla.Hacks, 0, data.CreateChangeOption("\"Player Speed\"", "player_speed", "global.cheat_player_speed = clamp(global.cheat_player_speed + argument0 / 100, 0, 10)", "return string(global.cheat_player_speed * 100) + \"%\"", 10));
         data.InsertMenuOptionFromEnd(Menus.Vanilla.Hacks, 0, data.CreateChangeOption("\"Player Jump Height\"", "player_jump_height", "global.cheat_jump_height = clamp(global.cheat_jump_height + argument0 / 100, 0, 10)", "return string(global.cheat_jump_height * 100) + \"%\"", 10));
-        data.InsertMenuOptionFromEnd(Menus.Vanilla.Hacks, 0, data.CreateChangeOption("\"Max Fall Speed\n(Underwater Only)\"", "cheat_max_fall_speed", "global.cheat_max_fall_speed = clamp(global.cheat_max_fall_speed + argument0 / 100, 0, 100)", "return string(global.cheat_max_fall_speed)", 10));
+        //data.InsertMenuOptionFromEnd(Menus.Vanilla.Hacks, 0, data.CreateChangeOption("\"Max Fall Speed\n(Underwater Only)\"", "cheat_max_fall_speed", "global.cheat_max_fall_speed = clamp(global.cheat_max_fall_speed + argument0 / 100, 0, 100)", "return string(global.cheat_max_fall_speed)", 10));
         //data.InsertMenuOptionFromEnd(Menus.Vanilla.Gameplay, 0, data.CreateChangeOption("\"Player Respawn Time\"", "respawn_time", "global.setting_respawn_time = clamp(global.setting_respawn_time + argument0, 0, 10)", "return gml_Script_scr_return_respawn_time()", 0.25));
 
 

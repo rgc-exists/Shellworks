@@ -10,7 +10,7 @@
                 "pushglb.v global.screenshake",
                 "call.i max(argc=2)",
                 "pop.v.v global.screenshake",
-                "pushi.e 290"
+                "pushi.e #OBJECT_INDEX#(obj_player)"
             ],
             "Type": "replace",
             "InArgs": []

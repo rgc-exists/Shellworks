@@ -233,3 +233,14 @@ if(noclip_deathFX_fadeout > 0 && global.setting_noclip_indicator && global.invin
 } else {
     noclip_deathFX_fadeout = 0
 }
+
+if(room == level_editor_play_mode){
+    if(spawn_switched_timer > 0){
+        draw_set_halign(fa_center)
+        draw_set_valign(fa_bottom)
+        draw_set_color(c_white)
+        draw_set_alpha(spawn_switched_timer / 60)
+        draw_text_transformed(1920 / 2, 1080 - 75, "SPAWNPOINT " + string(global.current_spawnpoint + 1) + "/" + string(array_length(global.current_spawnpoints_list)), 1.5, 1.5, 0)
+        draw_set_alpha(1)
+    }
+}

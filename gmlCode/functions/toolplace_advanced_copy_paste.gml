@@ -1,11 +1,3 @@
-/*
-==================================================================================================================
-NOTE TO SELF! I ran into an issue where deleting a piece of glass crashed the game.
-Be sure to look into that, as well as the bug where it just... doesn't let you delete certain objects sometimes.
-==================================================================================================================
-*/
-
-
 
 var x_off = ds_map_find_value(argument0.ds_map_tool_properties, "copyxoff").value
 var y_off = ds_map_find_value(argument0.ds_map_tool_properties, "copyyoff").value
@@ -53,7 +45,7 @@ switch argument1
             if ((_Ts.placement_script == gml_Script_toolplace_fill_with_wall_blocks) && ((argument0.image_angle % 90) != 0))
             {
             }
-            else if variable_struct_exists(_Ts, "can_be_copied")
+            else if variable_struct_exists(_Ts, "can_be_copied") && !global.setting_copy_tool_bypass
             {
                 if ((_Ts.can_be_copied == 4) && ((clipboard[i].scaleX != 1) || (clipboard[i].scaleY != 1)) && (argument0.image_angle != 0))
                 {
@@ -94,7 +86,7 @@ switch argument1
             if ((_Ts.placement_script == gml_Script_toolplace_fill_with_wall_blocks) && ((argument0.image_angle % 90) != 0))
             {
             }
-            else if variable_struct_exists(_Ts, "can_be_copied")
+            else if variable_struct_exists(_Ts, "can_be_copied") && !global.setting_copy_tool_bypass
             {
                 if ((_Ts.can_be_copied == 4) && ((clipboard[i].scaleX != 1) || (clipboard[i].scaleY != 1)) && (argument0.image_angle != 0))
                 {
@@ -242,7 +234,7 @@ switch argument1
                     if (_Ts.placement_script == gml_Script_toolplace_fill_with_wall_blocks && (argument0.image_angle % 90) != 0 && wall_snapping)
                     {
                     }
-                    else if variable_struct_exists(_Ts, "can_be_copied")
+                    else if variable_struct_exists(_Ts, "can_be_copied") && !global.setting_copy_tool_bypass
                     {
                         if (_Ts.can_be_copied == 2 && argument0.image_angle != 0)
                         {

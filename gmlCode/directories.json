@@ -7,5 +7,6 @@
     "objectCode": "objectcode",
     "functionHooks": "functionhooks",
     "Other People's Code\\namethempguy\\functionHooks": "functionhooks",
-    "inlineAssemblyHooks": "inlineassemblyhooks"
+    "inlineAssemblyHooks": "inlineassemblyhooks",
+    "inlinereplacements": "inlinereplacements"
 }

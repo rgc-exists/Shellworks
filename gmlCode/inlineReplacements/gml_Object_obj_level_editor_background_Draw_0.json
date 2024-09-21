@@ -1,0 +1,14 @@
+{
+    "Script": "gml_Object_obj_level_editor_background_Draw_0",
+    "Replacements":[
+        {
+        "ToFind": "line_col = obj_levelstyler.col_back_pattern",
+        "ToReplace": "line_col = merge_color(obj_levelstyler.col_back_pattern, c_white, global.setting_editorGrid_contrast - 1)",
+        "Type": "replace",
+        "FindIsExternalFile": false,
+        "ReplaceIsExternalFile": false,
+        "FindFile": "",
+        "ReplaceFile": ""
+        }
+    ]
+}

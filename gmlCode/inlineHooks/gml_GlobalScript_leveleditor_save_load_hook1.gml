@@ -1,0 +1,1 @@
+gml_Script_scr_spawnpoint_switcher_ini()

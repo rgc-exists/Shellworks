@@ -53,7 +53,9 @@
             "File": "inlineHooks/scr_move_like_a_snail_hook4.gml",
             "Sig": [
                 "pushi.e -25",
-                "pop.v.i self.vspeed"
+                "push.v self.gravity_mult",
+                "mul.v.i",
+                "pop.v.v self.vspeed"
             ],
             "Type": "replace",
             "InArgs": []
@@ -61,7 +63,7 @@
         {
             "File": "inlineHooks/scr_move_like_a_snail_hook5.gml",
             "Sig": [
-                "pushi.e 368",
+                "pushi.e #OBJECT_INDEX#(obj_fx_flare)",
                 "conv.i.v",
                 "push.s \"Fx\"@689",
                 "conv.s.v",
@@ -75,7 +77,7 @@
                 "push.v self.idmerk",
                 "pushi.e -9",
                 "pop.v.d [stacktop]self.decay",
-                "push.v 205.col_player_trail",
+                "push.v #OBJECT_INDEX#(obj_levelstyler).col_player_trail",
                 "push.v self.idmerk",
                 "pushi.e -9",
                 "pop.v.v [stacktop]self.image_blend",
@@ -91,7 +93,7 @@
                 "push.v self.idmerk",
                 "pushi.e -9",
                 "pop.v.i [stacktop]self.vspeed",
-                "pushi.e 368",
+                "pushi.e #OBJECT_INDEX#(obj_fx_flare)",
                 "conv.i.v",
                 "push.s \"Fx\"@689",
                 "conv.s.v",
@@ -105,7 +107,7 @@
                 "push.v self.idmerk",
                 "pushi.e -9",
                 "pop.v.d [stacktop]self.decay",
-                "push.v 205.col_player_trail",
+                "push.v #OBJECT_INDEX#(obj_levelstyler).col_player_trail",
                 "push.v self.idmerk",
                 "pushi.e -9",
                 "pop.v.v [stacktop]self.image_blend",
@@ -121,7 +123,7 @@
                 "push.v self.idmerk",
                 "pushi.e -9",
                 "pop.v.i [stacktop]self.vspeed",
-                "pushi.e 368",
+                "pushi.e #OBJECT_INDEX#(obj_fx_flare)",
                 "conv.i.v",
                 "push.s \"Fx\"@689",
                 "conv.s.v",
@@ -135,7 +137,7 @@
                 "push.v self.idmerk",
                 "pushi.e -9",
                 "pop.v.d [stacktop]self.decay",
-                "push.v 205.col_player_trail",
+                "push.v #OBJECT_INDEX#(obj_levelstyler).col_player_trail",
                 "push.v self.idmerk",
                 "pushi.e -9",
                 "pop.v.v [stacktop]self.image_blend",
@@ -159,7 +161,9 @@
             "File": "inlineHooks/scr_move_like_a_snail_hook6.gml",
             "Sig": [
                 "pushi.e -11",
-                "pop.v.i self.vspeed"
+                "push.v self.gravity_mult",
+                "mul.v.i",
+                "pop.v.v self.vspeed"
             ],
             "Type": "replace",
             "InArgs": []

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <RootNamespace>shellworks</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
@@ -13,12 +13,12 @@
 
   <ItemGroup>
     <ProjectReference
-      Include="vendor\gmsl\vendor\undertalemodtool-src\UndertaleModLib\UndertaleModLib.csproj" />
-    <ProjectReference Include="vendor\gmsl\gmsl-modapi\gmsl-modapi.csproj" />
+      Include="vendor/gmsl/vendor/undertalemodtool-src/UndertaleModLib/UndertaleModLib.csproj" />
+    <ProjectReference Include="vendor/gmsl/gmsl-modapi/gmsl-modapi.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="**\*.cs" Exclude="vendor\**\*.*" />
+    <Compile Include="src/**/*.cs" Exclude="vendor/**/*.*" />
   </ItemGroup>
 
   <Target Name="DeleteAssets" BeforeTargets="BeforeBuild">

@@ -4,12 +4,15 @@ using UndertaleModLib.Models;
 
 namespace GMHooker;
 
-public static class HookExtensions {
+public static class HookExtensions
+{
     private static readonly Dictionary<string, UndertaleCode> originalCodes = new();
-    private static Dictionary<string, (string, ushort)> hooksToWrite = new Dictionary<string, (string, ushort)>{};
+    private static Dictionary<string, (string, ushort)> hooksToWrite = new Dictionary<string, (string, ushort)> { };
     private static UndertaleCode MoveCodeForHook(UndertaleData data, string cloneName, UndertaleCode cloning,
-        UndertaleCodeLocals cloningLocals) {
-        UndertaleCode codeClone = new() {
+        UndertaleCodeLocals cloningLocals)
+    {
+        UndertaleCode codeClone = new()
+        {
             Name = data.Strings.MakeString(cloneName),
             LocalsCount = cloning.LocalsCount,
             ArgumentsCount = cloning.ArgumentsCount,
@@ -18,12 +21,14 @@ public static class HookExtensions {
         };
         codeClone.Replace(cloning.Instructions);
         data.Code.Insert(data.Code.IndexOf(cloning) + 1, codeClone);
-        data.Scripts.Add(new UndertaleScript {
+        data.Scripts.Add(new UndertaleScript
+        {
             Name = codeClone.Name,
             Code = codeClone
         });
 
-        foreach(UndertaleCode childEntry in cloning.ChildEntries) {
+        foreach (UndertaleCode childEntry in cloning.ChildEntries)
+        {
             childEntry.ParentEntry = codeClone;
             codeClone.ChildEntries.Add(childEntry);
         }
@@ -32,11 +37,13 @@ public static class HookExtensions {
         cloning.Instructions.Clear();
         cloning.UpdateAddresses();
 
-        UndertaleCodeLocals localsClone = new() {
+        UndertaleCodeLocals localsClone = new()
+        {
             Name = codeClone.Name
         };
-        foreach(UndertaleCodeLocals.LocalVar localVar in cloningLocals.Locals)
-            localsClone.Locals.Add(new UndertaleCodeLocals.LocalVar {
+        foreach (UndertaleCodeLocals.LocalVar localVar in cloningLocals.Locals)
+            localsClone.Locals.Add(new UndertaleCodeLocals.LocalVar
+            {
                 Name = localVar.Name,
                 Index = localVar.Index
             });
@@ -49,55 +56,73 @@ public static class HookExtensions {
     public static void HookCode(this UndertaleData data, string code, string hook) =>
         data.Code.ByName(code).Hook(data, data.CodeLocals.ByName(code), hook);
 
-    public static void Hook(this UndertaleCode code, UndertaleData data, UndertaleCodeLocals locals, string hook) {
+    public static void Hook(this UndertaleCode code, UndertaleData data, UndertaleCodeLocals locals, string hook)
+    {
         string originalName = GetDerivativeName(code.Name.Content, "orig");
         originalCodes.TryAdd(code.Name.Content, MoveCodeForHook(data, originalName, code, locals));
         code.ReplaceGmlSafe(hook.Replace("#orig#", $"{originalName}"), data);
     }
 
-    public static void HookFunction(this UndertaleData data, string function, string hook) {
+    public static void HookFunction(this UndertaleData data, string function, string hook)
+    {
         ushort argCount = data.Code.ByName("gml_Script_" + function).ArgumentsCount;
         HardHook(data, function, hook, argCount);
     }
 
     public delegate void AsmHook(UndertaleCode code, UndertaleCodeLocals locals);
 
-    public static void HookAsm(this UndertaleData data, string name, AsmHook hook) {
-        if(!originalCodes.TryGetValue(name, out UndertaleCode? code))
+    public static void HookAsm(this UndertaleData data, string name, AsmHook hook)
+    {
+        if (!originalCodes.TryGetValue(name, out UndertaleCode? code))
             code = data.Code.ByName(name);
         code.Hook(data.CodeLocals.ByName(code.Name.Content), hook);
     }
 
-    public static void Hook(this UndertaleCode code, UndertaleCodeLocals locals, AsmHook hook) {
+    public static void Hook(this UndertaleCode code, UndertaleCodeLocals locals, AsmHook hook)
+    {
         hook(code, locals);
         code.UpdateAddresses();
     }
 
-    public static void HardHook(this UndertaleData data, string function, string hook, ushort argCount) {
+    public static void HardHook(this UndertaleData data, string function, string hook, ushort argCount)
+    {
         function = "gml_Script_" + function;
         string hookName = GetDerivativeName(function, "hook");
         UndertaleCode hookCode = data.CreateLegacyScript(hookName, hook.Replace("#orig#", function), argCount).Code;
         hooksToWrite.Add(function, (hookName, argCount));
     }
 
-    public static void FinalizeHooks(this UndertaleData data){
-        foreach(UndertaleCode code in data.Code) {
-            if(code.ParentEntry is not null) continue;
-            code.Hook(data.CodeLocals.ByName(code.Name.Content), (origCode, locals) => {
-                foreach(string function in hooksToWrite.Keys) {
+    public static void FinalizeHooks(this UndertaleData data)
+    {
+        foreach (UndertaleCode code in data.Code)
+        {
+            if (code.ParentEntry is not null) continue;
+            code.Hook(data.CodeLocals.ByName(code.Name.Content), (origCode, locals) =>
+            {
+                foreach (string function in hooksToWrite.Keys)
+                {
                     var newHookInfo = hooksToWrite[function];
                     string hookName = newHookInfo.Item1;
                     ushort argCount = newHookInfo.Item2;
                     AsmCursor cursor = new(data, origCode, locals);
-                    while(cursor.GotoNext($"call.i {function}(argc={argCount})")){
+                    while (cursor.GotoNext($"call.i {function}(argc={argCount})"))
+                    {
                         cursor.Replace($"call.i {hookName}(argc={argCount})");
                     }
                     AsmCursor cursor2 = new(data, origCode, locals);
-                    while(cursor2.GotoNext($"push.i {function}")){
+                    while (cursor2.GotoNext($"push.i {function}"))
+                    {
                         cursor2.Replace($"push.i {hookName}");
                     }
-                    
-                    
+                    AsmCursor cursor3 = new(data, origCode, locals);
+                    while (cursor3.GotoNext($"pop.v.v [stacktop]self.{function.Replace("gml_Script_", "")}"))
+                    {
+                        cursor3.index -= 7;
+                        cursor3.Replace($"push.i {function}");
+                        cursor3.index += 7;
+                    }
+
+
                 }
             });
         }

@@ -231,3 +231,7 @@ global.frames_since_startup = 0
 global.coming_from_room = level_select
 
 gml_Script_scr_extra_databases_ini()
+
+holding_spawnSwitchButton = false
+
+spawn_switched_timer = 0
