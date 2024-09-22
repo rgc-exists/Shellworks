@@ -1,7 +1,9 @@
-
-global.is_Shellworks_client = true
+if ((instance_number(obj_persistent) >= 2))
+    instance_destroy()
+    
+global.is_shellworks_client = true
 //This is for  if any other mods want to make their code "support" Shellworks by making it compatible if it detects a Shellworks client.
-//Just use if(variable_global_exists("is_Shellworks_client")) to detect if it's Shellworks or not.
+//Just use if(variable_global_exists("is_shellworks_client")) to detect if it's Shellworks or not.
 //Sorry for anyone that needs to detect whether or not it's Shellworks before obj_persistent_Create_0 is run, I couldn't figure out how to get global init scripts to work with GMML.
 
 global.shellworks_version = "v0.4.0c"
@@ -235,3 +237,5 @@ gml_Script_scr_extra_databases_ini()
 holding_spawnSwitchButton = false
 
 spawn_switched_timer = 0
+
+gml_Script_scr_get_version()

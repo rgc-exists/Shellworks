@@ -19,4 +19,7 @@ with(popup){
     ]
 }
 
+popup.my_popup_id = global.current_popup_id
+global.current_popup_id += 1
+
 return popup

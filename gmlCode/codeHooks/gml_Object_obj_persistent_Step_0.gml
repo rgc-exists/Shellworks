@@ -75,6 +75,21 @@ if(global.frames_since_startup == 2){
     }
 
     gml_Script_scr_revert_selected_player_colors()
+
+    if(!variable_global_exists("game_build_version")){
+        global.disable_save_related_settings = true
+        global.game_build_version = "2.11"
+        gml_Script_shellworks_imgui_createpopup_doFunction("UNABLE TO FIND GAME VERSION!",
+            "Shellworks was unable to find the current game version. THIS SHOULD NOT HAPPEN!\n\nShellworks is likely incompatible with the current version of the game, and you are risking crashes, or even save data loss.\n\n\nSave-related features like optimized saving are disabled for safety, and and levels saved will save marked with the most recent supported version, " + string(global.game_build_version) + ".", "I understand.", gml_Script_shellworks_event_versionIncompatible_iUnderstand)
+        return false;
+    }
+    if(!scr_array_has(global.shellworks_supported_versions, global.game_build_version)){
+        global.disable_save_related_settings = true
+        gml_Script_shellworks_imgui_createpopup_doFunction("INCOMPATIBLE GAME VERSION!",
+            "SHELLWORKS DOES NOT SUPPORT THIS GAME VERSION!\n\nShellworks is likely incompatible with the current version of the game, and you are risking crashes, or even save data loss.\n\n\nSave-related features like optimized saving are disabled for safety.", "I understand.", gml_Script_shellworks_event_versionIncompatible_iUnderstand)
+    }
+
+    show_debug_message("game build version = " + string(global.game_build_version))
 } else if(global.frames_since_startup > 2){
     if(instance_exists(obj_levelstyler)){
         if(!global.setting_player_body_selected_enabled)

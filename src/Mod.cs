@@ -56,8 +56,14 @@ public class Shellworks : IGMSLMod
 
 
 
-        string needsToBeUpdated = Path.Combine(baseDirectory, "needsToBeUpdated.txt");
+        string needsToBeUpdated_old = Path.Combine(baseDirectory, "needsToBeUpdated.txt");
+        string needsToBeUpdated = Path.Combine(appDataDirectory, "Shellworks_Cache", "needsToBeUpdated.txt");
 
+        if (File.Exists(needsToBeUpdated_old))
+        {
+            File.Delete(needsToBeUpdated_old);
+            File.WriteAllText(needsToBeUpdated, "1");
+        }
         if (File.Exists(needsToBeUpdated) && File.ReadAllText(needsToBeUpdated).Trim() == "1")
         {
             Console.WriteLine("Shellworks was disabled until the next updated. To re-enable it, delete or change the file " + needsToBeUpdated);
@@ -214,6 +220,7 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
     {
 
         GetCursedInlineFunctionName();
+        LoadExtraCode_Before();
 
         var directoryJsonPath = Path.Combine(baseDirectory, "code", "directories.json");
         var directories = JsonSerializer.Deserialize<Dictionary<string, string>>(File.ReadAllText(directoryJsonPath));
@@ -261,6 +268,38 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
             }
         }
 
+        LoadExtraCode_After();
+    }
+
+    private static void LoadExtraCode_Before()
+    {
+        GetGameVersion();
+    }
+    private static void GetGameVersion()
+    {
+        UndertaleCode scr_save_settings = data.Code.ByName("gml_GlobalScript_scr_save_settings");
+        string assembly_str = scr_save_settings.Disassemble(data.Variables, data.CodeLocals.For(scr_save_settings)).Replace("\r\n", "\n").Replace("\r", "\n").Replace("\t", "").Replace(" ", "");
+        GlobalDecompileContext globalDecompileContext = new GlobalDecompileContext(data, false);
+        string decompiledStr = Decompiler.Decompile(scr_save_settings, globalDecompileContext);
+        var match = Regex.Match(decompiledStr, @"file_text_write_string\\(.*\\, \\""Game Version\\""\\)
+.*file_text_writeln\\(.*\\)
+.*file_text_write_string\\(.*\\, \\""(.*)\\""\\)/gm");
+        if (match.Success)
+        {
+            if (match.Groups.Count > 0 && true)
+            {
+                string game_version = match.Groups[0].Value;
+                data.CreateFunction("scr_get_version", $"global.game_build_version = {game_version}", 0);
+                return;
+            }
+        }
+        data.CreateFunction("scr_get_version", $@"global.is_getting_version = true
+scr_save_settings()
+gml_Script_scr_get_game_version_from_orig_settings_function()", 0);
+
+    }
+    private static void LoadExtraCode_After()
+    {
 
     }
 
@@ -364,7 +403,7 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
 
         handlers.Add("inlinehooks", (code, file) =>
         {
-            if (file.EndsWith(".gml")) return;
+            if (!file.EndsWith(".json")) return;
 
             var hookFile = JsonSerializer.Deserialize<HookFile>(code);
             if (hookFile == null) return;
@@ -463,7 +502,7 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
 
         handlers.Add("inlineassemblyhooks", (code, file) =>
         {
-            if (file.EndsWith(".gml") || file.EndsWith(".asm")) return;
+            if (!file.EndsWith(".json")) return;
 
             var hookFile = JsonSerializer.Deserialize<HookFile_Asm>(code);
             if (hookFile == null) return;
@@ -506,7 +545,7 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
 
         handlers.Add("inlinereplacements", (code, file) =>
         {
-            if (file.EndsWith(".gml")) return;
+            if (!file.EndsWith(".json")) return;
 
             var hookFile = JsonSerializer.Deserialize<ReplaceFile>(code);
             if (hookFile == null) return;
@@ -1011,6 +1050,17 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
         {
             Console.WriteLine("Hiding console...");
             HideConsole();
+        }
+        return 1;
+    }
+
+    [GmlInterop("interop_file_write_all_text", 2)]
+    public double WriteAllText(string path, string text)
+    {
+        Console.WriteLine($"Writing to {path}");
+        using (StreamWriter outputFile = new StreamWriter(path))
+        {
+            outputFile.Write(text);
         }
         return 1;
     }

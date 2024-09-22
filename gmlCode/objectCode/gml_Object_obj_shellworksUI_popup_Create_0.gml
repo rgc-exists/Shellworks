@@ -16,6 +16,7 @@ buttons = [
     ]
 ]
 
+just_drew = false
 
 /*
 BUTTON TYPE 0
@@ -39,3 +40,5 @@ BUTTON TYPE 2
     global_var_name, //Global variable name
 ]
 */
+
+my_popup_id = -1

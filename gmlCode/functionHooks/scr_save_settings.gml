@@ -1,14 +1,21 @@
-if(file_exists("SettoIngs23-2.set")){
-    gml_Script_scr_get_game_version_from_orig_settings_function()
-}
 
-if(variable_global_exists("is_resetting_settings")){
-    if(global.is_resetting_settings == 1){
-        global.is_resetting_settings = 0
+
+if(variable_global_exists("is_getting_version")){
+    if(global.is_getting_version){
+        global.is_getting_version = false
+        #orig#()
         return false;
     }
+} else {
+    if(variable_global_exists("is_resetting_settings")){
+        if(global.is_resetting_settings == 1){
+            global.is_resetting_settings = 0
+            return false;
+        }
+    } else {
+        #orig#()
+    }
 }
-#orig#()
 if(variable_global_exists("is_resetting_settings")){
     if(global.is_resetting_settings == 2){
         global.is_resetting_settings = 0

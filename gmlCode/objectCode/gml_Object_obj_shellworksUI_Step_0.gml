@@ -99,6 +99,9 @@ if(global.shellworks_imgui_menuOpen){
     
     imgui_separator_text("Advanced")
     gml_Script_shellworks_imgui_newboolean("Optimized Saving", "setting_optimized_saving")
+    if(global.disable_save_related_settings){
+        imgui_text("OPTIMIZED SAVING HAS BEEN DISABLED DUE TO POSSIBLE INCOMPATIBILITY.")
+    }
     imgui_text("(DRASTICALLY speeds up saving large levels using buffers.)")
 
 
@@ -284,4 +287,8 @@ if(global.shellworks_imgui_menuOpen){
 
 with(obj_shellworksUI_popup){
     event_user(0)
+}
+
+with(obj_shellworksUI_popup){
+    just_drew = false
 }

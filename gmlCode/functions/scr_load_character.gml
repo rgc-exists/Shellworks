@@ -37,7 +37,7 @@ if(character_save_path != ""){
                 break;
             case "Hat":
                 global.save_equipped_hat = file_text_read_real(file)
-                global.setting_default_hat = file_text_read_real(file)
+                global.setting_default_hat = global.save_equipped_hat
                 break;
         }
         file_text_readln(file)

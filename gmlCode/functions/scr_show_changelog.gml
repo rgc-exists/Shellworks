@@ -14,17 +14,26 @@ MAJOR FEATURE - ADVANCED COPY TOOL:
 The advanced copy tool was added in the past, but reverted due to major bugs.
 
 THINGS THAT CHANGED IN THE UPDATE SINCE THE ORIGINAL REVERTED VERSION:
--Advanced copy tool settings now transfer even after you save/reload the level.
-(This makes up for the fact that I can't save custom tool settings in the level without crashing the vanilla game.)
 -Fixed a bug where lava objects couldn't be deleted by the trash tool.
 
 
 NEW MAJOR CHANGES:
--The move tool can select MULTIPLE objects by right clicking.
-THE CODE FOR THIS FEATURE WAS ENTIRELY WRITTEN BY NAMETHEMPGUY! Thank you Name, you are the GOAT of WYS modding. :)
+-Added spawnpoint switcher. Switch between the orange spawnpoint objects with keybinds,
+Inspired by Geometry Dash \"Startpos Switcher\".
+-Added \"optimized saving\", which DRASTICALLY speeds up save times for large levels using buffers.
+-Added \"preserve copy order\", which preserves the layer order of copied objects instead of randomizing it.
+-Updated the mod to work with the Slices Of Infinity update (v2.11)
 
 NEW MINOR CHANGES:
 -Made it so when you place an object with a scale that cant be deleted it gets scaled up until it's safe
+-Made copyable wires optional
+
+NEW TECHNICAL CHANGES:
+-Updated GMSL to dotnet 8 due to updates to UndertaleModTool.
+-Added a warning that shows when an unsupported game version is detected.
+-Give user option to disable Shellworks until the next update with unsupported game version.
+-Renamed the \"is_Shellworks_client\" global var to \"is_shellworks_client\" with a lowercase S.
+
 
 BUG FIXES:
 -Soundtrack player no longer sometimes crashes due to the NORMAL player's hat being spawned for the BOUNCING snails.

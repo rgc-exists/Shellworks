@@ -35,3 +35,9 @@ global.total_half_jumps_so_far_can_change = true
 
 global.current_clipboard = []
 global.current_clipboard_wires = []
+
+global.disable_save_related_settings = false
+
+global.shellworks_supported_versions = ["2.11"]
+
+global.current_popup_id = 0
