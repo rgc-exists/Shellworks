@@ -1,4 +1,43 @@
+
+var missing_schemes = []
+var max_existing_scheme = 1
+for(var colsche = 0; colsche < 10000; colsche++){
+    if(directory_exists(("Colors/" + string((colsche + 1))))){
+        max_existing_scheme = colsche + 1
+    } else {
+        array_push(missing_schemes, colsche + 1)
+    }
+}
+
+to_rename = {}
+for(var i = 1; i <= array_length(missing_schemes); i++){
+    var c = missing_schemes[i - 1] 
+
+    for(var j = c + 1; j <= max_existing_scheme; j++){
+        var existing_val = variable_struct_get(to_rename, string(j))
+        if(existing_val < 0 || is_undefined(existing_val)) existing_val = c
+        variable_struct_set(to_rename, string(j), existing_val - 1)
+    }
+}
+
+var names = variable_struct_get_names(to_rename)
+for(var i = 0; i < array_length(names); i++){
+    var og_name = names[i]
+    var new_name = variable_struct_get(to_rename, og_name)
+    gml_Script_scr_color_scheme_rename("Colors/" + string(og_name), string(new_name))
+
+    if(real(og_name) == global.setting_color_scheme){
+        global.setting_color_scheme = real(new_name)
+    }
+}
+
+if(!file_exists("Colors/" + string(global.setting_color_scheme) + "/" + "Normal.txt")){
+    gml_Script_shellworks_imgui_createpopup_message("Color scheme deleted!", "The selected color scheme was deleted!\nReverting to color scheme #2...", "Okay.")
+    global.setting_color_scheme = 2
+}
+
 #orig#()
+
 if global.save_pump_is_inverted
 {
     if (object_index == obj_levelstyler)
@@ -52,3 +91,7 @@ part_type_speed(global.part_type_playerTrail, 0.4, 0.6, 0, 0)
 part_type_orientation(global.part_type_playerTrail, 0, 360, 0, 0, 0)
 part_type_direction(global.part_type_playerTrail, 0, 360, 0, 0)
 part_type_size(global.part_type_playerTrail, 1.25, 1.25, 0, 0)
+
+global.levelstyler_colors_need_to_be_reloaded = true
+just_started_level = true
+alarm[4] = 1

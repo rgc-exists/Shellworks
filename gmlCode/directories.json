@@ -6,7 +6,6 @@
     "codeHooks": "codehooks",
     "objectCode": "objectcode",
     "functionHooks": "functionhooks",
-    "Other People's Code\\namethempguy\\functionHooks": "functionhooks",
     "inlineAssemblyHooks": "inlineassemblyhooks",
     "inlinereplacements": "inlinereplacements"
 }

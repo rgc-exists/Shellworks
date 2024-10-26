@@ -1,0 +1,203 @@
+function leveleditor_save\(\) \/\/gml_Script_leveleditor_save
+{
+    if campaign_is_readonly\(info\[0\]\)
+    {
+        show_debug_message\("Cant save a readonly campaign's level!"\)
+        return true;
+    }
+    if \(time == 0\)
+    {
+        display_text = "SAVING"
+        file = file_text_open_write\(saveName\)
+        return false;
+    }
+    var levelData = ds_map_find_value\(global\.campaignMap, array_get\(info, 0\)\)\.levels\[info\[1\]\]
+    if \(levelData\.isModded && \(!global\.isEditorModded\)\)
+    {
+        show_debug_message\("Can't save a modded level!"\)
+        return true;
+    }
+    var has_exploration_point = false
+    var player_tool_struct = undefined
+    var uses_modded_elements = false
+    li = 0
+    while \(li < ds_list_size\(global\.li_level_editor_database\)\)
+    {
+        dataBaseStruct = ds_list_find_value\(global\.li_level_editor_database, li\)
+        if dataBaseStruct\.modded
+        {
+            uses_modded_elements = true
+            break
+        }
+        else
+        {
+            li\+\+
+            continue
+        }
+    }
+    file_text_write_string\(file, \("2\.12" \+ \(uses_modded_elements ? "_MODDED" : ""\)\)\)
+    file_text_writeln\(file\)
+    LVLX1 = obj_level_editor\.level_bound_x1
+    LVLY1 = obj_level_editor\.level_bound_y1
+    LVLW = obj_level_editor\.level_bound_x2 \- obj_level_editor\.level_bound_x1
+    LVLH = obj_level_editor\.level_bound_y2 \- obj_level_editor\.level_bound_y1
+    file_text_writeln\(file\)
+    file_text_write_string\(file, "LEVEL DIMENSIONS:"\)
+    file_text_writeln\(file\)
+    file_text_write_real\(file, LVLW\)
+    file_text_writeln\(file\)
+    file_text_write_real\(file, LVLH\)
+    file_text_writeln\(file\)
+    file_text_writeln\(file\)
+    file_text_write_string\(file, "TOOL DATA:"\)
+    file_text_writeln\(file\)
+    file_text_write_real\(file, ds_list_size\(global\.li_level_editor_database\)\)
+    file_text_writeln\(file\)
+    for \(li = 0; li < ds_list_size\(global\.li_level_editor_database\); li\+\+\)
+    {
+        dataBaseStruct = ds_list_find_value\(global\.li_level_editor_database, li\)
+        file_text_write_string\(file, dataBaseStruct\.custom_tool_or_object_id\)
+        file_text_writeln\(file\)
+        file_text_write_real\(file, dataBaseStruct\.image_angle\)
+        file_text_writeln\(file\)
+        file_text_write_real\(file, dataBaseStruct\.image_xscale\)
+        file_text_writeln\(file\)
+        file_text_write_real\(file, dataBaseStruct\.image_yscale\)
+        file_text_writeln\(file\)
+        file_text_write_real\(file, array_length\(dataBaseStruct\.tool_properties\)\)
+        file_text_writeln\(file\)
+        for \(ti = 0; ti < array_length\(dataBaseStruct\.tool_properties\); ti\+\+\)
+        {
+            thsToolProp = dataBaseStruct\.tool_properties\[ti\]
+            file_text_write_string\(file, thsToolProp\.key\)
+            file_text_writeln\(file\)
+            file_text_write_real\(file, thsToolProp\.value\)
+            file_text_writeln\(file\)
+        }
+    }
+    file_text_writeln\(file\)
+    file_text_write_string\(file, "QUICK SLOTS:"\)
+    file_text_writeln\(file\)
+    for \(li = 0; li < 10; li\+\+\)
+    {
+        dataBaseStruct = ds_list_find_value\(obj_level_editor\.li_quicktool_slots, li\)
+        file_text_write_string\(file, dataBaseStruct\.custom_tool_or_object_id\)
+        file_text_writeln\(file\)
+    }
+    file_text_writeln\(file\)
+    file_text_write_string\(file, "PLACED OBJECTS:"\)
+    file_text_writeln\(file\)
+    file_text_write_real\(file, ds_list_size\(global\.li_level_editor_database\)\)
+    file_text_writeln\(file\)
+    for \(li = 0; li < ds_list_size\(global\.li_level_editor_database\); li\+\+\)
+    {
+        dataBaseStruct = ds_list_find_value\(global\.li_level_editor_database, li\)
+        file_text_write_string\(file, dataBaseStruct\.custom_tool_or_object_id\)
+        file_text_writeln\(file\)
+        if \(dataBaseStruct\.custom_tool_or_object_id == "exploration_point"\)
+            has_exploration_point = ds_list_size\(dataBaseStruct\.li_placed_instances\) > 0
+        else if \(dataBaseStruct\.custom_tool_or_object_id == "player"\)
+            player_tool_struct = dataBaseStruct
+        file_text_write_real\(file, ds_list_size\(dataBaseStruct\.li_placed_instances\)\)
+        file_text_writeln\(file\)
+        for \(ti = 0; ti < ds_list_size\(dataBaseStruct\.li_placed_instances\); ti\+\+\)
+        {
+            thisInst = ds_list_find_value\(dataBaseStruct\.li_placed_instances, ti\)
+            file_text_write_real\(file, \(thisInst\.x \- LVLX1\)\)
+            file_text_writeln\(file\)
+            file_text_write_real\(file, \(thisInst\.y \- LVLY1\)\)
+            file_text_writeln\(file\)
+            file_text_write_real\(file, thisInst\.image_angle\)
+            file_text_writeln\(file\)
+            file_text_write_real\(file, thisInst\.image_xscale\)
+            file_text_writeln\(file\)
+            file_text_write_real\(file, thisInst\.image_yscale\)
+            file_text_writeln\(file\)
+            if \(!\(variable_instance_exists\(thisInst, "map_properties"\)\)\)
+            {
+                file_text_write_real\(file, 0\)
+                file_text_writeln\(file\)
+            }
+            else if \(!\(ds_exists\(thisInst\.map_properties, 1\)\)\)
+            {
+                file_text_write_real\(file, 0\)
+                file_text_writeln\(file\)
+            }
+            else
+            {
+                file_text_write_real\(file, ds_map_size\(thisInst\.map_properties\)\)
+                file_text_writeln\(file\)
+                thisKey = ds_map_find_first\(thisInst\.map_properties\)
+                for \(pri = 0; pri < ds_map_size\(thisInst\.map_properties\); pri\+\+\)
+                {
+                    file_text_write_string\(file, thisKey\)
+                    file_text_writeln\(file\)
+                    var the_value = ds_map_find_value\(thisInst\.map_properties, thisKey\)
+                    if \(typeof\(the_value\) == "string"\)
+                        show_error\(\("string where number should be! \\nkey:" \+ thisKey \+ "\\nstruct:" \+ dataBaseStruct\.custom_tool_or_object_id \+ "\\nvalue:" \+ the_value\), true\)
+                    file_text_write_real\(file, the_value\)
+                    file_text_writeln\(file\)
+                    thisKey = ds_map_find_next\(thisInst\.map_properties, thisKey\)
+                }
+            }
+        }
+    }
+    file_text_writeln\(file\)
+    file_text_write_string\(file, "WIRES:"\)
+    file_text_writeln\(file\)
+    file_text_write_real\(file, ds_list_size\(global\.lvl_wires\)\)
+    file_text_writeln\(file\)
+    for \(li = 0; li < ds_list_size\(global\.lvl_wires\); li\+\+\)
+    {
+        thisWire = ds_list_find_value\(global\.lvl_wires, li\)
+        fromObj = thisWire\.from_obj
+        fromObj_indexInList = ds_list_find_index\(fromObj\.toolStruct\.li_placed_instances, fromObj\)
+        file_text_write_string\(file, fromObj\.toolStruct\.custom_tool_or_object_id\)
+        file_text_writeln\(file\)
+        file_text_write_real\(file, fromObj_indexInList\)
+        file_text_writeln\(file\)
+        toObj = thisWire\.to_obj
+        toObj_indexInList = ds_list_find_index\(toObj\.toolStruct\.li_placed_instances, toObj\)
+        file_text_write_string\(file, toObj\.toolStruct\.custom_tool_or_object_id\)
+        file_text_writeln\(file\)
+        file_text_write_real\(file, toObj_indexInList\)
+        file_text_writeln\(file\)
+    }
+    file_text_close\(file\)
+    var hasexplo = variable_struct_get\(levelData, "hasExplorationPoint"\)
+    var levelico = variable_struct_get\(levelData, "levelIcon"\)
+    var ismodded = variable_struct_get\(levelData, "isModded"\)
+    var startsunlocked = variable_struct_get\(levelData, "startUnlocked"\)
+    var lvltyp = variable_struct_get\(levelData, "levelType"\)
+    var lvldiff = variable_struct_get\(levelData, "diffPoints"\)
+    var is_different = false
+    if is_undefined\(hasexplo\)
+        hasexplo = ""
+    if is_undefined\(levelico\)
+        levelico = ""
+    if is_undefined\(ismodded\)
+        ismodded = ""
+    if is_undefined\(startsunlocked\)
+        startsunlocked = ""
+    if is_undefined\(lvltyp\)
+        lvltyp = ""
+    if is_undefined\(lvldiff\)
+        lvldiff = ""
+    levelData\.hasExplorationPoint = has_exploration_point
+    levelData\.levelIcon = ds_list_find_value\(global\.communityLevelIconsList, ds_map_find_value\(player_tool_struct\.ds_map_tool_properties, "lvl_icon"\)\.value\)
+    levelData\.isModded = uses_modded_elements
+    levelData\.startUnlocked = ds_map_find_value\(player_tool_struct\.ds_map_tool_properties, "lvl_unlocked"\)\.value == 1
+    levelData\.levelType = ds_map_find_value\(player_tool_struct\.ds_map_tool_properties, "lvl_type"\)\.value
+    levelData\.diffPoints = ds_map_find_value\(player_tool_struct\.ds_map_tool_properties, "lvl_diff"\)\.value
+    is_different = \(hasexplo != has_exploration_point || levelico != levelData\.levelIcon || ismodded != uses_modded_elements || startsunlocked != levelData\.startUnlocked || lvltyp != levelData\.levelType || lvldiff != levelData\.diffPoints\)
+    if is_different
+    {
+        save_leveleditor_campaign\(info\[0\]\)
+        with \(obj_level_editor\)
+        {
+            if \(level_select_tab == 0\)
+                self\.scr_level_editor_populate_level_list\(\)
+        }
+    }
+    return true;
+}
