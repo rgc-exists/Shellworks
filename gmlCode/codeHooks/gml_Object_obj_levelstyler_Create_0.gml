@@ -1,7 +1,7 @@
 
 var missing_schemes = []
 var max_existing_scheme = 1
-for(var colsche = 0; colsche < 10000; colsche++){
+for(var colsche = 0; colsche < 250; colsche++){
     if(directory_exists(("Colors/" + string((colsche + 1))))){
         max_existing_scheme = colsche + 1
     } else {
