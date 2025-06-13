@@ -15,7 +15,6 @@ using System.Runtime.Serialization;
 using Shellworks_AutoUpdater;
 using System.ComponentModel;
 using shellworks;
-using ShellworksCustomExtensions;
 using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks.Dataflow;
 
@@ -275,12 +274,11 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
     private static void LoadExtraCode_Before()
     {
         GetGameVersion();
-        CheckLevelSave_Regex();
     }
     private static void GetGameVersion()
     {
         UndertaleCode scr_save_settings = data.Code.ByName("gml_GlobalScript_scr_save_settings");
-        string assembly_str = scr_save_settings.Disassemble(data.Variables, data.CodeLocals.For(scr_save_settings)).StandardizeNewlines().Replace("\t", "").Replace(" ", "");
+        string assembly_str = scr_save_settings.Disassemble(data.Variables, data.CodeLocals.For(scr_save_settings)).Replace("\r\n", "\n").Replace("\r", "\n").Replace("\t", "").Replace(" ", "");
         GlobalDecompileContext globalDecompileContext = new GlobalDecompileContext(data, false);
         string decompiledStr = Decompiler.Decompile(scr_save_settings, globalDecompileContext);
         var match = Regex.Match(decompiledStr, @"file_text_write_string\\(.*\\, \\""Game Version\\""\\)
@@ -288,9 +286,9 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
 .*file_text_write_string\\(.*\\, \\""(.*)\\""\\)/gm");
         if (match.Success)
         {
-            if (match.Groups.Count > 0)
+            if (match.Groups.Count > 0 && true)
             {
-                string game_version = match.Groups[1].Value;
+                string game_version = match.Groups[0].Value;
                 data.CreateFunction("scr_get_version", $"global.game_build_version = {game_version}", 0);
                 return;
             }
@@ -298,28 +296,6 @@ Type ""y"" to disable shellworks. Type ""n"" to cancel. Either way the game will
         data.CreateFunction("scr_get_version", $@"global.is_getting_version = true
 scr_save_settings()
 gml_Script_scr_get_game_version_from_orig_settings_function()", 0);
-
-    }
-    private static void CheckLevelSave_Regex()
-    {
-
-        string regPath = Path.Combine(baseDirectory, "code", "hacky", "leveleditor_save_cache.regex");
-        string regStr = File.ReadAllText(regPath);
-
-        UndertaleCode leveleditor_save_load = data.Code.ByName("gml_GlobalScript_leveleditor_save_load");
-        string assembly_str = leveleditor_save_load.Disassemble(data.Variables, data.CodeLocals.For(leveleditor_save_load)).StandardizeNewlines().Replace("\t", "").Replace(" ", "");
-        GlobalDecompileContext globalDecompileContext = new GlobalDecompileContext(data, false);
-        string decompiledStr = Decompiler.Decompile(leveleditor_save_load, globalDecompileContext).StandardizeNewlines();
-        var match = Regex.Match(decompiledStr, regStr.StandardizeNewlines());
-        if (match.Success)
-        {
-            if (match.Groups.Count > 0)
-            {
-                data.CreateFunction("scr_check_savefunc", $"global.saving_didnt_match = false", 0);
-                return;
-            }
-        }
-        data.CreateFunction("scr_check_savefunc", $@"global.saving_didnt_match = true", 0);
 
     }
     private static void LoadExtraCode_After()
@@ -538,7 +514,7 @@ gml_Script_scr_get_game_version_from_orig_settings_function()", 0);
             {
                 UndertaleCode undertaleCode = data.Code.ByName(hookFile.Script);
 
-                string assembly_str = undertaleCode.Disassemble(data.Variables, data.CodeLocals.For(undertaleCode)).StandardizeNewlines();
+                string assembly_str = undertaleCode.Disassemble(data.Variables, data.CodeLocals.For(undertaleCode)).Replace("\r\n", "\n").Replace("\r", "\n");
 
                 assembly_str = ReplaceAssetsWithIndexes_ASM(assembly_str);
 
@@ -581,7 +557,7 @@ gml_Script_scr_get_game_version_from_orig_settings_function()", 0);
             {
                 UndertaleCode undertaleCode = data.Code.ByName(hookFile.Script);
 
-                string assembly_str = undertaleCode.Disassemble(data.Variables, data.CodeLocals.For(undertaleCode)).StandardizeNewlines().Replace("\t", "").Replace(" ", "");
+                string assembly_str = undertaleCode.Disassemble(data.Variables, data.CodeLocals.For(undertaleCode)).Replace("\r\n", "\n").Replace("\r", "\n").Replace("\t", "").Replace(" ", "");
                 GlobalDecompileContext globalDecompileContext = new GlobalDecompileContext(data, false);
                 string decompiledStr = Decompiler.Decompile(undertaleCode, globalDecompileContext);
 
@@ -598,8 +574,8 @@ gml_Script_scr_get_game_version_from_orig_settings_function()", 0);
                 {
                     replace = File.ReadAllText(Path.Combine(baseDirectory, "code", replaceData.ReplaceFile)).Trim();
                 }
-                //find = find.StandardizeNewlines();
-                //replace = replace.StandardizeNewlines();
+                //find = find.Replace("\r\n", "\n").Replace("\r", "\n");
+                //replace = replace.Replace("\r\n", "\n").Replace("\r", "\n");
 
                 try
                 {
@@ -682,12 +658,74 @@ gml_Script_scr_get_game_version_from_orig_settings_function()", 0);
 
         data.InsertMenuOptionFromEnd("obj_menu_Controls", 0, new Menus.WysMenuOption("\"Open Shellworks Menu\"", instance: "obj_menu_cOpenShellworks"));
 
+        UndertaleGameObject specialMenu = data.CreateMenu("special");
+        data.InsertMenuOptionFromEnd(Menus.Vanilla.Settings, 1, new Menus.WysMenuOption("\"Special\"")
+        {
+            instance = specialMenu.Name.Content
+        });
+
+
+        UndertaleGameObject funMenu = data.CreateMenu("funMenu");
+        data.InsertMenuOptionFromEnd(specialMenu.Name.Content, 0, new Menus.WysMenuOption("\"Novelties & Jokes\"")
+        {
+            instance = funMenu.Name.Content
+        });
 
 
         data.AddMenuOption("obj_menu_ExplorationMode", new Menus.WysMenuOption("\"Extra\"", script: "gml_Script_scr_set_explore_mode", scriptArgument: "2", tooltipScript: "gml_Script_scr_return_input", tooltipArgument: "\"Unlocks ALL levels, INCLUDING secrets.\""));
         data.AddMenuOption("obj_menu_ExplorationMode", new Menus.WysMenuOption("\"Extra + DIALOG SPRINGS\"", script: "gml_Script_scr_set_explore_mode", scriptArgument: "3", tooltipScript: "gml_Script_scr_return_input", tooltipArgument: "\"Unlocks ALL levels AND dialog springs.\""));
         //data.AddMenuOption("obj_menu_StayInBack", new Menus.WysMenuOption("\"Stay In FOREGROUND\"", script: "gml_Script_scr_set_stay_in_back_gml_Object_obj_menu_StayInBack_Other_10", scriptArgument: "2", tooltipScript: "gml_Script_scr_return_input", tooltipArgument: "\"Makes it so squid ALWAYS stays in the foreground, and never goes into the background.\""));
         //UndertaleGameObject squidInEditorMenu =
+        UndertaleGameObject levelEditorMenu = data.CreateMenu("level_editor",
+        data.CreateToggleOption("\"Squid In Editor\"", "squidInEditorMenu", "global.setting_squid_in_editor = argument0", "selectedItem = global.setting_squid_in_editor", "global.setting_squid_in_editor", tooltipScript: "gml_Script_scr_return_input", tooltipArgument: "\"Have squid present in your editor. He will not talk, but he will keep you company while you build.\"")
+        );
+        data.InsertMenuOptionFromEnd(Menus.Vanilla.Settings, 2, new Menus.WysMenuOption("\"Level Editor\"")
+        {
+            instance = levelEditorMenu.Name.Content
+        });
+        UndertaleGameObject editorCameraMenu = data.CreateMenu("editor_camera", data.CreateChangeOption("\"Minimum Zoom\"", "obj_menu_camera_min_zoom",
+        @"global.setting_camzoom_min = clamp(global.setting_camzoom_min + argument0, 0.05, 500)",
+        @"return string(global.setting_camzoom_min * 100)", 0.05), data.CreateChangeOption("\"Maximum Zoom\"", "obj_menu_camera_max_zoom",
+        @"gml_Script_scr_set_camZoomMax(argument0)",
+        @"return string(global.setting_camzoom_max * 100)", .5));
+        data.InsertMenuOptionFromEnd(levelEditorMenu.Name.Content, 1, new Menus.WysMenuOption("\"Camera\"")
+        {
+            instance = editorCameraMenu.Name.Content
+        });
+        data.InsertMenuOption(Menus.Vanilla.More, 3, data.CreateToggleOption("\"Epilepsy Warning\"", "epilepsy_warning", "gml_Script_scr_set_epilepsy_warning(argument0)", "gml_Script_scr_preselect_epilepsy_warning()", "global.setting_epilepsy_warning", tooltipScript: "gml_Script_scr_return_input", tooltipArgument: "\"Having this off will skip the epilepsy warning you get at the beginning of the game.\""));
+        data.InsertMenuOption(Menus.Vanilla.More, 3, data.CreateToggleOption("\"Skip Title Animation\"", "skip_title_anim", "global.setting_skip_title_animation = argument0", "selectedITem = global.setting_skip_title_animation", "global.setting_skip_title_animation", tooltipScript: "gml_Script_scr_return_input", tooltipArgument: "\"Skip the title screen animation from when you load a save file.\""));
+        //data.InsertMenuOption(Menus.Vanilla.SquidVisuals, 3, data.CreateToggleOption("\"Constant Opacity\"", "squid_constant_opacity", "gml_Script_scr_set_squid_constant_opacity(argument0)", "scr_preselect_squid_constant_opacity()", "global.setting_squid_constant_opacity", tooltipScript: "gml_Script_scr_return_input", tooltipArgument: "\"Change whether or not squid becomes less visible when being silent.\n(ALSO MAKES HIM ALWAYS STAY IN THE FRONT, DUE TO HOW THE CODE OF THE GAME WAS STRUCTURED I CANNOT CHANGE THIS.)\""));
+        data.AddMenuOption(Menus.Vanilla.Graphics, data.CreateChangeOption("\"Intense Background Intensity\"", "intenseBackgrounda", "global.setting_intense_backgrounds = clamp(global.setting_intense_backgrounds + argument0, 0, 1)", "return string_replace(string(global.setting_intense_backgrounds * 100), \".00\", \"\") + \"%\" ", 0.1));
+
+
+
+        UndertaleGameObject spoilersMenu = data.CreateMenu("menu_spoilers", data.CreateToggleOption("\"Inverted Pump\"", "inverted_pump", "global.save_pump_is_inverted = argument0", "selectedItem = global.save_pump_is_inverted", "global.save_pump_is_inverted", tooltipScript: "gml_Script_scr_return_input", tooltipArgument: "\"Change the state of the pump. (If you don't know what this is, ignore it. It is a spoiler.)\""), data.CreateToggleOption("\"Fixed Heart Mode\"", "heart_fixed", "global.save_heart_fixed = argument0", "selectedItem = global.save_heart_fixed", "global.save_heart_fixed", tooltipScript: "gml_Script_scr_return_input", tooltipArgument: "\"Change whether or not squid's heart is fixed. (If you don't know what this is, ignore it. It is a spoiler.)\""));
+        data.InsertMenuOptionFromEnd(Menus.Vanilla.Hacks, 0, new Menus.WysMenuOption("\"Spoilers\"")
+        {
+            instance = spoilersMenu.Name.Content
+        });
+
+        UndertaleGameObject invincibilityMenu = data.CreateMenu("menu_invincibility_hacks",
+            data.CreateToggleOption("\"Player Invincibility\"", "invincibility", "global.invincible_mode = argument0", "selectedItem = global.invincible_mode", "global.invincible_mode", "gml_Script_scr_return_input", "\"Makes it so shelly can't die.\n\nNOTE: Even with the setting on, the player will still die when the self destruct button is pressed unless SELF DESTRUCT INVINCIBILITY is turned on, and the same is with FUSES for FUSE INVINCIBILITY..\""),
+            data.CreateToggleOption("\"Self Destruct Invincibility\"", "restart_invincibility", "global.restart_invincible_mode = argument0", "selectedItem = global.restart_invincible_mode", "global.restart_invincible_mode", "gml_Script_scr_return_input", "\"Controls whether or not the self destruct button works.\n\nNOTE: Even with normal invincibility on, the player will still die to a restart if this setting is off.\""),
+            data.CreateToggleOption("\"Fuse Invincibility\"", "fuse_invincibility", "global.fuse_invincible_mode = argument0", "selectedItem = global.fuse_invincible_mode", "global.fuse_invincible_mode", "gml_Script_scr_return_input", "\"Makes it so you don't die when you hit a fuse.\n\nNOTE: Even with normal invincibility on, the player will still die to a fuse if this setting is off.\""),
+            data.CreateToggleOption("\"Ball Invincibility\"", "ball_invincibility", "global.ball_invincible_mode = argument0", "selectedItem = global.ball_invincible_mode", "global.ball_invincible_mode", "gml_Script_scr_return_input", "\"Makes it so the basketball cannot pop.\""),
+            data.CreateToggleOption("\"Tower Defense Invincibility\"", "td_invincibility", "global.td_invincible_mode = argument0", "selectedItem = global.td_invincible_mode", "global.td_invincible_mode", "gml_Script_scr_return_input", "\"Makes it so you don't die when TD cores break.\"")
+        );
+        data.InsertMenuOptionFromEnd(Menus.Vanilla.Hacks, 0, new Menus.WysMenuOption("\"Invincibilty\"")
+        {
+            instance = invincibilityMenu.Name.Content
+        });
+        data.AddMenuOption(Menus.Vanilla.Hacks, data.CreateToggleOption("\"Infinite Double Jumps\"", "infinite_jumps", "global.infinite_jumps = argument0", "selectedItem = global.infinite_jumps", "global.infinite_jumps", "gml_Script_scr_return_input", "\"Gives shelly infinite double jumps\""));
+
+        data.AddMenuOption(funMenu.Name.Content, data.CreateToggleOption("\"Rendering Altogether\"", "enable_rendering", "global.rendering_enabled = argument0", "selectedItem = global.rendering_enabled", "global.rendering_enabled", "gml_Script_scr_return_input", "\"\\\"You want to disable rendering altogether? If you say so. It's running on 60 FPS we did it yaaay!\\\"\""));
+
+        //data.AddMenuOption(Menus.Vanilla.AdvancedGraphics, data.CreateToggleOption("\"Unlimited FPS (IDK if this does anything)\"", "unlimited_fps", "scr_set_unlimited_fps(argument0)", "scr_preselect_unlimited_fps()", "obj_persistent.unlimited_frame_rate", "gml_Script_scr_return_input", "\"Makes it so your framerate can go as high as you want. (I ACTUALLY HAVE NO CLUE IF THIS DOES ANYTHING BUT IT WAS IN THE CODE OF THE GAME SO WHY NOT.)\""));
+
+        data.AddMenuOption("obj_menu_wysapi_level_editor", data.CreateToggleOption("\"\\\"Press O for hotkeys\\\" message\"", "press_for_hotkeys", "global.setting_show_hotkeys_overlay = argument0", "selectedItem = global.setting_show_hotkeys_overlay", "global.setting_show_hotkeys_overlay", "gml_Script_scr_return_input", "\"Turn on/off the \\\"Press O to show list of BSE-Exclusive Hotkeys\\\" overlay that shows when you enter the editor.\""));
+
+        data.AddMenuOption("obj_menu_wysapi_level_editor", data.CreateToggleOption("\"Place Multiple Players\"", "place_multiple_players", "global.setting_place_multiple_players = argument0", "selectedItem = global.setting_place_multiple_players", "global.setting_place_multiple_players", "gml_Script_scr_return_input", "\"Turn on to disable the feature that removes existing player objects when you place a new one. Useful for double shelly levels.\""));
+        data.AddMenuOption("obj_menu_wysapi_level_editor", data.CreateToggleOption("\"Place Multiple 1-At-A-Time Objects\"", "place_multiple_1atATimeObjs", "global.setting_place_multiple_oneAtATime_objs = argument0", "selectedItem = global.setting_place_multiple_oneAtATime_objs", "global.setting_place_multiple_oneAtATime_objs", "gml_Script_scr_return_input", "\"Turn on to disable the feature that removes existing instances of certain objects when you place a new one. Useful for double shelly levels. (Includes the player object.)\""));
 
         UndertaleGameObject ResetVanillaSettings = data.CreateMenu("Reset_Vanilla_Settings", new Menus.WysMenuOption("\"Reset Vanilla Settings\"", Menus.Vanilla.More, "gml_Script_scr_reset_vanilla_settings()", null, "gml_Script_scr_return_input", "\"Reset all settings that are included in the original game (not added with mods).\""));
         data.InsertMenuOptionFromEnd(Menus.Vanilla.More, 5, new Menus.WysMenuOption("\"Reset Vanilla Settings\"")
@@ -706,6 +744,62 @@ gml_Script_scr_get_game_version_from_orig_settings_function()", 0);
         {
             instance = ResetKeybindings.Name.Content
         });
+
+
+
+
+        UndertaleGameObject MusicPlayer = data.CreateMenu("Music_Player", new Menus.WysMenuOption("\"Soundtrack Player\"", Menus.Vanilla.More, "gml_Script_scr_go_to_music_player()", null, "gml_Script_scr_return_input", "\"Go to the OST music player room\""));
+        data.InsertMenuOptionFromEnd(specialMenu.Name.Content, 0, new Menus.WysMenuOption("\"Soundtrack Player\"")
+        {
+            instance = MusicPlayer.Name.Content
+        });
+
+        data.InsertMenuOptionFromEnd(Menus.Vanilla.Hacks, 0, data.CreateChangeOption("\"Player Speed\"", "player_speed", "global.cheat_player_speed = clamp(global.cheat_player_speed + argument0 / 100, 0, 10)", "return string(global.cheat_player_speed * 100) + \"%\"", 10));
+        data.InsertMenuOptionFromEnd(Menus.Vanilla.Hacks, 0, data.CreateChangeOption("\"Player Jump Height\"", "player_jump_height", "global.cheat_jump_height = clamp(global.cheat_jump_height + argument0 / 100, 0, 10)", "return string(global.cheat_jump_height * 100) + \"%\"", 10));
+        //data.InsertMenuOptionFromEnd(Menus.Vanilla.Hacks, 0, data.CreateChangeOption("\"Max Fall Speed\n(Underwater Only)\"", "cheat_max_fall_speed", "global.cheat_max_fall_speed = clamp(global.cheat_max_fall_speed + argument0 / 100, 0, 100)", "return string(global.cheat_max_fall_speed)", 10));
+        //data.InsertMenuOptionFromEnd(Menus.Vanilla.Gameplay, 0, data.CreateChangeOption("\"Player Respawn Time\"", "respawn_time", "global.setting_respawn_time = clamp(global.setting_respawn_time + argument0, 0, 10)", "return gml_Script_scr_return_respawn_time()", 0.25));
+
+
+
+
+        /*
+        UndertaleGameObject advancedSpecialMenu = data.CreateMenu("advanced_special", 
+        data.CreateToggleOption("\"Global Inspector (Press F5)\"", "global_inspector", "global.setting_global_inspector_available = argument0", "selectedItem = global.setting_global_inspector_available", "global.setting_global_inspector_available", tooltipScript: "gml_Script_scr_return_input", tooltipArgument: "\"With this on, you can press F5 to open the global object inspector.\"")
+        );
+        data.InsertMenuOptionFromEnd(specialMenu.Name.Content, 1, new Menus.WysMenuOption("\"Advanced\"")
+        {
+            instance = advancedSpecialMenu.Name.Content
+        });
+        */
+
+
+
+
+        UndertaleGameObject linksMenu = data.CreateMenu("links_menu",
+            new Menus.WysMenuOption("\"RGC Exists Discord\"", null, "gml_Script_scr_open_link", "\"https://discord.gg/96aukFY7Rx\"", "gml_Script_scr_return_input", "\"Join the RGC Exists discord for updates on BSE and other RGC projects!\"")
+        );
+        data.InsertMenuOptionFromEnd(specialMenu.Name.Content, 0, new Menus.WysMenuOption("\"Cool Links\"")
+        {
+            instance = linksMenu.Name.Content
+        });
+        UndertaleGameObject snailsEndMenu = data.CreateMenu("snails_end",
+            new Menus.WysMenuOption("\"Leaderboard\"", null, "gml_Script_scr_open_link", "\"https://sites.google.com/view/snailsend/list\"", "gml_Script_scr_return_input", "\"The unofficial list of the top ranked hardest WYS levels!\""),
+            new Menus.WysMenuOption("\"Submit level\"", null, "gml_Script_scr_open_link", "\"https://docs.google.com/forms/d/e/1FAIpQLSfbw4_JKeixMV1vKwCiXRk0JiuLMwp5vOwWNfb-3OcHdez5xA/viewform\"", "gml_Script_scr_return_input", "\"Submit to the leaderboard of the hardest WYS levels!\n\nYour level must have video proof of being legitimately completed by a real human, in one attempt.\"")
+        );
+        data.InsertMenuOptionFromEnd(linksMenu.Name.Content, 0, new Menus.WysMenuOption("\"Snail's End\"")
+        {
+            instance = snailsEndMenu.Name.Content
+        });
+
+
+        data.InsertMenuOptionFromEnd("obj_menu_Controls", 0, data.CreateToggleOption("\"Input Display\"", "input_display", "global.setting_input_display = argument0", "selectedItem = global.setting_input_display", "global.setting_input_display", tooltipScript: "gml_Script_scr_return_input", tooltipArgument: "\"Display the keys you are currently pressing on the screen.\n\nOnly works with keyboard for now.\""));
+
+
+        data.InsertMenuOptionFromEnd(specialMenu.Name.Content, 0, data.CreateToggleOption("\"Cheat Indicator\"", "cheat_indicator", "global.setting_legitimacy_marker = argument0", "selectedItem = global.setting_legitimacy_marker", "global.setting_legitimacy_marker", "gml_Script_scr_return_input", "\"Displays a tiny rectangle at the top right of the screen. Green if your run is legit, red if not.\""));
+
+
+        data.InsertMenuOption(Menus.Vanilla.Speedrun, 3, data.CreateToggleOption("\"Attempt Timer\"", "SrTimerAttempt", "global.setting_speedrun_timer_attempt = argument0", "selectedItem = global.setting_speedrun_timer_attempt", "global.setting_speedrun_timer_attempt", tooltipScript: "gml_Script_scr_return_input", tooltipArgument: "\"\""));
+        data.InsertMenuOptionFromEnd(Menus.Vanilla.Speedrun, 0, data.CreateToggleOption("\"Savefile Reset Keybind\n(CTRL+SHIFT+R)\"", "SavefileResetButton", "global.setting_speedrun_reset_button = argument0", "selectedItem = global.setting_speedrun_reset_button", "global.setting_speedrun_reset_button", tooltipScript: "gml_Script_scr_return_input", tooltipArgument: "\"Reset your entire savefile with the press of a keybind: CTRL+SHIFT+R.\n\nIMPORTANT: If you accidentally delete a savefile you shouldn't have, savefile backups can be found in the WYS AppData location.\""));
 
     }
     private static void BuildRooms()
@@ -916,7 +1010,7 @@ gml_Script_scr_get_game_version_from_orig_settings_function()", 0);
     private static void GetCursedInlineFunctionName()
     {
         UndertaleCode keybindingSystem = data.Code.ByName("gml_GlobalScript_keybinding_system");
-        string assembly_str = keybindingSystem.Disassemble(data.Variables, data.CodeLocals.For(keybindingSystem)).StandardizeNewlines();
+        string assembly_str = keybindingSystem.Disassemble(data.Variables, data.CodeLocals.For(keybindingSystem)).Replace("\r\n", "\n").Replace("\r", "\n");
 
         string pattern = @">(.*) \(locals=1, argc=0\)\n:\[\d+\]\ncall\.i @@This@@\(argc=0\)\npush\.v builtin\.GetValue\ncallv\.v 0\npopz\.v\npush\.v self\.current_value\npushi\.e 0\ncmp\.i\.v LTE";
         Match match = Regex.Match(assembly_str, pattern);
@@ -956,6 +1050,17 @@ gml_Script_scr_get_game_version_from_orig_settings_function()", 0);
         {
             Console.WriteLine("Hiding console...");
             HideConsole();
+        }
+        return 1;
+    }
+
+    [GmlInterop("interop_file_write_all_text", 2)]
+    public double WriteAllText(string path, string text)
+    {
+        Console.WriteLine($"Writing to {path}");
+        using (StreamWriter outputFile = new StreamWriter(path))
+        {
+            outputFile.Write(text);
         }
         return 1;
     }

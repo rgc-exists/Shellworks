@@ -26,12 +26,9 @@ if(room != level_editor && room != level_editor_play_mode && room != menu && roo
     swapPump_remember = global.save_pump_is_inverted
     heartFixed_remember = global.save_heart_fixed
 }
-
-/*
 if(keyboard_check(ord("Y")) && keyboard_check(ord("O"))){
     aivl_play_ext("squid_yo", -1, -1, 3, 0, 1)
 }
-*/
 
 if(room != level_editor && room != menu){
     global.inspector_active = false
@@ -81,25 +78,18 @@ if(global.frames_since_startup == 2){
 
     if(!variable_global_exists("game_build_version")){
         global.disable_save_related_settings = true
-        global.game_build_version = "2.12"
+        global.game_build_version = "2.11"
         gml_Script_shellworks_imgui_createpopup_doFunction("UNABLE TO FIND GAME VERSION!",
-            "Shellworks was unable to find the current game version. THIS SHOULD NOT HAPPEN!\n\nShellworks is likely incompatible with the current version of the game, and you are risking crashes, or even save data loss.\n\n\nSave-related features like optimized saving are disabled for safety, and and levels saved will save marked with the most recent supported version, " + string(global.game_build_version) + ".\n\nCONTINUE AT YOUR OWN RISK!", "I understand.", gml_Script_shellworks_event_versionIncompatible_iUnderstand)
+            "Shellworks was unable to find the current game version. THIS SHOULD NOT HAPPEN!\n\nShellworks is likely incompatible with the current version of the game, and you are risking crashes, or even save data loss.\n\n\nSave-related features like optimized saving are disabled for safety, and and levels saved will save marked with the most recent supported version, " + string(global.game_build_version) + ".", "I understand.", gml_Script_shellworks_event_versionIncompatible_iUnderstand)
         return false;
     }
-    if(!scr_array_has(global.shellworks_supported_versions, global.game_build_version) && !string_starts_with(global.game_build_version, global.shellworks_supported_version_prefix)){
+    if(!scr_array_has(global.shellworks_supported_versions, global.game_build_version)){
         global.disable_save_related_settings = true
         gml_Script_shellworks_imgui_createpopup_doFunction("INCOMPATIBLE GAME VERSION!",
-            "SHELLWORKS DOES NOT SUPPORT THIS GAME VERSION!\n\nShellworks is likely incompatible with the current version of the game, and you are risking crashes, or even save data loss.\n\n\nSave-related features like optimized saving are disabled for safety.\n\nContinue at your own risk.", "I understand.", gml_Script_shellworks_event_versionIncompatible_iUnderstand)
-    } else {
-        gml_Script_scr_check_savefunc()
-        if(global.saving_didnt_match){
-        gml_Script_shellworks_imgui_createpopup_doFunction("POSSIBLE INCOMPATIBLE GAME VERSION! (SAVE FUNCTION DIFFERS!)",
-            "SHELLWORKS MAY NOT SUPPORT THIS GAME VERSION!\n\nShellwork's cache of the leveleditor_save function did not match the one in the current build. \n\nSave-related features like optimized saving are disabled for safety.\n\nContinue at your own risk.", "I understand.", gml_Script_shellworks_event_versionIncompatible_iUnderstand)
-        }
+            "SHELLWORKS DOES NOT SUPPORT THIS GAME VERSION!\n\nShellworks is likely incompatible with the current version of the game, and you are risking crashes, or even save data loss.\n\n\nSave-related features like optimized saving are disabled for safety.", "I understand.", gml_Script_shellworks_event_versionIncompatible_iUnderstand)
     }
 
     show_debug_message("game build version = " + string(global.game_build_version))
-
 } else if(global.frames_since_startup > 2){
     if(instance_exists(obj_levelstyler)){
         if(!global.setting_player_body_selected_enabled)

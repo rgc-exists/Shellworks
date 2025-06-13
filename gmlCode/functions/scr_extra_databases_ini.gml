@@ -30,5 +30,3 @@ global.database_snapped_grid_objects = [
     "walkthr_wall",
     "glass"
 ]
-
-gml_Script_scr_colorscheme_database_ini()

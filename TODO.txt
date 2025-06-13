@@ -1,0 +1,2 @@
+Writing down bugs here since my internet is dead rn.
+Switching to holding a player object from the inspector tool crashes the game.

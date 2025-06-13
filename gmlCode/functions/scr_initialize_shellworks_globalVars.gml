@@ -38,20 +38,6 @@ global.current_clipboard_wires = []
 
 global.disable_save_related_settings = false
 
-global.shellworks_supported_versions = ["2.11", "2.12"]
-global.shellworks_supported_version_prefix = "2.1"
+global.shellworks_supported_versions = ["2.11"]
 
 global.current_popup_id = 0
-
-global.show_hitboxes_enabled = true
-//Set to false by default when done testing
-
-global.shellworks_imgui_colorSchemeEditor_open = false
-
-global.just_applied_colors = false
-global.just_copied_color_scheme = false
-global.prev_theme_type = ""
-
-global.just_changed_schemes = false
-
-global.copy_overrides_enabled = false

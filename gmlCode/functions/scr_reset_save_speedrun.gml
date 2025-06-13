@@ -1,6 +1,5 @@
 with (obj_persistent)
 {
-    scr_save_game_archive()
     scr_save_settings()
     inMainMenu = 0
     with (obj_aivl_parent)
