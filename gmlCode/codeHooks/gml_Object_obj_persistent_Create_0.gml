@@ -6,7 +6,7 @@ global.is_shellworks_client = true
 //Just use if(variable_global_exists("is_shellworks_client")) to detect if it's Shellworks or not.
 //Sorry for anyone that needs to detect whether or not it's Shellworks before obj_persistent_Create_0 is run, I couldn't figure out how to get global init scripts to work with GMML.
 
-global.shellworks_version = "v0.4.0c"
+global.shellworks_version = "v0.4.0c.3"
 
 if(directory_exists(working_directory + "gmsl/mods/Shellworks/Shellworks_Assets/")){
     global.betterSE_assets = working_directory + "gmsl/mods/Shellworks/Shellworks_Assets/"

@@ -38,6 +38,6 @@ global.current_clipboard_wires = []
 
 global.disable_save_related_settings = false
 
-global.shellworks_supported_versions = ["2.11"]
+global.shellworks_supported_versions = ["2.12"]
 
 global.current_popup_id = 0

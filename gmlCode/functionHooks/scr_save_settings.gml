@@ -12,10 +12,9 @@ if(variable_global_exists("is_getting_version")){
             global.is_resetting_settings = 0
             return false;
         }
-    } else {
-        #orig#()
     }
 }
+#orig#()
 if(variable_global_exists("is_resetting_settings")){
     if(global.is_resetting_settings == 2){
         global.is_resetting_settings = 0

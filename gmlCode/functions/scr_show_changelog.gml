@@ -1,8 +1,12 @@
 
 
 gml_Script_shellworks_imgui_createpopup_message("SHELLWORKS CHANGELOG " + global.shellworks_version,
-"CHANGELOG
+"
+CHANGELOG:
+-Remove the experimental/broken color scheme stuff because I accidentally left it in when trying to fix a small bug.
 
+
+LAST MAJOR VERSION CHANGELOG:
 MAJOR FEATURE - ADVANCED COPY TOOL:
 -A variation of the copy tool that allows you to do a whole bunch of extra things:
 -Pasting MULTIPLE instances of the copied objects in rows and columns, allowing you to make custom \"tiles\"
